@@ -1,0 +1,12 @@
+{
+  "name": "codex-agent-team",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Codex Agent Team 前期文档与设计校验工具；应用技术栈尚未确定",
+  "scripts": {
+    "design:lint": "designmd lint design.md"
+  },
+  "devDependencies": {
+    "@google/design.md": "0.4.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "agent-team-probe",
+  "version": "0.5.0",
+  "description": "原生 Codex 会话团队协作与只读看板",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Agent Team",
+    "shortDescription": "原生团队协作与会话看板",
+    "longDescription": "提及 Agent Team 启用当前会话团队流程；只读 Kanban 与 Org Chart 展示已接入活动。",
+    "developerName": "Local workspace",
+    "category": "Productivity",
+    "composerIcon": "./assets/team.svg",
+    "logo": "./assets/team.svg",
+    "capabilities": [
+      "Read"
+    ],
+    "defaultPrompt": [
+      "启用当前会话的 Agent Team，使用原生团队技能处理后续需求，并打开本会话 Kanban。"
+    ]
+  },
+  "skills": "./skills/"
+}

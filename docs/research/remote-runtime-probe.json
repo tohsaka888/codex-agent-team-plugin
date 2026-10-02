@@ -1,0 +1,654 @@
+{
+  "scope": "SSH AI 远程 App Server 自建会话；只读隔离命令；继承默认模型",
+  "checks": {
+    "bothOutputsCorrect": false,
+    "overlappingTurns": true,
+    "commandEventsForBothTasks": false,
+    "overlappingCommands": false
+  },
+  "parallelRuns": [
+    {
+      "taskId": "probe-A",
+      "title": "真实并行只读验证 A",
+      "agent": "验证执行者 A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "parentThreadId": null,
+      "status": "failed",
+      "cwd": "/tmp/codex-agent-team-poc-PROBE_d2fa4183f54a-A",
+      "hostId": "remote-ssh-discovered:AI",
+      "output": "",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "startedAt": 1790864661.5468202,
+      "endedAt": 1790864681.3422904,
+      "turnStatus": "failed",
+      "currentActivity": "执行已结束，尚未人工验收",
+      "error": {
+        "message": "workspace routing discovery unauthorized (401)",
+        "codexErrorInfo": "other",
+        "additionalDetails": null,
+        "misalignment": null
+      }
+    },
+    {
+      "taskId": "probe-B",
+      "title": "真实并行只读验证 B",
+      "agent": "验证执行者 B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "parentThreadId": null,
+      "status": "failed",
+      "cwd": "/tmp/codex-agent-team-poc-PROBE_d2fa4183f54a-B",
+      "hostId": "remote-ssh-discovered:AI",
+      "output": "",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "startedAt": 1790864661.5302482,
+      "endedAt": 1790864683.5721002,
+      "turnStatus": "failed",
+      "currentActivity": "执行已结束，尚未人工验收",
+      "error": {
+        "message": "workspace routing discovery unauthorized (401)",
+        "codexErrorInfo": "other",
+        "additionalDetails": null,
+        "misalignment": null
+      }
+    }
+  ],
+  "overlapSeconds": 19.795470237731934,
+  "commandOverlapSeconds": 0,
+  "ok": false,
+  "error": "execution event deadline",
+  "events": [
+    {
+      "at": 1790864661.5302482,
+      "method": "turn/started",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null
+    },
+    {
+      "at": 1790864661.5468202,
+      "method": "turn/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null
+    },
+    {
+      "at": 1790864663.2814405,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": "userMessage",
+      "itemId": "01a0f7da-28cb-75d3-af43-10bb637a61dc"
+    },
+    {
+      "at": 1790864663.2941184,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": "userMessage",
+      "itemId": "01a0f7da-28cb-75d3-af43-10bb637a61dc"
+    },
+    {
+      "at": 1790864663.8845706,
+      "method": "item/started",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": "userMessage",
+      "itemId": "01a0f7da-2b24-7981-8c43-fb824837589d"
+    },
+    {
+      "at": 1790864663.885763,
+      "method": "item/completed",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": "userMessage",
+      "itemId": "01a0f7da-2b24-7981-8c43-fb824837589d"
+    },
+    {
+      "at": 1790864664.2719767,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 2/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864665.2547805,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 3/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864665.6758282,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 2/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864666.5576925,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 4/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864667.03779,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 3/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864668.26025,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 4/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864668.6481717,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 5/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864670.3019345,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 5/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864672.6340945,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 1/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864673.3871799,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 2/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864674.2869089,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 1/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864674.7066913,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 3/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864675.2736914,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 2/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864675.9637294,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 4/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864676.4381378,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 3/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864677.6273801,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 4/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864678.0412204,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 5/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864679.948822,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 5/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864681.3316643,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "workspace routing discovery unauthorized (401)",
+        "codexErrorInfo": "other",
+        "additionalDetails": null,
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864681.3422904,
+      "method": "turn/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+      "itemType": null,
+      "itemId": null,
+      "status": "failed"
+    },
+    {
+      "at": 1790864683.570923,
+      "method": "error",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "workspace routing discovery unauthorized (401)",
+        "codexErrorInfo": "other",
+        "additionalDetails": null,
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864683.5721002,
+      "method": "turn/completed",
+      "taskId": "probe-B",
+      "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+      "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+      "itemType": null,
+      "itemId": null,
+      "status": "failed"
+    },
+    {
+      "at": 1790864683.5914369,
+      "method": "turn/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": null,
+      "itemId": null
+    },
+    {
+      "at": 1790864684.5493464,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": "userMessage",
+      "itemId": "01a0f7da-7be0-78d3-9338-fdfdac9e2501"
+    },
+    {
+      "at": 1790864684.550779,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": "userMessage",
+      "itemId": "01a0f7da-7be0-78d3-9338-fdfdac9e2501"
+    },
+    {
+      "at": 1790864685.2053945,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 1/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864685.8788795,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 2/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864686.7944329,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 3/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864687.9436705,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 4/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864690.0529318,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "Reconnecting... 5/5",
+        "codexErrorInfo": {
+          "responseStreamDisconnected": {
+            "httpStatusCode": null
+          }
+        },
+        "additionalDetails": "workspace routing discovery unauthorized (401)",
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864693.784555,
+      "method": "error",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": null,
+      "itemId": null,
+      "error": {
+        "message": "workspace routing discovery unauthorized (401)",
+        "codexErrorInfo": "other",
+        "additionalDetails": null,
+        "misalignment": null
+      }
+    },
+    {
+      "at": 1790864693.7890706,
+      "method": "turn/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+      "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+      "itemType": null,
+      "itemId": null,
+      "status": "failed"
+    }
+  ]
+}

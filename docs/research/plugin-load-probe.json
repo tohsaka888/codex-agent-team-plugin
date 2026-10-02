@@ -1,0 +1,159 @@
+{
+  "pluginRead": {
+    "marketplaceName": "agent-team-local",
+    "mcpServers": [
+      "agent-team-probe"
+    ],
+    "apps": [],
+    "appTemplates": []
+  },
+  "mcpStatus": {
+    "data": [
+      {
+        "name": "agent-team-probe",
+        "runtimeStatus": null,
+        "pluginId": "agent-team-probe@agent-team-local",
+        "httpOrigin": null,
+        "serverInfo": {
+          "name": "agent-team-probe",
+          "title": null,
+          "version": "0.1.7",
+          "description": null,
+          "icons": [
+            {
+              "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSI+CiAgPGcgc3Ryb2tlPSIjNTQ1NDU0IiBzdHJva2Utd2lkdGg9IjEuOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgIDxyZWN0IHg9IjExIiB5PSIzIiB3aWR0aD0iMTAiIGhlaWdodD0iOCIgcng9IjIuNSIvPgogICAgPHBhdGggZD0iTTE2IDExdjZNNyAyMXYtNGgxOHY0Ii8+CiAgICA8cmVjdCB4PSIyIiB5PSIyMSIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyLjUiLz4KICAgIDxyZWN0IHg9IjIwIiB5PSIyMSIgd2lkdGg9IjEwIiBoZWlnaHQ9IjgiIHJ4PSIyLjUiLz4KICA8L2c+Cjwvc3ZnPgo=",
+              "mimeType": "image/svg+xml",
+              "sizes": [
+                "any"
+              ]
+            }
+          ],
+          "websiteUrl": null
+        },
+        "serverCapabilities": {
+          "resources": {
+            "listChanged": true
+          },
+          "tools": {
+            "listChanged": true
+          }
+        },
+        "tools": {
+          "get_agent_team_probe": {
+            "name": "get_agent_team_probe",
+            "description": "刷新验证数据，不触发执行。. This tool is part of plugin `Agent Team Probe`.",
+            "inputSchema": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "properties": {
+                "projectId": {
+                  "type": "string"
+                }
+              }
+            },
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "openWorldHint": false
+            }
+          },
+          "act_agent_team_probe": {
+            "name": "act_agent_team_probe",
+            "title": "POC 评审与执行操作",
+            "description": "仅供用户在 POC 页面操作：批准或退回测试方案、启动隔离任务、验收测试证据。不是生产审批。. This tool is part of plugin `Agent Team Probe`.",
+            "inputSchema": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "properties": {
+                "action": {
+                  "type": "string",
+                  "enum": [
+                    "approve_design",
+                    "reject_design",
+                    "start",
+                    "approve_release"
+                  ]
+                },
+                "requestId": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "action",
+                "requestId"
+              ]
+            },
+            "annotations": {
+              "readOnlyHint": false,
+              "destructiveHint": false,
+              "openWorldHint": false
+            },
+            "_meta": {
+              "ui": {
+                "visibility": [
+                  "app"
+                ]
+              }
+            }
+          },
+          "open_agent_team_probe": {
+            "name": "open_agent_team_probe",
+            "title": "打开 Agent Team 验证看板",
+            "description": "读取真实 Workspace 列表和阶段 0 执行证据，打开验证 UI。不启动任何任务。. This tool is part of plugin `Agent Team Probe`.",
+            "inputSchema": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "properties": {
+                "projectId": {
+                  "type": "string"
+                }
+              }
+            },
+            "annotations": {
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "openWorldHint": false
+            },
+            "_meta": {
+              "ui": {
+                "resourceUri": "ui://agent-team-probe/board-v017.html"
+              },
+              "openai/ui": {
+                "entrypoints": [
+                  {
+                    "type": "global"
+                  },
+                  {
+                    "type": "thread"
+                  }
+                ]
+              },
+              "ui/resourceUri": "ui://agent-team-probe/board-v017.html"
+            }
+          }
+        },
+        "toolsError": null,
+        "resources": [
+          {
+            "mimeType": "text/html;profile=mcp-app",
+            "name": "Agent Team Probe",
+            "uri": "ui://agent-team-probe/board-v017.html"
+          }
+        ],
+        "resourceTemplates": [],
+        "authStatus": "unsupported"
+      }
+    ],
+    "nextCursor": null
+  },
+  "checks": {
+    "installedMcpLoaded": true,
+    "toolsDiscovered": true,
+    "uiResourceDiscovered": true,
+    "globalMetadataPresent": true,
+    "threadMetadataPresent": true
+  },
+  "ok": true,
+  "scope": "installed plugin discovery in a separate App Server; desktop rendering not verified"
+}

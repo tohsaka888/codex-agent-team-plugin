@@ -1,0 +1,80 @@
+{
+  "scope": "read-only; no thread/start, resume or turn/start",
+  "results": [
+    {
+      "method": "initialize",
+      "ok": true,
+      "resultKeys": [
+        "userAgent",
+        "codexHome",
+        "platformFamily",
+        "platformOs"
+      ]
+    },
+    {
+      "method": "project/list",
+      "ok": true,
+      "resultKeys": [
+        "data",
+        "nextCursor"
+      ],
+      "returnedCount": 1,
+      "hasMore": true,
+      "itemKeys": [
+        "id",
+        "name",
+        "roots",
+        "metadata",
+        "position",
+        "createdAt",
+        "updatedAt",
+        "recencyAt"
+      ]
+    },
+    {
+      "method": "thread/list",
+      "ok": true,
+      "resultKeys": [
+        "data",
+        "nextCursor",
+        "backwardsCursor"
+      ],
+      "returnedCount": 1,
+      "hasMore": false,
+      "itemKeys": [
+        "id",
+        "environments",
+        "extra",
+        "sessionId",
+        "forkedFromId",
+        "parentThreadId",
+        "preview",
+        "ephemeral",
+        "section",
+        "sectionEnteredAt",
+        "projectId",
+        "historyMode",
+        "modelProvider",
+        "model",
+        "reasoningEffort",
+        "createdAt",
+        "updatedAt",
+        "recencyAt",
+        "status",
+        "path",
+        "cwd",
+        "cliVersion",
+        "originator",
+        "source",
+        "canAcceptDirectInput",
+        "threadSource",
+        "agentNickname",
+        "agentRole",
+        "gitInfo",
+        "name",
+        "daybreakEnabled",
+        "turns"
+      ]
+    }
+  ]
+}

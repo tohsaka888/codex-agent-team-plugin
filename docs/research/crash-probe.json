@@ -1,0 +1,122 @@
+{
+  "scope": "Windows 测试专用进程树强杀；不是桌面 App 强杀",
+  "checks": {
+    "testProcessTreeKilled": true,
+    "sameThreadRestored": true,
+    "priorInputRecovered": true,
+    "commandNotReplayed": true
+  },
+  "ok": true,
+  "events": [
+    {
+      "at": 1790864800.2523346,
+      "method": "turn/started",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+      "itemType": null,
+      "itemId": null
+    },
+    {
+      "at": 1790864804.9417531,
+      "method": "item/started",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+      "itemType": "userMessage",
+      "itemId": "01a0f7dc-4c4c-79f1-beef-d018e1626647"
+    },
+    {
+      "at": 1790864804.9438996,
+      "method": "item/completed",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+      "itemType": "userMessage",
+      "itemId": "01a0f7dc-4c4c-79f1-beef-d018e1626647"
+    },
+    {
+      "at": 1790864806.5136397,
+      "method": "item/started",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+      "itemType": "agentMessage",
+      "itemId": "msg_03c667ec0aebfc02016abe6da7f36087d095c279511bbc6644"
+    },
+    {
+      "at": 1790864807.039498,
+      "method": "item/completed",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+      "itemType": "agentMessage",
+      "itemId": "msg_03c667ec0aebfc02016abe6da7f36087d095c279511bbc6644"
+    },
+    {
+      "at": 1790864808.3289063,
+      "method": "item/started",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+      "itemType": "commandExecution",
+      "itemId": "exec-778cee7d-0b01-4c7f-99f4-fb013fc4fe2b",
+      "exitCode": null
+    },
+    {
+      "at": 1790864809.2951772,
+      "method": "turn/started",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+      "itemType": null,
+      "itemId": null
+    },
+    {
+      "at": 1790864813.1616747,
+      "method": "item/started",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+      "itemType": "userMessage",
+      "itemId": "01a0f7dc-6c68-75f3-adb2-3d44fb31d478"
+    },
+    {
+      "at": 1790864813.163328,
+      "method": "item/completed",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+      "itemType": "userMessage",
+      "itemId": "01a0f7dc-6c68-75f3-adb2-3d44fb31d478"
+    },
+    {
+      "at": 1790864815.4114761,
+      "method": "item/started",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+      "itemType": "agentMessage",
+      "itemId": "msg_0b8b86ede888ccd8016abe6db0d96887d0ba911b6b5231de6f"
+    },
+    {
+      "at": 1790864815.8751307,
+      "method": "item/completed",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+      "itemType": "agentMessage",
+      "itemId": "msg_0b8b86ede888ccd8016abe6db0d96887d0ba911b6b5231de6f"
+    },
+    {
+      "at": 1790864816.028843,
+      "method": "turn/completed",
+      "taskId": "crash-test",
+      "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+      "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+      "itemType": null,
+      "itemId": null,
+      "status": "completed"
+    }
+  ]
+}

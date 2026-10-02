@@ -1,0 +1,51 @@
+{
+  "scope": "direct MCP integration; not desktop UI",
+  "checks": [
+    {
+      "name": "tools/list",
+      "names": [
+        "open_agent_team_probe",
+        "get_agent_team_probe"
+      ],
+      "metadata": {
+        "ui": {
+          "resourceUri": "ui://agent-team-probe/board-v016.html"
+        },
+        "openai/ui": {
+          "entrypoints": [
+            {
+              "type": "global"
+            },
+            {
+              "type": "thread"
+            }
+          ]
+        },
+        "ui/resourceUri": "ui://agent-team-probe/board-v016.html"
+      }
+    },
+    {
+      "name": "resources/read",
+      "mimeType": "text/html;profile=mcp-app",
+      "htmlBytes": 610150
+    },
+    {
+      "name": "tools/call",
+      "isError": false,
+      "projectCount": 5,
+      "selectedProjectId": "01a0f766-1695-76e3-b2ca-1b8d94fb39dd",
+      "scope": "真实 App Server 隔离验证会话；非原生聊天接管"
+    },
+    {
+      "name": "workspace inventory",
+      "localCount": 2,
+      "remoteCount": 3,
+      "uniqueKeys": true
+    },
+    {
+      "name": "remote workspace selection excludes local probe runs",
+      "ok": true
+    }
+  ],
+  "ok": true
+}

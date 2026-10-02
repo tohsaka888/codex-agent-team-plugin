@@ -1,0 +1,20 @@
+{
+  "name": "agent-team-probe",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node server.mjs",
+    "preview": "node server.mjs --http",
+    "prototype:review": "node web/human-review.prototype-server.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.31.0",
+    "@modelcontextprotocol/ext-apps": "2.0.3",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12"
+  }
+}

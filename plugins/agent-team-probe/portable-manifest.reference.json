@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "agent-team-probe",
+  "version": "0.1.1",
+  "description": "Agent Team 阶段 0 可行性探针：内嵌入口、Workspace 数据和真实执行事件。",
+  "extensions": {
+    "com.openai": {
+      "mcpServers": "./.mcp.json",
+      "interface": {
+        "displayName": "Agent Team Probe",
+        "shortDescription": "验证内嵌团队看板和执行追踪",
+        "longDescription": "本地验证原型，不是完整产品。不改写现有聊天。",
+        "developerName": "Local workspace",
+        "category": "Productivity",
+        "capabilities": ["Read"],
+        "defaultPrompt": ["使用 Agent Team Probe 打开可行性验证看板。"]
+      }
+    }
+  }
+}

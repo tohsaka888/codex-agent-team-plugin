@@ -1,0 +1,321 @@
+{
+  "scope": "本机 App Server 自建会话；只读隔离命令；继承默认模型",
+  "checks": {
+    "bothOutputsCorrect": false,
+    "overlappingTurns": true,
+    "commandEventsForBothTasks": true,
+    "interruptAcknowledged": true,
+    "sameThreadResumedAfterServerRestart": true,
+    "historyRetainedAfterRestart": false,
+    "recoveryDoesNotReexecuteCommand": true
+  },
+  "parallelRuns": [
+    {
+      "taskId": "probe-A",
+      "title": "真实并行只读验证 A",
+      "agent": "验证执行者 A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "parentThreadId": null,
+      "status": "completed",
+      "cwd": "D:\\Workspaces\\codex-agent-team\\.runtime\\probe\\run-a",
+      "output": "FAB37CF86E6FBE324E7BA722168C738F507C53B92D977DE15C10DDCC6C5B0738",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "startedAt": 1790859920.9824953,
+      "currentActivity": "命令执行结束",
+      "endedAt": 1790859944.9642494,
+      "turnStatus": "completed"
+    },
+    {
+      "taskId": "probe-B",
+      "title": "真实并行只读验证 B",
+      "agent": "验证执行者 B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "parentThreadId": null,
+      "status": "completed",
+      "cwd": "D:\\Workspaces\\codex-agent-team\\.runtime\\probe\\run-b",
+      "output": "PROBE_0ec8fde5a9bf_B_23",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "startedAt": 1790859920.816229,
+      "currentActivity": "命令执行结束",
+      "endedAt": 1790859939.235383,
+      "turnStatus": "completed"
+    }
+  ],
+  "overlapSeconds": 18.252887725830078,
+  "ok": false,
+  "events": [
+    {
+      "at": 1790859920.816229,
+      "method": "turn/started",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": null
+    },
+    {
+      "at": 1790859920.9824953,
+      "method": "turn/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": null
+    },
+    {
+      "at": 1790859925.5084918,
+      "method": "item/started",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": "userMessage"
+    },
+    {
+      "at": 1790859925.5096047,
+      "method": "item/completed",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": "userMessage"
+    },
+    {
+      "at": 1790859925.7412171,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": "userMessage"
+    },
+    {
+      "at": 1790859925.743218,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": "userMessage"
+    },
+    {
+      "at": 1790859927.1298747,
+      "method": "item/started",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859927.690777,
+      "method": "item/completed",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859929.2988586,
+      "method": "item/started",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": "commandExecution",
+      "exitCode": null
+    },
+    {
+      "at": 1790859932.2493095,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859932.8372886,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859934.5343885,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": "commandExecution",
+      "exitCode": null
+    },
+    {
+      "at": 1790859937.4735675,
+      "method": "item/completed",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": "commandExecution",
+      "exitCode": 0
+    },
+    {
+      "at": 1790859938.9585586,
+      "method": "item/started",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859939.1802342,
+      "method": "item/completed",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859939.235383,
+      "method": "turn/completed",
+      "taskId": "probe-B",
+      "threadId": "01a0f791-c561-7ab3-9562-6256787de4fd",
+      "turnId": "01a0f791-c5a7-7122-b436-c770c03a1290",
+      "itemType": null,
+      "status": "completed"
+    },
+    {
+      "at": 1790859942.719434,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": "commandExecution",
+      "exitCode": 0
+    },
+    {
+      "at": 1790859944.175494,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859944.8136158,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859944.9642494,
+      "method": "turn/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f791-c59a-71e3-a3b5-7d845d59c5fe",
+      "itemType": null,
+      "status": "completed"
+    },
+    {
+      "at": 1790859945.4962757,
+      "method": "turn/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-2406-79d0-82a7-e4b708eb2630",
+      "itemType": null
+    },
+    {
+      "at": 1790859945.5763767,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-2406-79d0-82a7-e4b708eb2630",
+      "itemType": "userMessage"
+    },
+    {
+      "at": 1790859945.5782564,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-2406-79d0-82a7-e4b708eb2630",
+      "itemType": "userMessage"
+    },
+    {
+      "at": 1790859947.3865397,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-2406-79d0-82a7-e4b708eb2630",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859949.6229255,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-2406-79d0-82a7-e4b708eb2630",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859950.3512435,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-2406-79d0-82a7-e4b708eb2630",
+      "itemType": "commandExecution",
+      "exitCode": null
+    },
+    {
+      "at": 1790859950.3618476,
+      "method": "turn/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-2406-79d0-82a7-e4b708eb2630",
+      "itemType": null,
+      "status": "interrupted"
+    },
+    {
+      "at": 1790859950.9512036,
+      "method": "turn/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-3b5c-7251-86d8-3a3847988fe9",
+      "itemType": null
+    },
+    {
+      "at": 1790859962.3094416,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-3b5c-7251-86d8-3a3847988fe9",
+      "itemType": "userMessage"
+    },
+    {
+      "at": 1790859962.3111026,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-3b5c-7251-86d8-3a3847988fe9",
+      "itemType": "userMessage"
+    },
+    {
+      "at": 1790859964.0833082,
+      "method": "item/started",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-3b5c-7251-86d8-3a3847988fe9",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859964.8024647,
+      "method": "item/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-3b5c-7251-86d8-3a3847988fe9",
+      "itemType": "agentMessage"
+    },
+    {
+      "at": 1790859964.8613079,
+      "method": "turn/completed",
+      "taskId": "probe-A",
+      "threadId": "01a0f791-c386-7ba0-8cd3-307c54779903",
+      "turnId": "01a0f792-3b5c-7251-86d8-3a3847988fe9",
+      "itemType": null,
+      "status": "completed"
+    }
+  ]
+}

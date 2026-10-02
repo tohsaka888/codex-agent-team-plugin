@@ -1,0 +1,12 @@
+{
+  "scope": "existing app-server proxy only; no daemon start or model turns",
+  "checks": [],
+  "connectionError": "proxy exited before response",
+  "stderr": [
+    "Error: failed to connect to socket at C:\\Users\\15613\\.codex\\app-server-control\\app-server-control.sock",
+    "",
+    "Caused by:",
+    "套接字操作遇到了一个已死的网络。 (os error 10050)"
+  ],
+  "ok": false
+}

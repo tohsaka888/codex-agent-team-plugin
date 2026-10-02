@@ -1,0 +1,86 @@
+{
+  "projects": [
+    {
+      "id": "[\"local\",\"8162cf2b-ce48-45e4-930b-3389279ced87\"]",
+      "projectId": "8162cf2b-ce48-45e4-930b-3389279ced87",
+      "hostId": "local",
+      "hostName": "本机",
+      "kind": "local",
+      "name": "pptx",
+      "path": "D:\\Workspaces\\pptx",
+      "source": "宿主已保存本机项目（兼容适配）",
+      "connectionStatus": "unknown"
+    },
+    {
+      "id": "[\"local\",\"23ee269c-76a4-4b26-83da-aa53d765a482\"]",
+      "projectId": "23ee269c-76a4-4b26-83da-aa53d765a482",
+      "hostId": "local",
+      "hostName": "本机",
+      "kind": "local",
+      "name": "codex-agent-team",
+      "path": "D:\\Workspaces\\codex-agent-team",
+      "source": "宿主已保存本机项目（兼容适配）",
+      "connectionStatus": "unknown"
+    },
+    {
+      "id": "[\"remote-ssh-discovered:AI\",\"21a89be0-1527-4c18-821f-1403d269c8be\"]",
+      "projectId": "21a89be0-1527-4c18-821f-1403d269c8be",
+      "name": "Lyria",
+      "hostId": "remote-ssh-discovered:AI",
+      "hostName": "AI",
+      "kind": "remote",
+      "path": "/data/ai-workspaces/Lyria",
+      "source": "宿主已保存远程项目",
+      "connectionStatus": "unknown"
+    },
+    {
+      "id": "[\"remote-ssh-discovered:AI\",\"411b0957-e28b-48c2-afcf-6a0fa6c52f50\"]",
+      "projectId": "411b0957-e28b-48c2-afcf-6a0fa6c52f50",
+      "name": "hermes-agent",
+      "hostId": "remote-ssh-discovered:AI",
+      "hostName": "AI",
+      "kind": "remote",
+      "path": "/data/ai-workspaces/hermes-agent",
+      "source": "宿主已保存远程项目",
+      "connectionStatus": "unknown"
+    },
+    {
+      "id": "[\"remote-ssh-discovered:AI\",\"fb20b22e-3b6c-4226-bf74-5e1268170c6f\"]",
+      "projectId": "fb20b22e-3b6c-4226-bf74-5e1268170c6f",
+      "name": "litellm-langfuse-k3s-helm",
+      "hostId": "remote-ssh-discovered:AI",
+      "hostName": "AI",
+      "kind": "remote",
+      "path": "/data/ai-workspaces/litellm-langfuse-k3s-helm",
+      "source": "宿主已保存远程项目",
+      "connectionStatus": "unknown"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "01a0f766-2e3e-70a3-a9c8-1d8628222a2c",
+      "title": "查看一条真实本机原生 Task"
+    },
+    {
+      "id": "01a0fb29-5d89-7c51-9d83-f530f652ce70",
+      "title": "修复团队视图五项验收反馈"
+    },
+    {
+      "id": "01a0fc3f-b6e9-7050-8ae7-ac74a072fa41",
+      "title": "01a0fc3f-b6e9-7050-8ae7-ac74a072fa41"
+    },
+    {
+      "id": "01a0fc7d-edd1-7052-9eb7-e696222644e8",
+      "title": "优化 Agent Team 整体 UI 与彩色动态图标"
+    },
+    {
+      "id": "01a0fc8e-6c2b-7573-83ab-061b7944c3b1",
+      "title": "01a0fc8e-6c2b-7573-83ab-061b7944c3b1"
+    }
+  ],
+  "selectedProjectId": "[\"local\",\"23ee269c-76a4-4b26-83da-aa53d765a482\"]",
+  "selectedRootSessionId": "01a0fc7d-edd1-7052-9eb7-e696222644e8",
+  "snapshot": {
+    "lastEventAt": "2026-10-02T13:50:35.082Z"
+  }
+}

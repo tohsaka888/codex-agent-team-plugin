@@ -1,0 +1,21 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+*.log
+.runtime/
+
+# 本机配置与生成的调试产物
+__pycache__/
+*.py[cod]
+.codex/hooks.json
+plugins/agent-team-probe/.mcp.json
+plugins/agent-team-probe/mcp.json
+.scratch/**/baseline/
+.scratch/**/report*.mjs
+.scratch/**/legacy-payload.json
+.scratch/**/legacy-scope-dates.json
+
+.scratch/**/*-before.*

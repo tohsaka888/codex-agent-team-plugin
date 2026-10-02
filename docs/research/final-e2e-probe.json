@@ -1,0 +1,1177 @@
+{
+  "checks": {
+    "reviewToolAppOnly": true,
+    "acceptancePersistedAcrossMcpRestart": true,
+    "duplicateExecutionBlocked": true,
+    "actualExecutionBelongsToUiJob": true,
+    "localExecutionPassed": true,
+    "crashRecoveryPassed": true
+  },
+  "scope": "真实 MCP/执行服务与浏览器端到端测试；浏览器动作由测试代理执行，非真人身份认证验收",
+  "job": {
+    "id": "0f950d1d-1953-47c1-a030-a39df1929761",
+    "pid": 11344,
+    "status": "accepted",
+    "startedAt": "2026-10-01T14:26:02.873Z",
+    "acceptedAt": "2026-10-01T14:27:06.383Z",
+    "designApproved": true,
+    "acceptanceApproved": true,
+    "planVersion": 1,
+    "deliveryVersion": 1,
+    "approvals": {
+      "design": {
+        "stage": "design",
+        "version": 1,
+        "decision": "approved",
+        "reviewer": "POC_BROWSER_ACTION",
+        "requestId": "6ce02a2c-a803-4679-a663-6dd9d601df84"
+      },
+      "release": {
+        "stage": "release",
+        "version": 1,
+        "decision": "approved",
+        "reviewer": "POC_BROWSER_ACTION",
+        "requestId": "cd93521b-8564-46d4-a6a8-1f92b98a85be"
+      }
+    },
+    "reviewScope": "POC 浏览器操作；无宿主账号身份认证，不批准真实工程交付"
+  },
+  "runtime": {
+    "scope": "本机 App Server 自建会话；只读隔离命令；继承默认模型",
+    "jobId": "0f950d1d-1953-47c1-a030-a39df1929761",
+    "checks": {
+      "bothOutputsCorrect": true,
+      "overlappingTurns": true,
+      "commandEventsForBothTasks": true,
+      "overlappingCommands": true,
+      "interruptAcknowledged": true,
+      "sameThreadResumedAfterServerRestart": true,
+      "historyRetainedAfterRestart": true,
+      "recoveryDoesNotReexecuteCommand": true
+    },
+    "parallelRuns": [
+      {
+        "taskId": "probe-A",
+        "title": "真实并行只读验证 A",
+        "agent": "验证执行者 A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "parentThreadId": null,
+        "status": "completed",
+        "cwd": "D:\\Workspaces\\codex-agent-team\\.runtime\\probe\\run-a",
+        "hostId": "local",
+        "output": "PROBE_2199f5dd5744_A_17",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "startedAt": 1790864764.303016,
+        "currentActivity": "执行已结束，尚未人工验收",
+        "endedAt": 1790864783.9760973,
+        "turnStatus": "completed"
+      },
+      {
+        "taskId": "probe-B",
+        "title": "真实并行只读验证 B",
+        "agent": "验证执行者 B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "parentThreadId": null,
+        "status": "completed",
+        "cwd": "D:\\Workspaces\\codex-agent-team\\.runtime\\probe\\run-b",
+        "hostId": "local",
+        "output": "PROBE_2199f5dd5744_B_23",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "startedAt": 1790864764.0551133,
+        "currentActivity": "执行已结束，尚未人工验收",
+        "endedAt": 1790864784.155603,
+        "turnStatus": "completed"
+      }
+    ],
+    "overlapSeconds": 19.673081398010254,
+    "commandOverlapSeconds": 8.210314750671387,
+    "ok": true,
+    "events": [
+      {
+        "at": 1790864764.0551133,
+        "method": "turn/started",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": null,
+        "itemId": null
+      },
+      {
+        "at": 1790864764.303016,
+        "method": "turn/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": null,
+        "itemId": null
+      },
+      {
+        "at": 1790864768.914079,
+        "method": "item/started",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": "userMessage",
+        "itemId": "01a0f7db-bf91-7be1-bd98-75f786422b56"
+      },
+      {
+        "at": 1790864768.9153419,
+        "method": "item/completed",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": "userMessage",
+        "itemId": "01a0f7db-bf91-7be1-bd98-75f786422b56"
+      },
+      {
+        "at": 1790864769.6114025,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": "userMessage",
+        "itemId": "01a0f7db-c24a-79b3-99e2-c73bd562ee7b"
+      },
+      {
+        "at": 1790864769.613304,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": "userMessage",
+        "itemId": "01a0f7db-c24a-79b3-99e2-c73bd562ee7b"
+      },
+      {
+        "at": 1790864770.6589563,
+        "method": "item/started",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": "agentMessage",
+        "itemId": "msg_052921c8278fe0ed016abe6d84138087d08147a25beccd1b50"
+      },
+      {
+        "at": 1790864771.3706427,
+        "method": "item/completed",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": "agentMessage",
+        "itemId": "msg_052921c8278fe0ed016abe6d84138087d08147a25beccd1b50"
+      },
+      {
+        "at": 1790864771.6152363,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": "agentMessage",
+        "itemId": "msg_04814dcb8fe99ef6016abe6d850a2087d096f06325ed9971fd"
+      },
+      {
+        "at": 1790864772.266637,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": "agentMessage",
+        "itemId": "msg_04814dcb8fe99ef6016abe6d850a2087d096f06325ed9971fd"
+      },
+      {
+        "at": 1790864773.9133167,
+        "method": "item/started",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": "commandExecution",
+        "itemId": "exec-1e1a2caf-54eb-44bf-bcc7-bb537a5a451a",
+        "exitCode": null
+      },
+      {
+        "at": 1790864773.937045,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": "commandExecution",
+        "itemId": "exec-95d7a45d-7741-48a2-8eee-9cd381bde4c7",
+        "exitCode": null
+      },
+      {
+        "at": 1790864782.1473598,
+        "method": "item/completed",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": "commandExecution",
+        "itemId": "exec-1e1a2caf-54eb-44bf-bcc7-bb537a5a451a",
+        "exitCode": 0
+      },
+      {
+        "at": 1790864782.1663122,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": "commandExecution",
+        "itemId": "exec-95d7a45d-7741-48a2-8eee-9cd381bde4c7",
+        "exitCode": 0
+      },
+      {
+        "at": 1790864783.6551366,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": "agentMessage",
+        "itemId": "msg_04814dcb8fe99ef6016abe6d91106087d0aa4709e96f157dec"
+      },
+      {
+        "at": 1790864783.8945239,
+        "method": "item/started",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": "agentMessage",
+        "itemId": "msg_052921c8278fe0ed016abe6d9148ac87d0b7f77341e0d7904d"
+      },
+      {
+        "at": 1790864783.8978229,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": "agentMessage",
+        "itemId": "msg_04814dcb8fe99ef6016abe6d91106087d0aa4709e96f157dec"
+      },
+      {
+        "at": 1790864783.9760973,
+        "method": "turn/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-ac83-7a10-a384-fe31d65599ed",
+        "itemType": null,
+        "itemId": null,
+        "status": "completed"
+      },
+      {
+        "at": 1790864784.1218722,
+        "method": "item/completed",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": "agentMessage",
+        "itemId": "msg_052921c8278fe0ed016abe6d9148ac87d0b7f77341e0d7904d"
+      },
+      {
+        "at": 1790864784.155603,
+        "method": "turn/completed",
+        "taskId": "probe-B",
+        "threadId": "01a0f7db-ac50-79c0-b1f0-3bbd0049a78f",
+        "turnId": "01a0f7db-ac8d-7ac2-8ca7-fce01a426634",
+        "itemType": null,
+        "itemId": null,
+        "status": "completed"
+      },
+      {
+        "at": 1790864784.6767855,
+        "method": "turn/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-fb1d-7f50-b7ad-db0a0fd21b54",
+        "itemType": null,
+        "itemId": null
+      },
+      {
+        "at": 1790864784.790785,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-fb1d-7f50-b7ad-db0a0fd21b54",
+        "itemType": "userMessage",
+        "itemId": "01a0f7db-fd95-7f00-ab4f-0de3c65bfb7d"
+      },
+      {
+        "at": 1790864784.7926245,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-fb1d-7f50-b7ad-db0a0fd21b54",
+        "itemType": "userMessage",
+        "itemId": "01a0f7db-fd95-7f00-ab4f-0de3c65bfb7d"
+      },
+      {
+        "at": 1790864786.3027642,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-fb1d-7f50-b7ad-db0a0fd21b54",
+        "itemType": "agentMessage",
+        "itemId": "msg_04814dcb8fe99ef6016abe6d93be5887d0a92c7b8b842ff4b9"
+      },
+      {
+        "at": 1790864786.7253115,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-fb1d-7f50-b7ad-db0a0fd21b54",
+        "itemType": "agentMessage",
+        "itemId": "msg_04814dcb8fe99ef6016abe6d93be5887d0a92c7b8b842ff4b9"
+      },
+      {
+        "at": 1790864787.804409,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-fb1d-7f50-b7ad-db0a0fd21b54",
+        "itemType": "commandExecution",
+        "itemId": "exec-2d8e87fc-346d-459a-aa32-8e3ce2d8bf6f",
+        "exitCode": null
+      },
+      {
+        "at": 1790864787.8151815,
+        "method": "turn/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7db-fb1d-7f50-b7ad-db0a0fd21b54",
+        "itemType": null,
+        "itemId": null,
+        "status": "interrupted"
+      },
+      {
+        "at": 1790864788.96692,
+        "method": "turn/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7dc-0ddb-78c0-842c-8ec97bbb5f05",
+        "itemType": null,
+        "itemId": null
+      },
+      {
+        "at": 1790864793.960785,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7dc-0ddb-78c0-842c-8ec97bbb5f05",
+        "itemType": "userMessage",
+        "itemId": "01a0f7dc-2167-7770-b200-fb3277aad07b"
+      },
+      {
+        "at": 1790864793.9629877,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7dc-0ddb-78c0-842c-8ec97bbb5f05",
+        "itemType": "userMessage",
+        "itemId": "01a0f7dc-2167-7770-b200-fb3277aad07b"
+      },
+      {
+        "at": 1790864796.675562,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7dc-0ddb-78c0-842c-8ec97bbb5f05",
+        "itemType": "agentMessage",
+        "itemId": "msg_064f88f88deedb2e016abe6d9e1df087d0bf703d1aebc76951"
+      },
+      {
+        "at": 1790864796.9290729,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7dc-0ddb-78c0-842c-8ec97bbb5f05",
+        "itemType": "agentMessage",
+        "itemId": "msg_064f88f88deedb2e016abe6d9e1df087d0bf703d1aebc76951"
+      },
+      {
+        "at": 1790864796.9833052,
+        "method": "turn/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7db-aa39-78c3-8390-1dd7894d4d25",
+        "turnId": "01a0f7dc-0ddb-78c0-842c-8ec97bbb5f05",
+        "itemType": null,
+        "itemId": null,
+        "status": "completed"
+      }
+    ]
+  },
+  "crash": {
+    "scope": "Windows 测试专用进程树强杀；不是桌面 App 强杀",
+    "checks": {
+      "testProcessTreeKilled": true,
+      "sameThreadRestored": true,
+      "priorInputRecovered": true,
+      "commandNotReplayed": true
+    },
+    "ok": true,
+    "events": [
+      {
+        "at": 1790864800.2523346,
+        "method": "turn/started",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+        "itemType": null,
+        "itemId": null
+      },
+      {
+        "at": 1790864804.9417531,
+        "method": "item/started",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+        "itemType": "userMessage",
+        "itemId": "01a0f7dc-4c4c-79f1-beef-d018e1626647"
+      },
+      {
+        "at": 1790864804.9438996,
+        "method": "item/completed",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+        "itemType": "userMessage",
+        "itemId": "01a0f7dc-4c4c-79f1-beef-d018e1626647"
+      },
+      {
+        "at": 1790864806.5136397,
+        "method": "item/started",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+        "itemType": "agentMessage",
+        "itemId": "msg_03c667ec0aebfc02016abe6da7f36087d095c279511bbc6644"
+      },
+      {
+        "at": 1790864807.039498,
+        "method": "item/completed",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+        "itemType": "agentMessage",
+        "itemId": "msg_03c667ec0aebfc02016abe6da7f36087d095c279511bbc6644"
+      },
+      {
+        "at": 1790864808.3289063,
+        "method": "item/started",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-395c-7572-ae69-764afabdfbd9",
+        "itemType": "commandExecution",
+        "itemId": "exec-778cee7d-0b01-4c7f-99f4-fb013fc4fe2b",
+        "exitCode": null
+      },
+      {
+        "at": 1790864809.2951772,
+        "method": "turn/started",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+        "itemType": null,
+        "itemId": null
+      },
+      {
+        "at": 1790864813.1616747,
+        "method": "item/started",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+        "itemType": "userMessage",
+        "itemId": "01a0f7dc-6c68-75f3-adb2-3d44fb31d478"
+      },
+      {
+        "at": 1790864813.163328,
+        "method": "item/completed",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+        "itemType": "userMessage",
+        "itemId": "01a0f7dc-6c68-75f3-adb2-3d44fb31d478"
+      },
+      {
+        "at": 1790864815.4114761,
+        "method": "item/started",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+        "itemType": "agentMessage",
+        "itemId": "msg_0b8b86ede888ccd8016abe6db0d96887d0ba911b6b5231de6f"
+      },
+      {
+        "at": 1790864815.8751307,
+        "method": "item/completed",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+        "itemType": "agentMessage",
+        "itemId": "msg_0b8b86ede888ccd8016abe6db0d96887d0ba911b6b5231de6f"
+      },
+      {
+        "at": 1790864816.028843,
+        "method": "turn/completed",
+        "taskId": "crash-test",
+        "threadId": "01a0f7dc-3785-7c32-abe1-92e0faf81d2e",
+        "turnId": "01a0f7dc-5d44-7b60-b6eb-943fcc032c51",
+        "itemType": null,
+        "itemId": null,
+        "status": "completed"
+      }
+    ]
+  },
+  "remote": {
+    "scope": "SSH AI 远程 App Server 自建会话；只读隔离命令；继承默认模型",
+    "checks": {
+      "bothOutputsCorrect": false,
+      "overlappingTurns": true,
+      "commandEventsForBothTasks": false,
+      "overlappingCommands": false
+    },
+    "parallelRuns": [
+      {
+        "taskId": "probe-A",
+        "title": "真实并行只读验证 A",
+        "agent": "验证执行者 A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "parentThreadId": null,
+        "status": "failed",
+        "cwd": "/tmp/codex-agent-team-poc-PROBE_d2fa4183f54a-A",
+        "hostId": "remote-ssh-discovered:AI",
+        "output": "",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "startedAt": 1790864661.5468202,
+        "endedAt": 1790864681.3422904,
+        "turnStatus": "failed",
+        "currentActivity": "执行已结束，尚未人工验收",
+        "error": {
+          "message": "workspace routing discovery unauthorized (401)",
+          "codexErrorInfo": "other",
+          "additionalDetails": null,
+          "misalignment": null
+        }
+      },
+      {
+        "taskId": "probe-B",
+        "title": "真实并行只读验证 B",
+        "agent": "验证执行者 B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "parentThreadId": null,
+        "status": "failed",
+        "cwd": "/tmp/codex-agent-team-poc-PROBE_d2fa4183f54a-B",
+        "hostId": "remote-ssh-discovered:AI",
+        "output": "",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "startedAt": 1790864661.5302482,
+        "endedAt": 1790864683.5721002,
+        "turnStatus": "failed",
+        "currentActivity": "执行已结束，尚未人工验收",
+        "error": {
+          "message": "workspace routing discovery unauthorized (401)",
+          "codexErrorInfo": "other",
+          "additionalDetails": null,
+          "misalignment": null
+        }
+      }
+    ],
+    "overlapSeconds": 19.795470237731934,
+    "commandOverlapSeconds": 0,
+    "ok": false,
+    "error": "execution event deadline",
+    "events": [
+      {
+        "at": 1790864661.5302482,
+        "method": "turn/started",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null
+      },
+      {
+        "at": 1790864661.5468202,
+        "method": "turn/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null
+      },
+      {
+        "at": 1790864663.2814405,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": "userMessage",
+        "itemId": "01a0f7da-28cb-75d3-af43-10bb637a61dc"
+      },
+      {
+        "at": 1790864663.2941184,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": "userMessage",
+        "itemId": "01a0f7da-28cb-75d3-af43-10bb637a61dc"
+      },
+      {
+        "at": 1790864663.8845706,
+        "method": "item/started",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": "userMessage",
+        "itemId": "01a0f7da-2b24-7981-8c43-fb824837589d"
+      },
+      {
+        "at": 1790864663.885763,
+        "method": "item/completed",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": "userMessage",
+        "itemId": "01a0f7da-2b24-7981-8c43-fb824837589d"
+      },
+      {
+        "at": 1790864664.2719767,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 2/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864665.2547805,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 3/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864665.6758282,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 2/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864666.5576925,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 4/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864667.03779,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 3/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864668.26025,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 4/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864668.6481717,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 5/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864670.3019345,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 5/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864672.6340945,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 1/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864673.3871799,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 2/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864674.2869089,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 1/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864674.7066913,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 3/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864675.2736914,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 2/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864675.9637294,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 4/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864676.4381378,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 3/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864677.6273801,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 4/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864678.0412204,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 5/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864679.948822,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 5/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864681.3316643,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "workspace routing discovery unauthorized (401)",
+          "codexErrorInfo": "other",
+          "additionalDetails": null,
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864681.3422904,
+        "method": "turn/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-21c8-7220-979f-bb1273f26dc1",
+        "itemType": null,
+        "itemId": null,
+        "status": "failed"
+      },
+      {
+        "at": 1790864683.570923,
+        "method": "error",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "workspace routing discovery unauthorized (401)",
+          "codexErrorInfo": "other",
+          "additionalDetails": null,
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864683.5721002,
+        "method": "turn/completed",
+        "taskId": "probe-B",
+        "threadId": "01a0f7da-2169-78d0-a03d-e3657f4d3cd1",
+        "turnId": "01a0f7da-21eb-7d20-8fa4-4e2c75f72318",
+        "itemType": null,
+        "itemId": null,
+        "status": "failed"
+      },
+      {
+        "at": 1790864683.5914369,
+        "method": "turn/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": null,
+        "itemId": null
+      },
+      {
+        "at": 1790864684.5493464,
+        "method": "item/started",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": "userMessage",
+        "itemId": "01a0f7da-7be0-78d3-9338-fdfdac9e2501"
+      },
+      {
+        "at": 1790864684.550779,
+        "method": "item/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": "userMessage",
+        "itemId": "01a0f7da-7be0-78d3-9338-fdfdac9e2501"
+      },
+      {
+        "at": 1790864685.2053945,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 1/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864685.8788795,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 2/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864686.7944329,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 3/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864687.9436705,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 4/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864690.0529318,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "Reconnecting... 5/5",
+          "codexErrorInfo": {
+            "responseStreamDisconnected": {
+              "httpStatusCode": null
+            }
+          },
+          "additionalDetails": "workspace routing discovery unauthorized (401)",
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864693.784555,
+        "method": "error",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": null,
+        "itemId": null,
+        "error": {
+          "message": "workspace routing discovery unauthorized (401)",
+          "codexErrorInfo": "other",
+          "additionalDetails": null,
+          "misalignment": null
+        }
+      },
+      {
+        "at": 1790864693.7890706,
+        "method": "turn/completed",
+        "taskId": "probe-A",
+        "threadId": "01a0f7da-1eca-7e03-81e6-5ee5323c4dc0",
+        "turnId": "01a0f7da-781d-7523-b949-f953225d6171",
+        "itemType": null,
+        "itemId": null,
+        "status": "failed"
+      }
+    ]
+  },
+  "localE2ePassed": true,
+  "allEnvironmentsPassed": false,
+  "conclusion": "核心需求可实施；SSH 模型执行受当前远程 401 授权阻断。新宿主内审批交互无自动化访问面，仅完成普通浏览器经真实 MCP 的交互闭环。"
+}

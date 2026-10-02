@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-01",
+  "scope": "native desktop integration; no new execution engine, SSH login or model turn",
+  "hostProjects": {
+    "tool": "mcp__codex_app__list_projects",
+    "ok": true,
+    "localCount": 2,
+    "remoteCount": 3,
+    "remoteHostIds": [
+      "remote-ssh-discovered:AI"
+    ]
+  },
+  "hostThreadList": {
+    "tool": "mcp__codex_app__list_threads",
+    "ok": true,
+    "limit": 50,
+    "remoteCount": 23,
+    "unavailableHosts": []
+  },
+  "remoteNativeHistory": {
+    "tool": "mcp__codex_app__read_thread",
+    "threadId": "01a0eb09-ec0a-74e3-8d68-1ba6625a1b90",
+    "hostId": "remote-ssh-discovered:AI",
+    "lastTurnStatus": "completed",
+    "containsFileChangeItems": true,
+    "scope": "read-only existing history; not a new remote execution; not direct iframe access"
+  },
+  "mcpApps": {
+    "embeddedHandshake": true,
+    "remoteWorkspaceSelection": true,
+    "refresh": "10s timer; visible page timestamp updated; selected remote Workspace preserved",
+    "directHostToolCall": {
+      "tool": "mcp__codex_app__list_projects",
+      "isError": true,
+      "error": "MCP error -32602: Tool mcp__codex_app__list_projects not found"
+    },
+    "message": {
+      "marker": "NATIVE_UI_BRIDGE_20261001",
+      "hostAcknowledgement": {},
+      "deliveredToCurrentConversation": true,
+      "deliveryEvidence": "received as untrusted_input kind=message source=mcp_app after the report turn; marker matched",
+      "treatedAsUserApproval": false,
+      "scope": "current mounted app conversation only; no verified chosen card or remote thread continuation; no real approval"
+    }
+  },
+  "nativeEvents": {
+    "hooks": "documented SubagentStart/SubagentStop/PreToolUse/PostToolUse; not installed or observed in this host test",
+    "subagent": "actual research subagent completed in current native team; no live hook-to-board event test"
+  },
+  "outcome": {
+    "allNativeEndToEndPassed": false,
+    "pureUiDirectFullHostIntegration": "NO_GO_IN_CURRENT_VERIFIED_CONFIGURATION",
+    "thinHookBridge": "documented implementation route; not an end-to-end passed result"
+  }
+}
