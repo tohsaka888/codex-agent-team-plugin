@@ -1,6 +1,6 @@
 # 新会话交接
 
-当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。技术插件 ID 和只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
+当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。插件 ID 为 `agent-team`；只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
 ## 当前边界
 
 Codex 原生承担角色职责分派、子 Agent 派生、协作、Skills 发现与按需读取。插件只展示 Kanban、Org Chart、Workspace 和详情。
@@ -39,3 +39,5 @@ Codex 原生承担角色职责分派、子 Agent 派生、协作、Skills 发现
 
 
 2026-10-02 用户明确“确认交付”验收人工评审 feature v1（含列明验证限制），见 .scratch/human-review/decisions.md。额外会话/Workspace倒序与未命名会话可读表达独立实施，记录见 .scratch/selector-order/。已打开旧页面需重新打开，新后端活动时间字段需重连插件加载；不要求重启整个App。
+
+2026-10-02 用户要求名称迁移：项目/marketplace 为 `codex-agent-team-plugin`，插件及 MCP server 为 `agent-team`，源码位于 `plugins/agent-team`，只读工具名保持兼容。本机旧目录因运行进程占用暂留并被 Git 忽略；旧安装 ID 未自动迁移，重新安装使用新 ID。

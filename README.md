@@ -1,6 +1,6 @@
 # Codex Agent Team
 
-当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。技术插件 ID 和只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
+当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。插件 ID 为 `agent-team`；只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
 基于 Codex 原生能力的多角色工程团队；后续通过内嵌只读 UI 查看 会话 Kanban、Agent Org Chart 和任务详情。
 
 
@@ -10,7 +10,7 @@
 
 ```powershell
 npm ci
-cd plugins/agent-team-probe
+cd plugins/agent-team
 npm ci
 node build.mjs
 node server.mjs --http
@@ -18,7 +18,7 @@ node server.mjs --http
 
 本机预览：`http://127.0.0.1:43782/`。没有接入原生活动时显示空态；预览不会执行任务。
 
-Codex插件配置：将 `plugins/agent-team-probe/.mcp.json.example` 复制为同目录 `.mcp.json`，将示例绝对路径换成实际克隆目录；插件入口为该目录 `.codex-plugin/plugin.json`。将 `.codex/hooks.example.json` 复制为 `.codex/hooks.json` 并替换脚本路径，按宿主要求启用项目Hook采集。该配置是本机安装输入，不宣称自动全局安装。Node.js须支持 `node:test`、`fetch` 和 `AbortSignal.timeout`（本机验证使用Node 24）。
+Codex插件配置：将 `plugins/agent-team/.mcp.json.example` 复制为同目录 `.mcp.json`，将示例绝对路径换成实际克隆目录；插件入口为该目录 `.codex-plugin/plugin.json`。将 `.codex/hooks.example.json` 复制为 `.codex/hooks.json` 并替换脚本路径，按宿主要求启用项目Hook采集。该配置是本机安装输入，不宣称自动全局安装。Node.js须支持 `node:test`、`fetch` 和 `AbortSignal.timeout`（本机验证使用Node 24）。
 
 Git忽略依赖、构建输出、`.runtime/`、本机MCP/Hook配置、Python缓存及临时回报脚本；设计/spec/工单与验证记录保留。第三方Matt Skills的固定来源和MIT许可见 `docs/agents/skills.md` 及 `docs/agents/mattpocock-LICENSE`。历史POC仅作研究证据，当前原生只读路线见 `docs/architecture.md`。
 
@@ -64,5 +64,7 @@ Git忽略依赖、构建输出、`.runtime/`、本机MCP/Hook配置、Python缓�
 使用入口：在原生对话调用 `native-agent-team` Skill，并给出具体目标与验收。Skills 发现和任务执行沿用 Codex；角色 TOML 为可选定制，不要求插件按角色名加载。入口是原生工作流辅助，插件本身只展示，详见团队合同。
 
 首次安装文档工具执行 `npm ci`；设计校验执行 `npm run design:lint`。
-只读插件位于 `plugins/agent-team-probe/`：`node build.mjs` 构建页面；`node --test native-state.test.mjs org-view.test.mjs view-model.test.mjs sync-query.test.mjs readonly-mcp.test.mjs workspace-registry.test.mjs canvas-interaction.test.mjs` 检查当前查询/展示与几何边界。实际原生团队能力另有分派、Hook、回报及安装插件证据。`review-gate.test.mjs` 仅属历史规则，不代替正式验收。
+只读插件位于 `plugins/agent-team/`：`node build.mjs` 构建页面；`node --test native-state.test.mjs org-view.test.mjs view-model.test.mjs sync-query.test.mjs readonly-mcp.test.mjs workspace-registry.test.mjs canvas-interaction.test.mjs` 检查当前查询/展示与几何边界。实际原生团队能力另有分派、Hook、回报及安装插件证据。`review-gate.test.mjs` 仅属历史规则，不代替正式验收。
 不再启动探针的独立执行器测试来代替第一阶段交付。根 package 仅管理文档校验工具，不表示应用框架已选定。
+
+项目及 marketplace 名称为 `codex-agent-team-plugin`，插件 ID 为 `agent-team`，源码目录为 `plugins/agent-team`。旧名称安装的插件需按新 ID 重新安装；历史验收记录保留当时名称。

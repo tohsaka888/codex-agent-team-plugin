@@ -12,11 +12,11 @@ import {readArtifact} from './artifact-reader.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..');
 const directory = resolve(root,'.runtime/native-team/events');
-const uiUri = 'ui://agent-team-probe/session-readonly-v050.html';
+const uiUri = 'ui://agent-team/session-readonly-v050.html';
 const icons = [{ src:'data:image/svg+xml;base64,' + Buffer.from(await readFile(resolve(here,'assets/team.svg'))).toString('base64'),mimeType:'image/svg+xml',sizes:['any'] }];
 const state = (projectId,rootSessionId) => readState({ projectId,rootSessionId,root,directory });
 export function createMcpServer() {
-  const server = new McpServer({ name:'agent-team-probe',version:'0.5.0',icons });
+  const server = new McpServer({ name:'agent-team',version:'0.5.0',icons });
   registerAppTool(server,'open_agent_team_probe',{
     title:'打开 Agent Team 看板',description:'查看指定主会话及其子 Agent 的团队看板。启用团队由插件 Skill 和原生协调者完成，本工具只读。',
     inputSchema:{ projectId:z.string().optional(),rootSessionId:z.string().optional() },

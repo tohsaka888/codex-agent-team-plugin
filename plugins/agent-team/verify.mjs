@@ -3,7 +3,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-const client = new Client({ name: 'agent-team-probe-verifier', version: '0.1.0' });
+const client = new Client({ name: 'agent-team-verifier', version: '0.1.0' });
 const transport = new StdioClientTransport({ command: process.execPath, args: [fileURLToPath(new URL('./server.mjs', import.meta.url))], stderr: 'ignore' });
 const report = { scope: 'direct MCP integration; not desktop UI', checks: [] };
 try {

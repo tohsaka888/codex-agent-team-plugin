@@ -11,11 +11,14 @@ coverage/
 __pycache__/
 *.py[cod]
 .codex/hooks.json
-plugins/agent-team-probe/.mcp.json
-plugins/agent-team-probe/mcp.json
+plugins/agent-team/.mcp.json
+plugins/agent-team/mcp.json
 .scratch/**/baseline/
 .scratch/**/report*.mjs
 .scratch/**/legacy-payload.json
 .scratch/**/legacy-scope-dates.json
 
 .scratch/**/*-before.*
+
+# 仅本机旧连接可使用的目录别名，不作为插件源码发布
+plugins/agent-team-probe/

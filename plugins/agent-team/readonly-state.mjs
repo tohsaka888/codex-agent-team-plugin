@@ -19,7 +19,7 @@ export async function readState({ projectId, rootSessionId, root, directory, reg
   const projects = [...local, ...remoteWorkspaces(registry)];
   if (!projects.some(p=>p.hostId==='local' && samePath(p.path,root))) projects.unshift({
     id:JSON.stringify(['local',root]), projectId:null, hostId:'local', hostName:'本机', kind:'local',
-    name:'codex-agent-team', path:root, source:'当前工程路径', connectionStatus:'unknown' });
+    name:'codex-agent-team-plugin', path:root, source:'当前工程路径', connectionStatus:'unknown' });
   const selected = projectId
     ? projects.find(p=>p.id===projectId || (p.hostId==='local' && p.projectId===projectId))
     : projects.find(p=>p.hostId==='local' && samePath(p.path,root));

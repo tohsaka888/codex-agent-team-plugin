@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team-probe/observe-native.mjs\" --hook",
+            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team/observe-native.mjs\" --hook",
             "async": true,
             "timeout": 2
           }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team-probe/observe-native.mjs\" --hook",
+            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team/observe-native.mjs\" --hook",
             "async": true,
             "timeout": 2
           }
@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team-probe/observe-native.mjs\" --hook",
+            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team/observe-native.mjs\" --hook",
             "async": true,
             "timeout": 2
           }
@@ -41,7 +41,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team-probe/observe-native.mjs\" --hook",
+            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team/observe-native.mjs\" --hook",
             "async": true,
             "timeout": 2
           }
@@ -53,7 +53,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team-probe/observe-native.mjs\" --hook",
+            "command": "node \"/absolute/path/to/codex-agent-team-plugin/plugins/agent-team/observe-native.mjs\" --hook",
             "async": true,
             "timeout": 2
           }

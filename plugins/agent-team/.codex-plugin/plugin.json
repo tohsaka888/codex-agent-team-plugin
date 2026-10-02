@@ -1,5 +1,5 @@
 {
-  "name": "agent-team-probe",
+  "name": "agent-team",
   "version": "0.5.0",
   "description": "原生 Codex 会话团队协作与只读看板",
   "mcpServers": "./.mcp.json",

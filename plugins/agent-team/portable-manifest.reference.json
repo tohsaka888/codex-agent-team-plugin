@@ -1,6 +1,6 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "agent-team-probe",
+  "name": "agent-team",
   "version": "0.1.1",
   "description": "Agent Team 阶段 0 可行性探针：内嵌入口、Workspace 数据和真实执行事件。",
   "extensions": {

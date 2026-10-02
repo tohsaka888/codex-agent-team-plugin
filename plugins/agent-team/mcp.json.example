@@ -1,11 +1,11 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
-    "agent-team-probe": {
+    "agent-team": {
       "type": "stdio",
       "command": "node",
       "args": [
-        "/absolute/path/to/codex-agent-team-plugin/plugins/agent-team-probe/server.mjs"
+        "/absolute/path/to/codex-agent-team-plugin/plugins/agent-team/server.mjs"
       ]
     }
   }

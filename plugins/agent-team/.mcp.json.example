@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "agent-team": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/codex-agent-team-plugin/plugins/agent-team/server.mjs"
+      ]
+    }
+  }
+}

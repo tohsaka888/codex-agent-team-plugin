@@ -1,5 +1,5 @@
 {
-  "name": "codex-agent-team",
+  "name": "codex-agent-team-plugin",
   "version": "0.0.0",
   "private": true,
   "description": "Codex Agent Team 前期文档与设计校验工具；应用技术栈尚未确定",

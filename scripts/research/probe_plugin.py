@@ -28,19 +28,19 @@ def main():
     try:
         call(1, 'initialize', {'clientInfo': {'name': 'plugin_probe', 'version': '0.1.0'}, 'capabilities': {'experimentalApi': True}})
         p.stdin.write('{"method":"initialized"}\n'); p.stdin.flush()
-        result = call(2, 'plugin/read', {'marketplacePath': str(ROOT / '.agents/plugins/marketplace.json'), 'pluginName': 'agent-team-probe'})
+        result = call(2, 'plugin/read', {'marketplacePath': str(ROOT / '.agents/plugins/marketplace.json'), 'pluginName': 'agent-team'})
         if 'error' in result: report['pluginRead'] = result
         else:
             plugin = result.get('plugin', {})
             report['pluginRead'] = {k: plugin.get(k) for k in ['marketplaceName', 'mcpServers', 'apps', 'appTemplates']}
-        status = call(3, 'mcpServerStatus/list', {'serverName': 'agent-team-probe', 'limit': 100})
+        status = call(3, 'mcpServerStatus/list', {'serverName': 'agent-team', 'limit': 100})
         report['mcpStatus'] = status
-        server = next((s for s in status.get('data', []) if s.get('name') == 'agent-team-probe'), {})
+        server = next((s for s in status.get('data', []) if s.get('name') == 'agent-team'), {})
         opener = server.get('tools', {}).get('open_agent_team_probe', {})
         metadata = opener.get('_meta', {})
         entrypoints = metadata.get('openai/ui', {}).get('entrypoints', [])
         report['checks'] = {
-            'installedMcpLoaded': 'agent-team-probe' in report.get('pluginRead', {}).get('mcpServers', []),
+            'installedMcpLoaded': 'agent-team' in report.get('pluginRead', {}).get('mcpServers', []),
             'toolsDiscovered': bool(opener) and not server.get('toolsError'),
             'uiResourceDiscovered': any(r.get('uri') == metadata.get('ui', {}).get('resourceUri') and r.get('mimeType') == 'text/html;profile=mcp-app' for r in server.get('resources', [])),
             'globalMetadataPresent': {'type': 'global'} in entrypoints,
