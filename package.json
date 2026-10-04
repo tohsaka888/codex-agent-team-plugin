@@ -4,9 +4,17 @@
   "private": true,
   "description": "Codex Agent Team 前期文档与设计校验工具；应用技术栈尚未确定",
   "scripts": {
-    "design:lint": "designmd lint design.md"
+    "design:lint": "designmd lint design.md",
+    "lint": "eslint plugins/agent-team eslint.config.mjs",
+    "format": "prettier --write \"plugins/agent-team/**/*.{mjs,html,css}\" eslint.config.mjs .prettierrc.json",
+    "format:check": "prettier --check \"plugins/agent-team/**/*.{mjs,html,css}\" eslint.config.mjs .prettierrc.json"
   },
   "devDependencies": {
-    "@google/design.md": "0.4.0"
+    "@eslint/js": "10.0.1",
+    "@google/design.md": "0.4.0",
+    "eslint": "10.12.0",
+    "globals": "17.13.0",
+    "linkedom": "0.18.13",
+    "prettier": "3.9.9"
   }
 }

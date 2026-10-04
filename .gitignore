@@ -21,4 +21,5 @@ plugins/agent-team/mcp.json
 .scratch/**/*-before.*
 
 # 仅本机旧连接可使用的目录别名，不作为插件源码发布
-plugins/agent-team-probe/
+# 可重建的项目级团队追踪归档。
+.agent-team/

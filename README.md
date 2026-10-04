@@ -1,5 +1,70 @@
 # Codex Agent Team
 
+当前重构采用宿主原生团队 + 四个可移植 Skills（agent-team、team-sync、team-review、team-ue）+ 通用同步脚本。Codex 使用内嵌插件；其他客户端使用同一 Skills 和独立只读 Web。Hooks仅是可选生命周期观察，Agent 最终回复不要求专用 JSON。完整协议与边界见 [可移植追踪](docs/portable-tracking.md)。
+
+## Codex 安装插件
+
+需要 Node.js 24（本机验证版本）、npm 和支持插件的 Codex。先克隆源码并安装构建依赖：
+
+```powershell
+git clone https://github.com/tohsaka888/codex-agent-team-plugin.git
+cd codex-agent-team-plugin
+npm ci
+Push-Location plugins/agent-team
+npm ci
+node build.mjs
+Pop-Location
+```
+
+将 `plugins/agent-team/.mcp.json.example` 复制为同目录 `.mcp.json`，将 args 中 server.mjs 改成实际绝对路径；Node 不在宿主 PATH 时 command 也填实际绝对路径。已有 `.mcp.json` 先核对，不覆盖自定义配置。然后在仓库根目录执行：
+
+```powershell
+codex plugin marketplace add .
+codex plugin add agent-team@codex-agent-team-plugin
+codex plugin list --marketplace codex-agent-team-plugin --json
+```
+
+marketplace 入口为 `.agents/plugins/marketplace.json`，插件入口为 `plugins/agent-team/.codex-plugin/plugin.json`。安装命令已通过本机 CLI 帮助核对；安装后在新会话核对四个 Skills 和只读工具实际可见，再说“使用 Agent Team 完成……”。已有会话不保证自动重读新版指引。
+
+想安装项目级原生角色预设时，明确目标工程并执行下列命令；它保留所有已存在的 Skill/Profile，不修改全局规则：
+
+```powershell
+node plugins/agent-team/install-skills.mjs --workspace D:/Projects/MyApp --codex-profiles
+```
+
+预设包括 Coordinator、Requirements、Architect、Developer、Reviewer、UE。Codex实际发现/派生能力以当前会话工具为准，Profile不匹配时仍可使用动态职责。项目 Skills 与插件 Skills 两种安装方式择一；有重复或旧副本时核对宿主实际选中的版本。工程流程需要的 Matt Skills 单独核验，来源、许可及安装边界见 [Skills说明](docs/agents/skills.md)。
+
+## 非 Codex 使用 Skills 和独立 Web
+
+同样安装上面的 Node 依赖并构建页面，无需安装 Codex 插件。将四个 Skills 安装到目标客户端真实支持的目录；默认使用目标项目 `.agents/skills`，也可明确指定目录：
+
+```powershell
+node plugins/agent-team/install-skills.mjs --workspace D:/Projects/MyApp --target D:/Projects/MyApp/.agents/skills
+node plugins/agent-team/server.mjs --http --portable --workspace D:/Projects/MyApp
+```
+
+浏览器打开 `http://127.0.0.1:43782/`。默认数据目录为目标项目 `.agent-team`；自定义时同步命令和 Web 都传相同 `--data-dir`。需要不同端口时设置 `AGENT_TEAM_PREVIEW_PORT`。其他页面嵌入看板可显式打开 `/?transport=http`，避免将任意 iframe 当成 Codex。
+
+在客户端显式调用 agent-team；没有原生 Skills 发现机制时，明确要求读取已安装的 `agent-team/SKILL.md`。协调者派生子 Agent 时提供 `team-sync/SKILL.md` 和脚本实际路径及团队/工单/运行标识，要求读取、同步并核对。客户端仍需提供真实原生子 Agent 工具；本项目不另建执行器。隐式匹配依赖客户端，不能承诺每次自动加载。
+
+以下命令可验证完整最小接入（工单没有运行时也会展示待开始）：
+
+```powershell
+$syncScript = 'D:/Projects/MyApp/.agents/skills/team-sync/scripts/sync.mjs'
+node $syncScript team --workspace D:/Projects/MyApp --team-id my-app --title 'My App' --provider common
+node $syncScript task --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --title '实现首页' --goal '依据已确认UI实现首页'
+node $syncScript run --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --run-id developer-1 --provider common --role Developer --agent-name home_development --profile developer
+node $syncScript activity --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --run-id developer-1 --summary '正在核对首页实现'
+node $syncScript acceptance --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --item-id layout --label '首页布局符合确认图' --status pending
+node $syncScript read --workspace D:/Projects/MyApp
+```
+
+上述是使用示例，不是预置演示数据。真实团队还应提交具体逐项证据、运行结束和独立业务阶段更新；review-requirement 计算实际文件指纹并保存快照，人工 review 引用用户原话和具体版本。完整参数用 `node $syncScript --help` 查看。同步脚本自包含，只复制 team-sync 目录也能运行，不依赖插件缓存或 Codex SQLite。
+
+Claude Code、Hermes、DSH 等使用此通用路径，无需逐家 Hook 适配器；各家技能目录、隐式发现及原生派生能力需实际核验。本轮通用 CLI/HTTP/浏览器验证与各客户端真实会话验证分别记录，未运行的客户端不标为已完整实测。
+
+本轮实际验证：本机94项检查、AI21项相关检查、lint/格式/构建，以及真实归档浏览器的四列/窄屏/多执行详情/组织图/HTTP嵌入通过；预定义与动态成员已实际读取并同步Skill。其他客户端真实会话和Codex宿主完整内嵌视觉仍待核验，见 [交付与限制](.scratch/profile-native-refactor/delivery-v2.md)。已有插件副本更新后须重连MCP、重开看板，并在新会话核对新版Skills发现。
+
 当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。插件 ID 为 `agent-team`；只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
 基于 Codex 原生能力的多角色工程团队；后续通过内嵌只读 UI 查看 会话 Kanban、Agent Org Chart 和任务详情。
 
@@ -18,7 +83,7 @@ node server.mjs --http
 
 本机预览：`http://127.0.0.1:43782/`。没有接入原生活动时显示空态；预览不会执行任务。
 
-Codex插件配置：将 `plugins/agent-team/.mcp.json.example` 复制为同目录 `.mcp.json`，将示例绝对路径换成实际克隆目录；插件入口为该目录 `.codex-plugin/plugin.json`。将 `.codex/hooks.example.json` 复制为 `.codex/hooks.json` 并替换脚本路径，按宿主要求启用项目Hook采集。该配置是本机安装输入，不宣称自动全局安装。Node.js须支持 `node:test`、`fetch` 和 `AbortSignal.timeout`（本机验证使用Node 24）。
+可选 Codex Hook观察：参考 `.codex/hooks.example.json`，替换脚本路径并按宿主要求配置与信任后采集。无需 Hooks 即可通过 team-sync 使用完整业务追踪；不同客户端 Hook 协议不统一，不复制配置冒充通用。Node.js须支持 `node:test`、`fetch` 和 `AbortSignal.timeout`（本机验证使用Node 24）。
 
 Git忽略依赖、构建输出、`.runtime/`、本机MCP/Hook配置、Python缓存及临时回报脚本；设计/spec/工单与验证记录保留。第三方Matt Skills的固定来源和MIT许可见 `docs/agents/skills.md` 及 `docs/agents/mattpocock-LICENSE`。历史POC仅作研究证据，当前原生只读路线见 `docs/architecture.md`。
 
@@ -53,6 +118,8 @@ Git忽略依赖、构建输出、`.runtime/`、本机MCP/Hook配置、Python缓�
 
 ## 文档与探针检查
 
+代码规范检查：根目录运行 `npm run lint`（ESLint）、`npm run format:check`（Prettier）；`npm run format` 整理插件 JavaScript、HTML、CSS 和测试。页面骨架见 `plugins/agent-team/web/board.html`，基础样式见 `web/base.css`；卡片、空态与详情分别在 `cards-view.mjs`、`empty-view.mjs`、`detail-view.mjs`。构建输出按生产资源打包，不作为手写源码维护。根 `npm ci` 安装规范与 DOM 测试工具；全部单元检查可用 `node --test plugins/agent-team/*.test.mjs`。
+
 整体 UI 彩色精修已实现并更新本机插件：统一双色职责 SVG、彩色页签、阶段细线、角色选中描边与轻量交互动效。浅/深主题、窄屏、减少动效、模拟断线及跨同步焦点已核对，相关24项检查和独立限定审查通过；见 [交付记录](.scratch/ui-color/delivery.md)。重新打开看板加载新资源，用户最终视觉验收待确认。
 
 会话视图动效升级已按确认的三项工单实现，0.4.0 已本机安装：固定节点的可平移/缩放画布、关系高亮与短程飞线、详情展开避让，以及真实状态驱动的 Kanban 动画。团队与验收证据见 [动效交付](.scratch/ui-motion/delivery.md)。
@@ -63,7 +130,9 @@ Git忽略依赖、构建输出、`.runtime/`、本机MCP/Hook配置、Python缓�
 
 使用入口：在原生对话调用 `native-agent-team` Skill，并给出具体目标与验收。Skills 发现和任务执行沿用 Codex；角色 TOML 为可选定制，不要求插件按角色名加载。入口是原生工作流辅助，插件本身只展示，详见团队合同。
 
-首次安装文档工具执行 `npm ci`；设计校验执行 `npm run design:lint`。
+跨项目及 SSH 使用 `@Agent Team` 时，插件入口先按[环境检查指引](plugins/agent-team/skills/agent-team/references/preflight.md)核对原生工具、实际工作区、Matt Skills、项目流程上下文和适用运行/验证依赖，再按[Matt 流程指引](plugins/agent-team/skills/agent-team/references/matt-workflow.md)开展正式工作。必需项缺失或未知时先补齐，不退化成普通团队。插件携带的是检查与流程指引，未捆绑31个上游技能；看板故障单列，不阻断已就绪的原生执行。文件同步不代表既有会话已重新读取或新会话已实测。
+
+首次安装文档工具执行 `npm ci`；设计校验执行 `npm run design:lint`。Agent Team 的 UI 任务预检包含官方 `@google/design.md` CLI 的项目级安装、版本与可运行检查；本仓库固定为 `0.4.0`，其他工作区/SSH 环境须独立核验并按[补齐指引](plugins/agent-team/skills/agent-team/references/preflight.md#补齐-designmd-cli)安装，人工结构核对不能替代 CLI 校验通过。
 只读插件位于 `plugins/agent-team/`：`node build.mjs` 构建页面；`node --test native-state.test.mjs org-view.test.mjs view-model.test.mjs sync-query.test.mjs readonly-mcp.test.mjs workspace-registry.test.mjs canvas-interaction.test.mjs` 检查当前查询/展示与几何边界。实际原生团队能力另有分派、Hook、回报及安装插件证据。`review-gate.test.mjs` 仅属历史规则，不代替正式验收。
 不再启动探针的独立执行器测试来代替第一阶段交付。根 package 仅管理文档校验工具，不表示应用框架已选定。
 

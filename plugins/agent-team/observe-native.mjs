@@ -1,7 +1,10 @@
 import { ingest } from './native-state.mjs';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
-const directory = resolve(dirname(fileURLToPath(import.meta.url)), '../../.runtime/native-team/events');
+const directory = resolve(
+  dirname(fileURLToPath(import.meta.url)),
+  '../../.runtime/native-team/events',
+);
 let input = '';
 const hookMode = process.argv.includes('--hook');
 try {
@@ -13,6 +16,8 @@ try {
   await ingest(directory, value);
   // Hook 始终无输出，不注入上下文、不改变审批或执行。
 } catch (error) {
-  if (!hookMode) { console.error(error.message); process.exitCode = 1; }
+  if (!hookMode) {
+    console.error(error.message);
+    process.exitCode = 1;
+  }
 }
-

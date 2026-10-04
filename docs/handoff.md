@@ -1,5 +1,35 @@
 # 新会话交接
 
+2026-10-04 按用户要求补充 design.md CLI 环境预检：UI 任务核验并按项目固定版本补齐官方 `@google/design.md`，更新入口及 UE 工作流，人工结构核对仅作补充。本机 `0.4.0` 可运行，design:lint 为 0 错误/0 警告；本机插件及 AI 安装源/缓存的 4 份指引均已备份同步，SHA256 与源码一致。远程业务项目 CLI 安装未执行，已有会话需重读指引或在新会话使用。替换 Validation 文案与限制见 [交付记录](../.scratch/agent-team-preflight/designmd-delivery.md)。
+
+2026-10-04 Lyria复核阶段一致性追加修复：同实例续派允许历史+唯一活动run，未补报依赖不再遮蔽已开始复核，多实例状态聚合覆盖运行/失败/修复，人工scope自由范围正确映射。Windows104项、AI34项及真实归档/新MCP核对通过；redesign-07两回合实测已结束，两视图一致，01至06无run标执行未同步，2项V1确认恢复。两端缓存已备份同步，需重连并重开；未替业务补造完成。见 [第三轮交付](../.scratch/remote-task-merge/delivery-v3.md)。
+
+2026-10-04 追加修复详情来源遗漏、Org重复根及复合Coordinator图标：原始目标事件署名/时间/ID投影到详情，Codex `/root` run 通过已观察team根会话关联，复合职责按明确主职责使用图标并保留全文。真实Lyria组织图3节点/1根2子，三个截图工单字段齐全；Windows100项、AI32项、lint/格式/构建和真实MCP打开/刷新通过，两端缓存备份同步。需重连MCP并重开页面，宿主内嵌视觉未完整复验。见 [追加交付](../.scratch/remote-task-merge/delivery-v2.md)。
+
+2026-10-04 AI 看板重复卡、状态差异及自动打开报错已修复：同主会话内唯一宿主完整路径补充 run 展示关联，较新原生执行状态进入业务卡而不自动改业务依赖/验收，打开时按已核对主会话恢复桌面与服务器不同的项目 ID。Windows 全量97项及新增4项复测、AI18项及补充4项、lint/格式/构建、真实AI安装MCP两种打开与后续刷新通过；两端源码/缓存已备份同步，需重连MCP并重开页面。旧截图五卡当前未直接复现，宿主视觉待核对。见 [.scratch/remote-task-merge/delivery.md](../.scratch/remote-task-merge/delivery.md)。
+
+2026-10-03 可移植追踪重构v2已按用户明确确认的四工单实施：四Skills+自包含CLI/事件核心、Task多run、无实例计划、业务阶段、checklist/版本指纹、MCP/独立HTTP、六可选Profile及安装器，README已补Codex插件与非Codex使用。真实预定义/动态原生成员已读取并同步，独立Reviewer复查无剩余P1/P2。本机94项/AI21项、lint/格式/构建及真实浏览器四列/窄屏/详情/组织图/HTTP嵌入通过；源及两端已有缓存同步有备份。需重连MCP并新会话核对Skills，其他客户端真实会话及人工交付验收未验证。见 [.scratch/profile-native-refactor/delivery-v2.md](../.scratch/profile-native-refactor/delivery-v2.md)。
+
+2026-10-03 Kanban纵向布局回归已修复：原HTML重构提前关闭board容器，现使用完整renderKanbanBoard模板并补完整DOM测试。本机6项检查/lint/格式/构建、Chrome四列/640px双列及列内滚动通过，两端资源同步并备份；AI三项模型检查通过，远程DOM缺linkedom未运行成功，宿主完整交互未复验。见 [.scratch/kanban-layout-fix/delivery.md](../.scratch/kanban-layout-fix/delivery.md)，重新打开看板加载。
+
+2026-10-03 UE 方案 v1 已获用户“方案我认可”确认，团队技能、可选角色、图评审/归档/design.md 输入合同及 UE 看板展示已接入并同步两端。Lyria 当前规格/工单确认存在，但七次派生未提供 agent_type，不能称角色分派完整。14项本机/9项AI相关检查、lint/格式/构建通过；真实生图及确认后开发读取未试运行，技能验证器缺 PyYAML 未通过。见 [.scratch/ue-agent/delivery.md](../.scratch/ue-agent/delivery.md) 和对应工单；不补造 Lyria 历史职责，不擅自给其会话发消息。
+
+2026-10-03 明确分派目标回报：新增技能 report-goal.mjs 与 task-goal-report 展示元数据，成功分派/目标变更后协调者用真实父子 UUID 回报并查询核对。目标叠加到原生卡片，保持执行状态与业务工单目标独立。本机23项、AI21项相关检查通过，两端插件已同步。历史密文目标无可靠工单关联时保持不可用；已有协调者须重读新版 Skill，MCP须重连并重开看板。真实新分派回报闭环及宿主视觉尚未验收，见 [.scratch/goal-reporting/delivery.md](../.scratch/goal-reporting/delivery.md)。
+
+2026-10-03 HTML 源码重构：页面骨架/基础样式分离，卡片、空态、详情和状态文案独立模块，相关页面拼接改成多行模板；Prettier 覆盖 HTML/CSS，ESLint 禁止 HTML 字面量加号拼接。本机67项含DOM结构/转义测试、远程32项相关检查、lint/格式/构建通过，页面及源码已同步本机/AI插件。重新打开页面加载，完整宿主视觉未复验。见 [.scratch/html-refactor/delivery.md](../.scratch/html-refactor/delivery.md)。
+
+2026-10-03 代码规范与旧目录收尾：新增 ESLint/Prettier 配置及根 npm 命令，插件44个 mjs 格式化，两个未用变量/import修正，lint/format:check/65项测试/构建通过。旧 probe 配置停用，目录已可恢复归档至 .scratch/plugin-cleanup，plugins 仅保留 agent-team；旧进程停止/删除组合被策略拒绝，未主动终止旧MCP。见 [.scratch/plugin-cleanup/delivery.md](../.scratch/plugin-cleanup/delivery.md)。
+
+2026-10-03 默认 session 空选修正：打开看板缺 rootSessionId 时，优先核对调用环境会话；否则自动选择当前工作区最近活动的进行中主会话，再降级最近会话，启发式显示“自动”。页面接受省略会话的工具输入所对应结果绑定，手动选择及后续轮询保持固定 ID。两端15项检查和真实 AI MCP 自动选中 Develop English learning app 通过；资源已同步，需重连插件及重开看板，视觉待核对。见 [.scratch/session-default-fix/delivery.md](../.scratch/session-default-fix/delivery.md)。
+
+2026-10-03 原生动态 Agent 兼容：Kanban 缺职责时显示真实派生名称/宿主昵称，详情显示负责 Agent；新增成功分派目标及本实例公开活动摘要、时间和来源，支持 UUID 分派关联及待开始状态。两端43项检查、最后6项相关复测及真实 AI MCP 的 api_implementation/mobile_analysis 字段核对通过。源码与两端缓存已同步；须重连 MCP 并重新打开看板，宿主视觉待核对。范围与限制见 [.scratch/dynamic-agent-display/delivery.md](../.scratch/dynamic-agent-display/delivery.md)。
+
+2026-10-03 Workspace 归属误判修复：后端接受原始本机项目 ID，但前端只接受规范 ID，导致首次加载报“Workspace 响应归属不匹配”。已按响应清单的唯一 local 映射兼容别名，保留跨项目/主机/会话隔离及迟到响应保护。本机与 AI 各16项相关检查通过，页面构建与两端插件资源同步完成；重新打开看板即可加载本次页面修复，宿主视觉待核对。见 [.scratch/workspace-scope-fix/delivery.md](../.scratch/workspace-scope-fix/delivery.md)。
+
+2026-10-03 远程组织图未知/看板空修正：增加所选会话范围的原生分派及本实例执行回合投影，忽略 fork 父回合，业务回报优先。缺职责显示实际原生类型/分派名称，原始职责仍保留未知；不按名字猜角色。本机/AI源与缓存已同步，实际 AI MCP 返回 Lyria 7实例/6执行卡片；44项本机、29项远程相关检查通过。已有 MCP 须重连并重新打开页面，宿主新页面视觉仍待验收。具体依据与限制见 [.scratch/remote-kanban-fix/delivery.md](../.scratch/remote-kanban-fix/delivery.md)。
+
+2026-10-03 用户反馈 AI 远程 Workspace/session 及空下拉异常已修复并同步本机/AI 插件。增加只读 SQLite/名称索引适配，实际 MCP 读到 Lyria 等29个工作区及真实会话/子 Agent；远程 HTTP 页面组织图已核对。已有 MCP 进程须重连插件，页面须重新打开；未重启 Codex 服务。范围、检查、独立审查和待用户宿主验收见 [.scratch/remote-workspace-fix/delivery.md](../.scratch/remote-workspace-fix/delivery.md)。空项目、其他主机与未回报任务语义保持明确限制。
+
 当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。插件 ID 为 `agent-team`；只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
 ## 当前边界
 
@@ -41,3 +71,22 @@ Codex 原生承担角色职责分派、子 Agent 派生、协作、Skills 发现
 2026-10-02 用户明确“确认交付”验收人工评审 feature v1（含列明验证限制），见 .scratch/human-review/decisions.md。额外会话/Workspace倒序与未命名会话可读表达独立实施，记录见 .scratch/selector-order/。已打开旧页面需重新打开，新后端活动时间字段需重连插件加载；不要求重启整个App。
 
 2026-10-02 用户要求名称迁移：项目/marketplace 为 `codex-agent-team-plugin`，插件及 MCP server 为 `agent-team`，源码位于 `plugins/agent-team`，只读工具名保持兼容。本机旧目录因运行进程占用暂留并被 Git 忽略；旧安装 ID 未自动迁移，重新安装使用新 ID。
+
+## 2026-10-04 职责与全量 DAG
+已修正工作职责 UE/Developer 与 Coordinator 组织职责混用，以及 Org 卡片文字裁切；本机 104 项检查及 AI 相关 15 项通过。详情见 .scratch/org-dag/delivery-v1.md。全量任务依赖 DAG 新方向的 Spec、可查看原型及实施批次 v1 已准备，等待具体版本人工确认；正式 DAG 尚未实施。
+
+## 2026-10-04 全量 DAG 正式交付
+用户认可 v1 并要求保留原版 UI、修正箭头和居中；决定见 .scratch/org-dag/decision-v1.md。正式画布已实现全量 DAG 与全部原生身份切换，动态高度无裁切，已同步本机和 AI。完整 108 项、AI 相关 24 项通过；详情及备份见 .scratch/org-dag/delivery-v2.md。重新打开旧看板加载新前端，远程宿主实时 UI 未在此交付中直接验收。
+
+## 2026-10-04 Kanban 关联执行遗漏修复
+fidelity-v1 实际为一个业务工单、五条执行；卡片及角色筛选未体现 runs。已补全部执行明细、完成数和参与角色搜索筛选，保持单业务卡。完整110项及AI相关9项通过；安装及限制见 .scratch/org-dag/kanban-runs-delivery.md。
+
+## 2026-10-04 父工单与执行卡拆分
+用户明确确认父卡+独立执行卡；已按各自状态分列、标明归属与独立详情，同run去重，列数区分工单/执行。完整111项、AI相关6项通过并安装；详见 .scratch/org-dag/execution-cards-delivery.md。
+
+2026-10-04 执行卡归属简化为 Parent 图标+父工单号，独立名称/父标题替代角色大标题，角色保留右上角；已验证同步，依据和限制见 .scratch/org-dag/execution-cards-delivery.md。
+
+## 2026-10-04 Org Chart 工单/执行节点拆分
+用户明确确认父工单与各项执行各自独立成节点并显示归属。DAG 已与 Kanban 共用投影，执行独立名称/状态和 Parent 图标，虚线归属、实线业务依赖、每层居中；本机和AI相关14项通过并安装。记录及验证限制见 .scratch/org-dag/org-execution-delivery.md。
+
+2026-10-04 用户要求去掉箭头：已移除 Org Chart 两种关系模式的 SVG marker 及缩放处理，连线接到节点边缘；保留实线依赖、虚线归属与飞线。构建成功，真实归档预览 DOM 验证0个箭头标记、5条归属线。已同步本机缓存及AI源码/缓存；截图 .scratch/org-dag/org-no-arrows.png。旧看板重新打开生效。

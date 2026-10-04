@@ -1,28 +1,1018 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Agent Team</title>
-<style>
-:root{color-scheme:light dark;--bg:var(--color-background-primary,light-dark(#fff,#212121));--subtle:var(--color-background-secondary,light-dark(#f5f5f5,#303030));--text:var(--color-text-primary,light-dark(#202020,#ececec));--muted:var(--color-text-secondary,light-dark(#626262,#b4b4b4));--border:var(--color-border-primary,light-dark(#d8d8d8,#555));font:14px/1.6 var(--font-sans,"Segoe UI","Microsoft YaHei",sans-serif);color:var(--text);background:var(--bg)}
-*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden}html{background:light-dark(#fff,#212121)}body{background:var(--bg);height:100dvh;display:flex;flex-direction:column;padding:20px 24px 12px}h1{font-size:20px;margin:0 0 12px}.embedded h1{display:none}h2{font-size:16px;margin:0 0 12px}h3{font-size:14px;margin:0}button{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:7px 12px;cursor:pointer}button:focus{outline:none}button:focus-visible{box-shadow:inset 0 0 0 2px var(--text)}button:disabled{opacity:.5;cursor:default}[hidden]{display:none!important}.muted{color:var(--muted);font-size:12px}.toolbar,header{display:flex;align-items:center;gap:12px}header{justify-content:space-between;flex-shrink:0}.workspace{position:relative;min-width:0}.workspace-label{font-size:12px;color:var(--muted);margin-right:8px}.picker-trigger{display:inline-flex;align-items:center;gap:24px;max-width:min(420px,65vw);text-align:left}.picker-trigger span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.chevron{width:14px;height:14px;flex:none}#workspace-menu{position:absolute;z-index:30;top:calc(100% + 6px);left:0;width:min(440px,calc(100vw - 48px));max-height:280px;overflow:auto;overscroll-behavior:contain;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:6px;box-shadow:0 8px 24px #00000012}.option{width:100%;border:0;display:grid;gap:2px;text-align:left;padding:9px 10px;background:transparent}.option:hover,.option[aria-selected=true]{background:var(--subtle)}.option small{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.status-row{display:flex;align-items:center;gap:8px}#bridge{margin:10px 0 0;font-size:12px;color:var(--muted)}#bridge.error{color:light-dark(#92400e,#efc27a)}nav{display:flex;gap:24px;border-bottom:1px solid var(--border);margin:12px 0 16px;flex-shrink:0}nav button{border:0;background:none;border-radius:0;padding:10px 0}nav button[aria-selected=true]{border-bottom:2px solid currentColor;font-weight:600}
-#layout{flex:1;display:flex;gap:24px;min-height:0;position:relative;overflow:hidden}main{flex:1;min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain;padding:0 4px 16px 0;scrollbar-gutter:stable}.board{display:grid;grid-template-columns:repeat(4,minmax(170px,1fr));gap:12px;min-width:720px}.column{background:var(--subtle);padding:12px;border-radius:10px;min-height:220px}.column h2{font-size:13px;white-space:nowrap;margin-bottom:14px}.column-empty{font-size:12px;color:var(--muted);padding:16px 0;line-height:1.8}.card{text-align:left;width:100%;border-radius:10px;padding:14px;margin-bottom:10px;display:grid;gap:8px;line-height:1.6;overflow-wrap:anywhere}.card strong{font-weight:600;font-size:14px}.card[aria-pressed=true]{border-color:var(--text)}.chip{display:inline-block;border-radius:999px;background:var(--subtle);font-size:12px;padding:3px 8px;width:fit-content}.chip.success{background:light-dark(#ecfdf3,#133021);color:light-dark(#166534,#a2e4b6)}.chip.warning{background:light-dark(#fffbeb,#3c301b);color:light-dark(#92400e,#efc27a)}
-#detail{width:360px;flex:none;min-height:0;height:100%;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;border-left:1px solid var(--border);padding:0 12px 20px 24px}.detail-head{position:sticky;top:0;background:var(--bg);display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding-bottom:12px;z-index:2}.detail-head h2{line-height:1.5;overflow-wrap:anywhere}.detail-head button{border:0;padding:2px 7px;background:none}dl{margin:0}dt{font-weight:600;margin-top:20px;border-top:1px solid var(--border);padding-top:16px}dd{margin:8px 0 0;line-height:1.6;overflow-wrap:anywhere;white-space:pre-wrap}details{margin-top:20px}summary{cursor:pointer;color:var(--muted);font-size:12px}footer{flex-shrink:0;margin-top:12px;border-top:1px solid var(--border);padding-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;color:var(--muted)}
-.attention{margin-bottom:20px;padding:14px;border:1px solid var(--border);border-radius:10px}.attention h2{font-size:13px}.attention-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,320px));gap:12px}.attention .card{margin:0}.stage-guide{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}.stage-guide div{padding:14px 16px;border:1px solid var(--border);border-radius:10px;font-size:13px;color:var(--muted)}.empty-wrap{min-height:100%;display:flex;flex-direction:column}.empty-state{margin:auto;max-width:560px;width:100%;text-align:center;padding:32px 24px;border:1px solid var(--border);border-radius:14px;background:var(--bg)}.empty-icon{width:44px;height:44px;margin:0 auto 20px;color:var(--muted)}.empty-state h2{font-size:18px}.empty-state p{margin:10px auto 20px;max-width:430px;color:var(--muted)}.empty-state .path{font-size:12px;overflow-wrap:anywhere;margin-top:16px}.empty-state button{margin:4px}.empty-note{font-size:12px;color:var(--muted);text-align:center;margin:18px 0}.tree-wrap{padding:20px 4px;min-width:fit-content}.tree,.tree ul{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:20px}.tree li{text-align:center;position:relative;padding-top:24px}.tree>li{padding-top:0}.tree ul{padding-top:20px;position:relative}.tree ul:before{content:"";position:absolute;height:20px;border-left:1px solid var(--border);left:50%;top:0}.tree ul>li:before{content:"";position:absolute;top:0;height:24px;left:-10px;right:-10px;border-top:1px solid var(--border)}.tree ul>li:first-child:before{left:50%}.tree ul>li:last-child:before{right:50%}.tree ul>li:after{content:"";position:absolute;height:24px;top:0;left:50%;border-left:1px solid var(--border)}.tree ul>li:only-child:before{border-top:0}.agent-card{width:230px;display:inline-grid;text-align:left;gap:8px;padding:16px;border-radius:10px}.agent-card[aria-pressed=true]{border-color:var(--text)}.agent-card .task{font-size:13px;border-top:1px solid var(--border);padding-top:8px}.node-label{display:flex;justify-content:space-between;gap:8px}.org-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px}.unlinked{margin-top:24px;border-top:1px solid var(--border);padding-top:16px}.unlinked-grid{display:flex;gap:12px;flex-wrap:wrap}
-@media(max-width:950px){body{padding:16px}#layout{gap:0}#detail{position:absolute;inset:0 0 0 auto;width:min(420px,100%);background:var(--bg);padding:12px 16px;border:1px solid var(--border);border-radius:10px;box-shadow:-8px 0 24px #0000000a;z-index:10}.stage-guide{gap:6px}.stage-guide div{padding:10px 8px;font-size:12px}.empty-state{padding:24px 16px}.workspace-label{display:none}#coverage{display:none}}
-.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 14px;flex-shrink:0}.filters input{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:7px 10px;max-width:100%;width:230px}.filters input:focus-visible{outline:1px solid var(--text);outline-offset:1px}#roles{display:flex;gap:6px;flex-wrap:wrap}#roles button{padding:5px 9px;font-size:12px}#roles [aria-pressed=true]{background:var(--subtle);border-color:var(--text)}.evidence{margin-top:24px;border-top:1px solid var(--border);padding-top:16px}.evidence h3{margin:12px 0 8px}.evidence p{font-size:13px;overflow-wrap:anywhere}.reference{font-size:12px;overflow-wrap:anywhere}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.canvas-content{position:relative;overflow:hidden;padding:0;border:1px solid var(--border);border-radius:12px;background:var(--subtle);scrollbar-gutter:auto}.org-canvas{position:absolute;inset:0;overflow:hidden;touch-action:none;cursor:grab;background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:20px 20px;outline:none}.org-canvas:focus-visible{box-shadow:inset 0 0 0 2px var(--text)}.org-canvas.dragging{cursor:grabbing}.org-world{position:absolute;inset:0;transform-origin:0 0}.org-edges{position:absolute;overflow:visible;pointer-events:none}.org-node{position:absolute;transition:opacity 180ms;contain:layout style}.org-node .agent-card{width:100%;height:100%;background:var(--bg);padding:16px;border-radius:12px;gap:7px;box-shadow:0 2px 6px #00000004;overflow:hidden;align-content:start}.org-node .agent-card>.muted{white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.org-node .task,.org-node .agent-card>.muted:last-child{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5}.org-node .node-label{align-items:center}.org-node .chip{font-size:11px;white-space:nowrap}.org-node.selected .agent-card{border:2px solid var(--text);box-shadow:0 0 0 4px var(--border)}.org-node.related .agent-card{border-color:var(--text)}.org-node.dimmed{opacity:.62}.org-edge{fill:none;stroke:var(--muted);stroke-width:1.3;opacity:.3}.org-edge.focused{stroke:var(--text);stroke-width:2;opacity:.8}.org-flight{fill:none;stroke:var(--text);stroke-width:3;stroke-linecap:round;stroke-dasharray:24 220;opacity:0}.org-flight.playing{opacity:.8;animation:org-flight 2s linear 3}.org-tools{position:absolute;left:16px;bottom:16px;display:flex;gap:4px;align-items:center;background:var(--bg);border:1px solid var(--border);padding:4px;border-radius:10px;z-index:4;box-shadow:0 3px 12px #00000006;max-width:calc(100% - 32px);flex-wrap:wrap}.org-tools button{border:0;font-size:12px;padding:5px 8px}.org-tools output{font-size:12px;width:44px;text-align:center}.org-legend{position:absolute;left:16px;top:12px;font-size:11px;color:var(--muted);pointer-events:none}.unknown-relation{position:absolute;top:-22px;left:0;font-size:11px;color:var(--muted)}#layout.org-layout #detail{position:absolute;inset:0 0 0 auto;width:360px;height:100%;background:var(--bg);padding:16px 20px;border:1px solid var(--border);border-radius:12px;z-index:5;box-shadow:-5px 0 14px #00000005}#layout.detail-bottom #detail{top:auto;left:0;width:100%;height:45%;border-left:0;border-top:1px solid var(--border)}#layout.detail-bottom .org-tools{bottom:calc(45% + 12px)}#layout.detail-standalone #detail{inset:0;width:100%;height:100%}#layout.detail-standalone .org-canvas,#layout.detail-standalone .org-tools{visibility:hidden}.motion-ghost{z-index:40;pointer-events:none;transform-origin:0 0}.status-changed{animation:status-arrival 650ms ease-out}button.card:hover{border-color:var(--text);transform:translateY(-1px)}button{transition:background 120ms,border-color 120ms,transform 120ms}button:active{transform:scale(.99)}@keyframes org-flight{to{stroke-dashoffset:-244}}@keyframes status-arrival{0%{border-color:var(--text);box-shadow:0 0 0 3px var(--border)}100%{border-color:var(--border);box-shadow:none}}.reduce-motion *{transition:none!important;animation:none!important}@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}@media(max-width:650px){.org-tools{gap:2px;left:8px;bottom:8px;max-width:calc(100% - 16px)}.org-tools button{font-size:11px;padding:5px 6px}.org-legend{font-size:10px;left:12px}}
-/* 内嵌资源也由本页负责内边距，避免宿主重置挤贴页签。 */
-.embedded{padding:24px 24px 16px!important}header{padding-block:8px;min-height:52px;gap:16px}.session-picker{margin-top:12px}#layout{margin-top:4px}.filter-caption{font-size:12px;color:var(--muted);white-space:nowrap}.role-runs ul{list-style:none;padding:0;margin:12px 0}.role-runs li{display:grid;gap:5px;padding:12px 0;border-bottom:1px solid var(--border)}.role-runs li strong{font-size:13px}.task-history{margin-top:16px}.task-history summary{font-weight:600;color:var(--text)}.run-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.org-edge{vector-effect:non-scaling-stroke;stroke-width:1.2;opacity:.35}.org-edge.focused{stroke-width:1.6;opacity:.65}.org-flight.playing{stroke-width:2;stroke-dasharray:8 92;vector-effect:non-scaling-stroke;opacity:0;animation:org-comet 2.4s linear 3 forwards}.org-particle{fill:var(--text);pointer-events:none}.org-node.dimmed{opacity:.72}@keyframes org-comet{0%{stroke-dashoffset:0;opacity:0}12%,88%{opacity:.8}100%{stroke-dashoffset:-100;opacity:0}}@media(max-width:650px){.embedded{padding:20px 16px 12px!important}header{gap:8px}.toolbar{gap:8px}.picker-trigger{max-width:48vw}.filter-caption{width:100%}}
-</style><!-- POLISH --></head><body>
-<h1><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>Agent Team</h1>
-<header><div class="workspace" id="picker"><span class="workspace-label" id="workspace-label">Workspace</span><button id="workspace" class="picker-trigger" role="combobox" aria-label="选择 Workspace" aria-haspopup="listbox" aria-expanded="false" aria-controls="workspace-menu"><span id="workspace-value">加载中</span><svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="m4 6 4 4 4-4"/></svg></button><div id="workspace-menu" role="listbox" aria-label="Workspace 项目" hidden></div></div><details class="session-picker"><summary id="session-label">选择主会话</summary><div id="session-options" class="filters"></div></details><div class="toolbar"><span id="coverage" class="muted">正在加载</span></div></header>
-<p id="navigation-notice" class="navigation-error" role="status" hidden></p>
-<div id="bridge" role="status">正在连接只读数据…</div>
-<nav role="tablist" aria-label="团队视图"><button id="kanban" role="tab" aria-selected="true" aria-controls="content"><svg class="view-icon kanban-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="2"/><rect x="10" y="4" width="5" height="11" rx="2"/><rect x="17" y="4" width="4" height="14" rx="2"/></svg>Kanban</button><button id="org" role="tab" aria-selected="false" aria-controls="content"><svg class="view-icon org-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 8v6M5 17v-3h14v3"/><rect x="8" y="2" width="8" height="6" rx="2"/><rect x="2" y="17" width="6" height="5" rx="1.5"/><rect x="16" y="17" width="6" height="5" rx="1.5"/></svg>Agent Org Chart</button></nav>
-<section id="review-banner" hidden aria-label="当前会话待人工评审"></section>
-<section id="filters" class="filters" hidden aria-label="任务筛选"><input id="search" type="search" aria-label="搜索任务标题或编号" placeholder="搜索任务标题或编号"><span class="filter-caption">职责角色</span><div id="roles" role="group" aria-label="按职责角色筛选"></div><button id="clear-filters">清除筛选</button></section>
-<div id="layout"><main id="content" role="tabpanel" aria-label="任务看板"></main><aside id="detail" hidden aria-label="任务详情"></aside></div>
-<p id="motion-status" role="status" class="sr-only"></p>
-<footer id="sync">尚无成功同步数据</footer>
-<dialog id="artifact-dialog" aria-labelledby="artifact-title"><div class="artifact-head"><h2 id="artifact-title">产物预览</h2><button id="artifact-close" aria-label="关闭产物预览">×</button></div><p id="artifact-path" class="reference"></p><p id="artifact-notice" class="muted"></p><pre id="artifact-content" tabindex="0"></pre></dialog>
-<!-- BUNDLE -->
-</body></html>
-
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Agent Team</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: var(--color-background-primary, light-dark(#fff, #212121));
+        --subtle: var(--color-background-secondary, light-dark(#f5f5f5, #303030));
+        --text: var(--color-text-primary, light-dark(#202020, #ececec));
+        --muted: var(--color-text-secondary, light-dark(#626262, #b4b4b4));
+        --border: var(--color-border-primary, light-dark(#d8d8d8, #555));
+        font: 14px/1.6 var(--font-sans, 'Segoe UI', 'Microsoft YaHei', sans-serif);
+        color: var(--text);
+        background: var(--bg);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+      html {
+        background: light-dark(#fff, #212121);
+      }
+      body {
+        background: var(--bg);
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 24px 12px;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0 0 12px;
+      }
+      .embedded h1 {
+        display: none;
+      }
+      h2 {
+        font-size: 16px;
+        margin: 0 0 12px;
+      }
+      h3 {
+        font-size: 14px;
+        margin: 0;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 7px 12px;
+        cursor: pointer;
+      }
+      button:focus {
+        outline: none;
+      }
+      button:focus-visible {
+        box-shadow: inset 0 0 0 2px var(--text);
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .toolbar,
+      header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      header {
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+      .workspace {
+        position: relative;
+        min-width: 0;
+      }
+      .workspace-label {
+        font-size: 12px;
+        color: var(--muted);
+        margin-right: 8px;
+      }
+      .picker-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 24px;
+        max-width: min(420px, 65vw);
+        text-align: left;
+      }
+      .picker-trigger span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .chevron {
+        width: 14px;
+        height: 14px;
+        flex: none;
+      }
+      #workspace-menu {
+        position: absolute;
+        z-index: 30;
+        top: calc(100% + 6px);
+        left: 0;
+        width: min(440px, calc(100vw - 48px));
+        max-height: 280px;
+        overflow: auto;
+        overscroll-behavior: contain;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 6px;
+        box-shadow: 0 8px 24px #00000012;
+      }
+      .option {
+        width: 100%;
+        border: 0;
+        display: grid;
+        gap: 2px;
+        text-align: left;
+        padding: 9px 10px;
+        background: transparent;
+      }
+      .option:hover,
+      .option[aria-selected='true'] {
+        background: var(--subtle);
+      }
+      .option small {
+        font-size: 11px;
+        color: var(--muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .status-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      #bridge {
+        margin: 10px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      #bridge.error {
+        color: light-dark(#92400e, #efc27a);
+      }
+      nav {
+        display: flex;
+        gap: 24px;
+        border-bottom: 1px solid var(--border);
+        margin: 12px 0 16px;
+        flex-shrink: 0;
+      }
+      nav button {
+        border: 0;
+        background: none;
+        border-radius: 0;
+        padding: 10px 0;
+      }
+      nav button[aria-selected='true'] {
+        border-bottom: 2px solid currentColor;
+        font-weight: 600;
+      }
+      #layout {
+        flex: 1;
+        display: flex;
+        gap: 24px;
+        min-height: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      main {
+        flex: 1;
+        min-width: 0;
+        min-height: 0;
+        overflow: auto;
+        overscroll-behavior: contain;
+        padding: 0 4px 16px 0;
+        scrollbar-gutter: stable;
+      }
+      .board {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(170px, 1fr));
+        gap: 12px;
+        min-width: 720px;
+      }
+      .column {
+        background: var(--subtle);
+        padding: 12px;
+        border-radius: 10px;
+        min-height: 220px;
+      }
+      .column h2 {
+        font-size: 13px;
+        white-space: nowrap;
+        margin-bottom: 14px;
+      }
+      .column-empty {
+        font-size: 12px;
+        color: var(--muted);
+        padding: 16px 0;
+        line-height: 1.8;
+      }
+      .card {
+        text-align: left;
+        width: 100%;
+        border-radius: 10px;
+        padding: 14px;
+        margin-bottom: 10px;
+        display: grid;
+        gap: 8px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+      }
+      .card strong {
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .card[aria-pressed='true'] {
+        border-color: var(--text);
+      }
+      .chip {
+        display: inline-block;
+        border-radius: 999px;
+        background: var(--subtle);
+        font-size: 12px;
+        padding: 3px 8px;
+        width: fit-content;
+      }
+      .chip.success {
+        background: light-dark(#ecfdf3, #133021);
+        color: light-dark(#166534, #a2e4b6);
+      }
+      .chip.warning {
+        background: light-dark(#fffbeb, #3c301b);
+        color: light-dark(#92400e, #efc27a);
+      }
+      #detail {
+        width: 360px;
+        flex: none;
+        min-height: 0;
+        height: 100%;
+        overflow: auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+        border-left: 1px solid var(--border);
+        padding: 0 12px 20px 24px;
+      }
+      .detail-head {
+        position: sticky;
+        top: 0;
+        background: var(--bg);
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+        padding-bottom: 12px;
+        z-index: 2;
+      }
+      .detail-head h2 {
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+      }
+      .detail-head button {
+        border: 0;
+        padding: 2px 7px;
+        background: none;
+      }
+      dl {
+        margin: 0;
+      }
+      dt {
+        font-weight: 600;
+        margin-top: 20px;
+        border-top: 1px solid var(--border);
+        padding-top: 16px;
+      }
+      dd {
+        margin: 8px 0 0;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+      }
+      details {
+        margin-top: 20px;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      footer {
+        flex-shrink: 0;
+        margin-top: 12px;
+        border-top: 1px solid var(--border);
+        padding-top: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .attention {
+        margin-bottom: 20px;
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+      .attention h2 {
+        font-size: 13px;
+      }
+      .attention-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 320px));
+        gap: 12px;
+      }
+      .attention .card {
+        margin: 0;
+      }
+      .stage-guide {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .stage-guide div {
+        padding: 14px 16px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .empty-wrap {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .empty-state {
+        margin: auto;
+        max-width: 560px;
+        width: 100%;
+        text-align: center;
+        padding: 32px 24px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--bg);
+      }
+      .empty-icon {
+        width: 44px;
+        height: 44px;
+        margin: 0 auto 20px;
+        color: var(--muted);
+      }
+      .empty-state h2 {
+        font-size: 18px;
+      }
+      .empty-state p {
+        margin: 10px auto 20px;
+        max-width: 430px;
+        color: var(--muted);
+      }
+      .empty-state .path {
+        font-size: 12px;
+        overflow-wrap: anywhere;
+        margin-top: 16px;
+      }
+      .empty-state button {
+        margin: 4px;
+      }
+      .empty-note {
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+        margin: 18px 0;
+      }
+      .tree-wrap {
+        padding: 20px 4px;
+        min-width: fit-content;
+      }
+      .tree,
+      .tree ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .tree li {
+        text-align: center;
+        position: relative;
+        padding-top: 24px;
+      }
+      .tree > li {
+        padding-top: 0;
+      }
+      .tree ul {
+        padding-top: 20px;
+        position: relative;
+      }
+      .tree ul:before {
+        content: '';
+        position: absolute;
+        height: 20px;
+        border-left: 1px solid var(--border);
+        left: 50%;
+        top: 0;
+      }
+      .tree ul > li:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        height: 24px;
+        left: -10px;
+        right: -10px;
+        border-top: 1px solid var(--border);
+      }
+      .tree ul > li:first-child:before {
+        left: 50%;
+      }
+      .tree ul > li:last-child:before {
+        right: 50%;
+      }
+      .tree ul > li:after {
+        content: '';
+        position: absolute;
+        height: 24px;
+        top: 0;
+        left: 50%;
+        border-left: 1px solid var(--border);
+      }
+      .tree ul > li:only-child:before {
+        border-top: 0;
+      }
+      .agent-card {
+        width: 230px;
+        display: inline-grid;
+        text-align: left;
+        gap: 8px;
+        padding: 16px;
+        border-radius: 10px;
+      }
+      .agent-card[aria-pressed='true'] {
+        border-color: var(--text);
+      }
+      .agent-card .task {
+        font-size: 13px;
+        border-top: 1px solid var(--border);
+        padding-top: 8px;
+      }
+      .node-label {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .org-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .unlinked {
+        margin-top: 24px;
+        border-top: 1px solid var(--border);
+        padding-top: 16px;
+      }
+      .unlinked-grid {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      @media (max-width: 950px) {
+        body {
+          padding: 16px;
+        }
+        #layout {
+          gap: 0;
+        }
+        #detail {
+          position: absolute;
+          inset: 0 0 0 auto;
+          width: min(420px, 100%);
+          background: var(--bg);
+          padding: 12px 16px;
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          box-shadow: -8px 0 24px #0000000a;
+          z-index: 10;
+        }
+        .stage-guide {
+          gap: 6px;
+        }
+        .stage-guide div {
+          padding: 10px 8px;
+          font-size: 12px;
+        }
+        .empty-state {
+          padding: 24px 16px;
+        }
+        .workspace-label {
+          display: none;
+        }
+        #coverage {
+          display: none;
+        }
+      }
+      .filters {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 0 0 14px;
+        flex-shrink: 0;
+      }
+      .filters input {
+        font: inherit;
+        color: var(--text);
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 7px 10px;
+        max-width: 100%;
+        width: 230px;
+      }
+      .filters input:focus-visible {
+        outline: 1px solid var(--text);
+        outline-offset: 1px;
+      }
+      #roles {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      #roles button {
+        padding: 5px 9px;
+        font-size: 12px;
+      }
+      #roles [aria-pressed='true'] {
+        background: var(--subtle);
+        border-color: var(--text);
+      }
+      .evidence {
+        margin-top: 24px;
+        border-top: 1px solid var(--border);
+        padding-top: 16px;
+      }
+      .evidence h3 {
+        margin: 12px 0 8px;
+      }
+      .evidence p {
+        font-size: 13px;
+        overflow-wrap: anywhere;
+      }
+      .reference {
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      .canvas-content {
+        position: relative;
+        overflow: hidden;
+        padding: 0;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--subtle);
+        scrollbar-gutter: auto;
+      }
+      .org-canvas {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        touch-action: none;
+        cursor: grab;
+        background-image: radial-gradient(var(--border) 1px, transparent 1px);
+        background-size: 20px 20px;
+        outline: none;
+      }
+      .org-canvas:focus-visible {
+        box-shadow: inset 0 0 0 2px var(--text);
+      }
+      .org-canvas.dragging {
+        cursor: grabbing;
+      }
+      .org-world {
+        position: absolute;
+        inset: 0;
+        transform-origin: 0 0;
+      }
+      .org-edges {
+        position: absolute;
+        overflow: visible;
+        pointer-events: none;
+      }
+      .org-node {
+        position: absolute;
+        transition: opacity 180ms;
+        contain: layout style;
+      }
+      .org-node .agent-card {
+        width: 100%;
+        height: 100%;
+        background: var(--bg);
+        padding: 16px;
+        border-radius: 12px;
+        gap: 7px;
+        box-shadow: 0 2px 6px #00000004;
+        overflow: hidden;
+        align-content: start;
+      }
+      .org-node .agent-card > .muted {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .org-node .task,
+      .org-node .agent-card > .muted:last-child {
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.5;
+      }
+      .org-node .node-label {
+        align-items: center;
+      }
+      .org-node .chip {
+        font-size: 11px;
+        white-space: nowrap;
+      }
+      .org-node.selected .agent-card {
+        border: 2px solid var(--text);
+        box-shadow: 0 0 0 4px var(--border);
+      }
+      .org-node.related .agent-card {
+        border-color: var(--text);
+      }
+      .org-node.dimmed {
+        opacity: 0.62;
+      }
+      .org-edge {
+        fill: none;
+        stroke: var(--muted);
+        stroke-width: 1.3;
+        opacity: 0.3;
+      }
+      .org-edge.focused {
+        stroke: var(--text);
+        stroke-width: 2;
+        opacity: 0.8;
+      }
+      .org-flight {
+        fill: none;
+        stroke: var(--text);
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-dasharray: 24 220;
+        opacity: 0;
+      }
+      .org-flight.playing {
+        opacity: 0.8;
+        animation: org-flight 2s linear 3;
+      }
+      .org-tools {
+        position: absolute;
+        left: 16px;
+        bottom: 16px;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 4px;
+        border-radius: 10px;
+        z-index: 4;
+        box-shadow: 0 3px 12px #00000006;
+        max-width: calc(100% - 32px);
+        flex-wrap: wrap;
+      }
+      .org-tools button {
+        border: 0;
+        font-size: 12px;
+        padding: 5px 8px;
+      }
+      .org-tools output {
+        font-size: 12px;
+        width: 44px;
+        text-align: center;
+      }
+      .org-legend {
+        position: absolute;
+        left: 16px;
+        top: 12px;
+        font-size: 11px;
+        color: var(--muted);
+        pointer-events: none;
+      }
+      .unknown-relation {
+        position: absolute;
+        top: -22px;
+        left: 0;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      #layout.org-layout #detail {
+        position: absolute;
+        inset: 0 0 0 auto;
+        width: 360px;
+        height: 100%;
+        background: var(--bg);
+        padding: 16px 20px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        z-index: 5;
+        box-shadow: -5px 0 14px #00000005;
+      }
+      #layout.detail-bottom #detail {
+        top: auto;
+        left: 0;
+        width: 100%;
+        height: 45%;
+        border-left: 0;
+        border-top: 1px solid var(--border);
+      }
+      #layout.detail-bottom .org-tools {
+        bottom: calc(45% + 12px);
+      }
+      #layout.detail-standalone #detail {
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #layout.detail-standalone .org-canvas,
+      #layout.detail-standalone .org-tools {
+        visibility: hidden;
+      }
+      .motion-ghost {
+        z-index: 40;
+        pointer-events: none;
+        transform-origin: 0 0;
+      }
+      .status-changed {
+        animation: status-arrival 650ms ease-out;
+      }
+      button.card:hover {
+        border-color: var(--text);
+        transform: translateY(-1px);
+      }
+      button {
+        transition:
+          background 120ms,
+          border-color 120ms,
+          transform 120ms;
+      }
+      button:active {
+        transform: scale(0.99);
+      }
+      @keyframes org-flight {
+        to {
+          stroke-dashoffset: -244;
+        }
+      }
+      @keyframes status-arrival {
+        0% {
+          border-color: var(--text);
+          box-shadow: 0 0 0 3px var(--border);
+        }
+        100% {
+          border-color: var(--border);
+          box-shadow: none;
+        }
+      }
+      .reduce-motion * {
+        transition: none !important;
+        animation: none !important;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+      @media (max-width: 650px) {
+        .org-tools {
+          gap: 2px;
+          left: 8px;
+          bottom: 8px;
+          max-width: calc(100% - 16px);
+        }
+        .org-tools button {
+          font-size: 11px;
+          padding: 5px 6px;
+        }
+        .org-legend {
+          font-size: 10px;
+          left: 12px;
+        }
+      }
+      /* 内嵌资源也由本页负责内边距，避免宿主重置挤贴页签。 */
+      .embedded {
+        padding: 24px 24px 16px !important;
+      }
+      header {
+        padding-block: 8px;
+        min-height: 52px;
+        gap: 16px;
+      }
+      .session-picker {
+        margin-top: 12px;
+      }
+      #layout {
+        margin-top: 4px;
+      }
+      .filter-caption {
+        font-size: 12px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .role-runs ul {
+        list-style: none;
+        padding: 0;
+        margin: 12px 0;
+      }
+      .role-runs li {
+        display: grid;
+        gap: 5px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .role-runs li strong {
+        font-size: 13px;
+      }
+      .task-history {
+        margin-top: 16px;
+      }
+      .task-history summary {
+        font-weight: 600;
+        color: var(--text);
+      }
+      .run-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .org-edge {
+        vector-effect: non-scaling-stroke;
+        stroke-width: 1.2;
+        opacity: 0.35;
+      }
+      .org-edge.focused {
+        stroke-width: 1.6;
+        opacity: 0.65;
+      }
+      .org-flight.playing {
+        stroke-width: 2;
+        stroke-dasharray: 8 92;
+        vector-effect: non-scaling-stroke;
+        opacity: 0;
+        animation: org-comet 2.4s linear 3 forwards;
+      }
+      .org-particle {
+        fill: var(--text);
+        pointer-events: none;
+      }
+      .org-node.dimmed {
+        opacity: 0.72;
+      }
+      @keyframes org-comet {
+        0% {
+          stroke-dashoffset: 0;
+          opacity: 0;
+        }
+        12%,
+        88% {
+          opacity: 0.8;
+        }
+        100% {
+          stroke-dashoffset: -100;
+          opacity: 0;
+        }
+      }
+      @media (max-width: 650px) {
+        .embedded {
+          padding: 20px 16px 12px !important;
+        }
+        header {
+          gap: 8px;
+        }
+        .toolbar {
+          gap: 8px;
+        }
+        .picker-trigger {
+          max-width: 48vw;
+        }
+        .filter-caption {
+          width: 100%;
+        }
+      }
+    </style>
+    <!-- POLISH -->
+  </head>
+  <body>
+    <h1>
+      <span class="brand-mark" aria-hidden="true">
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+      Agent Team
+    </h1>
+    <header>
+      <div class="workspace" id="picker">
+        <span class="workspace-label" id="workspace-label">Workspace</span>
+        <button
+          id="workspace"
+          class="picker-trigger"
+          role="combobox"
+          aria-label="选择 Workspace"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          aria-controls="workspace-menu"
+        >
+          <span id="workspace-value">加载中</span>
+          <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor">
+            <path d="m4 6 4 4 4-4" />
+          </svg>
+        </button>
+        <div id="workspace-menu" role="listbox" aria-label="Workspace 项目" hidden></div>
+      </div>
+      <details class="session-picker">
+        <summary id="session-label">选择主会话</summary>
+        <div id="session-options" class="filters"></div>
+      </details>
+      <div class="toolbar"><span id="coverage" class="muted">正在加载</span></div>
+    </header>
+    <p id="navigation-notice" class="navigation-error" role="status" hidden></p>
+    <div id="bridge" role="status">正在连接只读数据…</div>
+    <nav role="tablist" aria-label="团队视图">
+      <button id="kanban" role="tab" aria-selected="true" aria-controls="content">
+        <svg class="view-icon kanban-icon" aria-hidden="true" viewBox="0 0 24 24">
+          <rect x="3" y="4" width="5" height="16" rx="2" />
+          <rect x="10" y="4" width="5" height="11" rx="2" />
+          <rect x="17" y="4" width="4" height="14" rx="2" />
+        </svg>
+        Kanban
+      </button>
+      <button id="org" role="tab" aria-selected="false" aria-controls="content">
+        <svg
+          class="view-icon org-icon"
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+        >
+          <path d="M12 8v6M5 17v-3h14v3" />
+          <rect x="8" y="2" width="8" height="6" rx="2" />
+          <rect x="2" y="17" width="6" height="5" rx="1.5" />
+          <rect x="16" y="17" width="6" height="5" rx="1.5" />
+        </svg>
+        Agent Org Chart
+      </button>
+    </nav>
+    <section id="review-banner" hidden aria-label="当前会话待人工评审"></section>
+    <section id="filters" class="filters" hidden aria-label="任务筛选">
+      <input
+        id="search"
+        type="search"
+        aria-label="搜索任务、目标或 Agent"
+        placeholder="搜索任务、目标或 Agent"
+      />
+      <span class="filter-caption">角色 / Agent</span>
+      <div id="roles" role="group" aria-label="按角色 / Agent筛选"></div>
+      <button id="clear-filters">清除筛选</button>
+    </section>
+    <div id="layout">
+      <main id="content" role="tabpanel" aria-label="任务看板"></main>
+      <aside id="detail" hidden aria-label="任务详情"></aside>
+    </div>
+    <p id="motion-status" role="status" class="sr-only"></p>
+    <footer id="sync">尚无成功同步数据</footer>
+    <dialog id="artifact-dialog" aria-labelledby="artifact-title">
+      <div class="artifact-head">
+        <h2 id="artifact-title">产物预览</h2>
+        <button id="artifact-close" aria-label="关闭产物预览">×</button>
+      </div>
+      <p id="artifact-path" class="reference"></p>
+      <p id="artifact-notice" class="muted"></p>
+      <pre id="artifact-content" tabindex="0"></pre>
+    </dialog>
+    <!-- BUNDLE -->
+  </body>
+</html>
