@@ -46,6 +46,44 @@ export function renderChecklist(task) {
                           <span>${escapeHtml(i.label)}</span>
                           <small>${labels[i.status]}</small>
                           ${
+                            i.verifier
+                              ? html`
+                                  <small>
+                                    ${i.verifier === 'human' ? '人工验收' : 'Agent 自主验证'} ·
+                                    ${escapeHtml(i.method)} · AC
+                                    ${escapeHtml(i.version || task.version || '未知')}
+                                  </small>
+                                `
+                              : ''
+                          }
+                          ${
+                            i.manualCheck
+                              ? html`
+                                  <p>入口：${escapeHtml(i.manualCheck.entry)}</p>
+                                  <ol>
+                                    ${i.manualCheck.steps
+                                      .map(
+                                        (step) => html`
+                                          <li>${escapeHtml(step)}</li>
+                                        `,
+                                      )
+                                      .join('')}
+                                  </ol>
+                                  <p>预期结果：${escapeHtml(i.manualCheck.expected)}</p>
+                                `
+                              : ''
+                          }
+                          ${
+                            i.resultVersion
+                              ? html`
+                                  <small>
+                                    结果 ${escapeHtml(i.resultVersion)} · SHA256
+                                    ${escapeHtml(i.resultDigest?.slice(0, 12) || '未知')}
+                                  </small>
+                                `
+                              : ''
+                          }
+                          ${
                             i.evidence
                               ? html`
                                   <p>
@@ -62,7 +100,7 @@ export function renderChecklist(task) {
               </ul>
             `
           : html`
-              <p class="muted">未回报验收条件</p>
+              <p class="muted">AC 缺失 · 待补齐；执行结束不能代替验收。</p>
             `
       }
     </section>
@@ -161,14 +199,20 @@ export function renderReviews(
       }
       <p class="muted review-note">
         ${
-          records.some(
-            (r) =>
-              r.actorType === 'human' &&
-              r.scope === 'delivery' &&
-              ['passed', 'confirmed'].includes(r.decision),
-          )
-            ? '已接入人工交付确认，依据见上述记录。'
-            : '尚无人工交付验收记录。'
+          task?.acceptance?.humanStatus === 'not_required'
+            ? '本卡无需人工核验；完成依据为当前 Agent 验证及审查。'
+            : (
+                  task?.acceptance
+                    ? task.acceptance.humanStatus === 'accepted'
+                    : records.some(
+                        (r) =>
+                          r.actorType === 'human' &&
+                          r.scope === 'delivery' &&
+                          ['passed', 'confirmed'].includes(r.decision),
+                      )
+                )
+              ? '已接入人工交付确认，依据见上述记录。'
+              : '当前结果尚待人工验收；历史确认不能替代当前结果。'
         }
       </p>
     </section>

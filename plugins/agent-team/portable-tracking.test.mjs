@@ -7,6 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import test from 'node:test';
+import { contractArgs, fixtureContract } from './test-contract-fixture.mjs';
 
 const cli = fileURLToPath(new URL('./skills/team-sync/scripts/sync.mjs', import.meta.url));
 async function fixture(t) {
@@ -15,6 +16,7 @@ async function fixture(t) {
   return {
     workspace,
     call(kind, ...args) {
+      args = contractArgs(kind, args);
       return JSON.parse(
         execFileSync(process.execPath, [cli, kind, '--workspace', workspace, ...args], {
           encoding: 'utf8',
@@ -23,6 +25,20 @@ async function fixture(t) {
     },
   };
 }
+
+test('公开run名称完整保存，状态更新保留名称并投影到工单执行', async (t) => {
+  const f = await fixture(t);
+  f.call('team', '--team-id', 'names');
+  f.call('task', '--team-id', 'names', '--task-id', '01', '--title', '父工单');
+  const args = ['--team-id', 'names', '--task-id', '01', '--run-id', 'r1'];
+  f.call('run', ...args, '--provider', 'common', '--title', '独立审查', '--goal', '核验名称同步链');
+  f.call('run', ...args, '--status', 'completed');
+  const raw = f.call('read');
+  assert.equal(raw.runs[0].title, '独立审查');
+  const { projectTracking } = await import('./portable-state.mjs');
+  const snapshot = projectTracking(raw, 'team:names');
+  assert.equal(snapshot.tasks[0].runs[0].title, '独立审查');
+});
 
 test('late run summary cannot overwrite a newer activity across operation kinds', async (t) => {
   const f = await fixture(t);
@@ -164,6 +180,10 @@ test('checklist逐项合并失败和通过，记录的通过证据不能被任�
   f.call('team', '--team-id', 'alpha');
   f.call('task', '--team-id', 'alpha', '--task-id', 'ui', '--title', '界面');
   const common = ['--team-id', 'alpha', '--task-id', 'ui'];
+  await writeFile(path.join(f.workspace, 'result.md'), '实际布局和键盘核对结果');
+  const result = f.call('result', ...common, '--reference', 'result.md', '--version', 'r1').event
+    .operation;
+  const verification = ['--version', 'v1', '--digest', result.digest];
   f.call(
     'acceptance',
     ...common,
@@ -191,6 +211,7 @@ test('checklist逐项合并失败和通过，记录的通过证据不能被任�
     'layout',
     '--status',
     'failed',
+    ...verification,
     '--evidence',
     '桌面截图中布局变成纵排',
     '--reported-by',
@@ -203,6 +224,7 @@ test('checklist逐项合并失败和通过，记录的通过证据不能被任�
     'layout',
     '--status',
     'passed',
+    ...verification,
     '--evidence',
     '重新核对1440px截图为四列',
     '--reported-by',
@@ -226,7 +248,7 @@ test('checklist逐项合并失败和通过，记录的通过证据不能被任�
       acceptanceItems: [{ id: 'keyboard', status: 'passed' }],
     }),
   );
-  assert.throws(() => f.call('task', '--body-file', body), /Unsupported field/);
+  assert.throws(() => f.call('task', '--body-file', body), /AC definitions/);
 });
 
 test('幂等重试、显式晚到修订及跨团队工单隔离', async (t) => {
@@ -297,6 +319,8 @@ test('人工评审只匹配真实文件版本与指纹，保存旧版快照及�
     'design',
     '--type',
     'visual',
+    '--item-id',
+    'prototype',
     '--reference',
     'design.md',
     '--version',
@@ -349,6 +373,8 @@ test('人工评审只匹配真实文件版本与指纹，保存旧版快照及�
     'design',
     '--type',
     'visual',
+    '--item-id',
+    'prototype',
     '--reference',
     'design.md',
     '--version',
@@ -487,6 +513,7 @@ test('并发公开命令完整落盘、UTF8 BOM正文可读且无插件依赖', 
     body,
     '\uFEFF' +
       JSON.stringify({
+        ...fixtureContract(),
         teamId: 'alpha',
         taskId: 'body',
         title: 'BOM正文标题',
@@ -500,6 +527,7 @@ test('并发公开命令完整落盘、UTF8 BOM正文可读且无插件依赖', 
       asyncExec(process.execPath, [
         cli,
         'task',
+        ...contractArgs('task', ['--title', `工单${index}`]),
         '--workspace',
         f.workspace,
         '--team-id',
@@ -602,5 +630,8 @@ test('产物关联不同运行时，旧修订不能覆盖工单当前产物', as
     '--revision',
     '1',
   );
-  assert.equal(f.call('read').tasks[0].artifacts[0].label, '修正后的设计');
+  const snapshot = f.call('read');
+  assert.equal(snapshot.runs.find((r) => r.runId === 'repair').artifacts[0].label, '修正后的设计');
+  assert.equal(snapshot.runs.find((r) => r.runId === 'dev').artifacts[0].label, '旧设计');
+  assert.equal(snapshot.tasks[0].artifacts.length, 0);
 });

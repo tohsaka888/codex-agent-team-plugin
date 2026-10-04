@@ -16,7 +16,10 @@ export function kanbanCards(tasks) {
         ...run,
         id: JSON.stringify(['execution', task.id, run.runId]),
         taskId: run.runId,
-        title: run.title || run.name || task.title || run.runId,
+        title:
+          [run.title, run.name, run.goal]
+            .find((value) => typeof value === 'string' && value.trim())
+            ?.trim() || '执行 · ' + run.runId,
         cardKind: 'execution',
         parentTaskId: task.id,
         parentTaskKey: task.taskId,
@@ -25,9 +28,11 @@ export function kanbanCards(tasks) {
         currentRunId: null,
         reviewPhase: 'unknown',
         runs: [run],
-        acceptanceItems: [],
-        reviewRecords: [],
-        reviewRequirements: [],
+        acceptanceItems: run.acceptanceItems || [],
+        acceptance: run.acceptance,
+        acceptanceItemsReported: true,
+        reviewRecords: run.reviewRecords || [],
+        reviewRequirements: run.reviewRequirements || [],
         executionStatus: run.executionStatus || run.status || 'unknown',
       })),
     ];
@@ -47,6 +52,8 @@ export function visibleTasks(tasks, query = '', role = '') {
           task.activitySummary,
           ...(task.runs || []).flatMap((run) => [
             run.runId,
+            run.title,
+            run.name,
             run.role,
             run.agentName,
             run.goal,
@@ -60,6 +67,14 @@ export function visibleTasks(tasks, query = '', role = '') {
   );
 }
 export function taskColumn(task) {
+  if (task.acceptance?.humanStatus === 'rejected')
+    return task.executionStatus === 'running' ? 'running' : 'review';
+  if (
+    (task.businessStatus === 'completed' ||
+      (!task.businessStatus && task.executionStatus === 'completed')) &&
+    !task.acceptance?.accepted
+  )
+    return 'review';
   if (task.businessStatus) {
     if (task.businessStatus === 'awaiting_review') return 'review';
     if (['blocked', 'repair_required', 'failed', 'interrupted'].includes(task.businessStatus))
@@ -78,4 +93,10 @@ export function taskColumn(task) {
   return ['queued', 'running', 'completed'].includes(task.executionStatus)
     ? task.executionStatus
     : 'unknown';
+}
+
+export function acceptanceSummary(task) {
+  const state = task.acceptance;
+  if (!state || state.missing) return 'AC 缺失 · 待补齐';
+  return `AC ${state.items.length} 项 · Agent ${state.agentPassed}/${state.agentTotal} · ${state.humanStatus === 'not_required' ? '无需人工核验' : state.humanStatus === 'accepted' ? '人工已验收' : state.humanStatus === 'rejected' ? '人工退回' : '人工待验收'}`;
 }

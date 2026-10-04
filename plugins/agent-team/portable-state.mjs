@@ -47,6 +47,29 @@ export function projectTracking(raw, selectedSessionId) {
   const runMap = new Map(teamRuns.map((r) => [key(r.teamId, r.runId), r]));
   const runs = teamRuns.map((run) => ({
     ...run,
+    acceptanceItems: acceptanceItems(run.acceptance?.items || run.acceptanceItems),
+    acceptanceItemsReported: true,
+    reviewRecords: projectReviews(run.reviewRecords, teamRuns),
+    reviewRequirements: reviewRequirements(
+      (run.reviewRequirements || [])
+        .filter(
+          (r) =>
+            !r.itemId ||
+            (run.acceptanceItems || []).some((i) => i.id === r.itemId && i.verifier === 'human'),
+        )
+        .map((r) => ({
+          ...r,
+          kind: r.type === 'visual' ? 'ui' : r.type,
+          title: r.label || r.id,
+          applicability: 'required',
+          reportedBy: r.producer,
+        })),
+    ),
+    artifacts: (run.artifacts || []).map((a) => ({
+      ...a,
+      title: a.label || a.reference,
+      availability: 'available',
+    })),
     reportedRole: run.role || null,
     role: workRole(run.role),
     agentId: instanceId(run),
@@ -87,7 +110,11 @@ export function projectTracking(raw, selectedSessionId) {
       const missing = dependencies.filter(
         (id) =>
           !raw.tasks.some(
-            (t) => t.teamId === task.teamId && t.taskId === id && t.status === 'completed',
+            (t) =>
+              t.teamId === task.teamId &&
+              t.taskId === id &&
+              t.status === 'completed' &&
+              t.acceptance?.accepted,
           ),
       );
       // 依赖的完成回报可能迟于实际执行；不能把明确进行中的业务/运行改成未开始阻塞。
@@ -147,7 +174,7 @@ export function projectTracking(raw, selectedSessionId) {
           ? '归档事件 ' + task.goalEventId + '（' + task.teamId + '/' + task.taskId + '）'
           : null,
         source: 'team-sync/' + (team.provider || 'common'),
-        acceptanceItems: acceptanceItems(task.acceptanceItems),
+        acceptanceItems: acceptanceItems(task.acceptance?.items || task.acceptanceItems),
         acceptanceItemsReported: true,
         reviewRecords: reviewRecords(
           (task.reviewRecords || []).map((r) => ({
@@ -186,16 +213,24 @@ export function projectTracking(raw, selectedSessionId) {
           })),
         ),
         reviewRequirements: reviewRequirements(
-          (task.reviewRequirements || []).map((r) => ({
-            ...r,
-            kind: r.type === 'visual' ? 'ui' : r.type,
-            title: r.label || r.id,
-            applicability: 'required',
-            reportedBy: r.producer,
-            affectedTaskIds: (r.affectedTaskIds || [task.taskId]).map((id) =>
-              key('team', task.teamId, 'task', id),
-            ),
-          })),
+          (task.reviewRequirements || [])
+            .filter(
+              (r) =>
+                !r.itemId ||
+                (task.acceptanceItems || []).some(
+                  (i) => i.id === r.itemId && i.verifier === 'human',
+                ),
+            )
+            .map((r) => ({
+              ...r,
+              kind: r.type === 'visual' ? 'ui' : r.type,
+              title: r.label || r.id,
+              applicability: 'required',
+              reportedBy: r.producer,
+              affectedTaskIds: (r.affectedTaskIds || [task.taskId]).map((id) =>
+                key('team', task.teamId, 'task', id),
+              ),
+            })),
         ),
         artifacts: (task.artifacts || []).map((a) => ({
           ...a,
@@ -249,6 +284,36 @@ export function projectTracking(raw, selectedSessionId) {
     revision: raw.eventCount || 0,
     note: '通用 Skill 同步；仅展示实际接入记录，生命周期覆盖以宿主能力为准。',
   };
+}
+
+function projectReviews(records = [], runs = []) {
+  return reviewRecords(
+    records.map((r) => ({
+      ...r,
+      actorType: r.authorType,
+      nativeAgentId:
+        r.authorType === 'agent' ? runs.find((run) => run.runId === r.runId)?.nativeAgentId : null,
+      summary: r.quote || r.evidence || '',
+      decision:
+        r.decision === 'approved'
+          ? r.authorType === 'human'
+            ? 'confirmed'
+            : 'passed'
+          : r.decision === 'rejected'
+            ? 'changes_requested'
+            : 'comment',
+      source:
+        r.authorType === 'human'
+          ? r.decision === 'rejected'
+            ? 'user-feedback'
+            : 'user-confirmation'
+          : 'agent-review',
+      targetId: r.requirementId,
+      targetVersion: r.version,
+      targetDigest: r.digest,
+      observedAt: at(r),
+    })),
+  );
 }
 
 export async function readPortableState({ root, dataDir, projectId, rootSessionId } = {}) {

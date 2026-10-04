@@ -2,6 +2,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, readdir, realpath, open, link, unlink, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
+import { validateContract, contractSignature, acceptanceState } from './acceptance-contract.mjs';
 
 const KINDS = new Set([
   'team',
@@ -13,6 +14,7 @@ const KINDS = new Set([
   'review',
   'artifact',
   'skill',
+  'result',
 ]);
 const TASK_STATUSES = new Set([
   'queued',
@@ -25,9 +27,21 @@ const TASK_STATUSES = new Set([
 const RUN_STATUSES = new Set(['queued', 'running', 'completed', 'failed', 'interrupted']);
 const OPERATION_FIELDS = {
   team: ['title', 'provider', 'rootSessionId'],
-  task: ['title', 'goal', 'role', 'status', 'activitySummary', 'dependencies', 'blockedReason'],
+  task: [
+    'title',
+    'goal',
+    'role',
+    'status',
+    'activitySummary',
+    'dependencies',
+    'blockedReason',
+    'acceptanceItems',
+    'version',
+    'taskType',
+  ],
   run: [
     'runId',
+    'title',
     'provider',
     'nativeAgentId',
     'nativeRole',
@@ -38,9 +52,12 @@ const OPERATION_FIELDS = {
     'status',
     'goal',
     'activitySummary',
+    'acceptanceItems',
+    'version',
+    'taskType',
   ],
   activity: ['runId', 'summary', 'evidence'],
-  acceptance: ['itemId', 'label', 'status', 'evidence', 'reportedBy'],
+  acceptance: ['runId', 'itemId', 'label', 'status', 'evidence', 'reportedBy', 'version', 'digest'],
   'review-requirement': [
     'requirementId',
     'type',
@@ -48,6 +65,8 @@ const OPERATION_FIELDS = {
     'version',
     'label',
     'affectedTaskIds',
+    'runId',
+    'itemId',
   ],
   review: [
     'reviewId',
@@ -64,6 +83,7 @@ const OPERATION_FIELDS = {
     'runId',
   ],
   artifact: ['artifactId', 'reference', 'label', 'runId'],
+  result: ['runId', 'reference', 'version'],
   skill: ['runId', 'skillId', 'name', 'reference', 'status', 'evidence'],
 };
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
@@ -143,7 +163,10 @@ function entityKey(operation) {
     operation.artifactId ||
     operation.skillId ||
     '';
-  return JSON.stringify([operation.kind, operation.teamId, suffix, item]);
+  const parts = [operation.kind, operation.teamId, suffix, item];
+  if (operation.runId && !['run', 'activity', 'skill'].includes(operation.kind))
+    parts.push(operation.runId);
+  return JSON.stringify(parts);
 }
 
 function fields(operation, names) {
@@ -198,6 +221,9 @@ function fold(events, workspace) {
           'activitySummary',
           'dependencies',
           'blockedReason',
+          'acceptanceItems',
+          'version',
+          'taskType',
         ]),
         ...metadata,
         ...(op.goal !== undefined
@@ -208,6 +234,16 @@ function fold(events, workspace) {
             }
           : {}),
       });
+      if (op.acceptanceItems) {
+        const updated = tasks.get(taskKey);
+        updated.acceptanceHistory = [
+          ...(task?.acceptanceHistory || []),
+          ...(task?.acKey
+            ? [{ version: task.version, acKey: task.acKey, items: task.acceptanceItems }]
+            : []),
+        ];
+        updated.acKey = sha256(contractSignature(updated));
+      }
       continue;
     }
     const runKey = key(op.teamId, op.runId);
@@ -221,6 +257,10 @@ function fold(events, workspace) {
         status: 'running',
         activities: [],
         skills: [],
+        acceptanceItems: [],
+        reviewRequirements: [],
+        reviewRecords: [],
+        artifacts: [],
         ...previous,
         teamId: op.teamId,
         taskId: op.taskId,
@@ -233,8 +273,12 @@ function fold(events, workspace) {
           'role',
           'agentName',
           'profile',
+          'title',
           'status',
           'goal',
+          'acceptanceItems',
+          'version',
+          'taskType',
         ]),
         ...metadata,
         updatedAt,
@@ -253,6 +297,22 @@ function fold(events, workspace) {
             ? event.timestamp
             : previous?.activitySummaryAt,
       });
+      if (op.acceptanceItems) {
+        const updated = runs.get(runKey);
+        updated.acceptanceHistory = [
+          ...(previous?.acceptanceHistory || []),
+          ...(previous?.acKey
+            ? [
+                {
+                  version: previous.version,
+                  acKey: previous.acKey,
+                  items: previous.acceptanceItems,
+                },
+              ]
+            : []),
+        ];
+        updated.acKey = sha256(contractSignature(updated));
+      }
       continue;
     }
     if (op.kind === 'activity' || op.kind === 'skill') {
@@ -283,6 +343,30 @@ function fold(events, workspace) {
       continue;
     }
     if (!task) throw new Error(`Event references missing task: ${op.taskId}`);
+    const target = op.runId ? runs.get(runKey) : task;
+    if (!target) throw new Error(`Event references missing run: ${op.runId}`);
+    if (op.kind === 'result') {
+      target.resultHistory = [
+        ...(target.resultHistory || []),
+        ...(target.resultDigest
+          ? [
+              {
+                version: target.resultVersion,
+                digest: target.resultDigest,
+                reference: target.resultReference,
+              },
+            ]
+          : []),
+      ];
+      Object.assign(target, {
+        resultReference: op.reference,
+        resultDigest: op.digest,
+        resultVersion: op.version,
+        resultArtifactKey: op.artifactKey,
+        resultCurrent: true,
+      });
+      continue;
+    }
     const collections = {
       acceptance: ['acceptanceItems', 'itemId'],
       'review-requirement': ['reviewRequirements', 'requirementId'],
@@ -297,17 +381,27 @@ function fold(events, workspace) {
       eventId: event.eventId,
     };
     delete item.kind;
-    const existing = task[collection].find((entry) => entry.id === item.id);
+    const existing = target[collection].find((entry) => entry.id === item.id);
     const history = existing
       ? [
           ...(existing.history || []),
           Object.fromEntries(Object.entries(existing).filter(([name]) => name !== 'history')),
         ]
       : [];
-    task[collection] = [
-      ...task[collection].filter((entry) => entry.id !== item.id),
-      { ...existing, ...item, history },
-    ];
+    target[collection] =
+      op.kind === 'acceptance' && existing
+        ? target[collection].map((entry) =>
+            entry.id === item.id ? { ...existing, ...item, history } : entry,
+          )
+        : [
+            ...target[collection].filter((entry) => entry.id !== item.id),
+            { ...existing, ...item, history },
+          ];
+    if (op.kind === 'acceptance') {
+      const stored = target[collection].find((entry) => entry.id === item.id);
+      stored.resultDigest = op.digest;
+      stored.resultVersion = op.resultVersion;
+    }
   }
   return {
     protocolVersion: 1,
@@ -318,6 +412,25 @@ function fold(events, workspace) {
     lastEventAt: events.at(-1)?.recordedAt || events.at(-1)?.timestamp || null,
     eventCount: events.length,
   };
+}
+
+function assertPrototypeDependencies(snapshot, task) {
+  for (const id of task.dependencies || []) {
+    const upstream = snapshot.tasks.find((t) => t.teamId === task.teamId && t.taskId === id);
+    const entities = [
+      upstream,
+      ...snapshot.runs.filter((r) => r.teamId === task.teamId && r.taskId === id),
+    ].filter(Boolean);
+    for (const entity of entities) {
+      for (const item of entity.acceptance?.items.filter((i) => i.kind === 'prototype') || []) {
+        const requirement = entity.reviewRequirements.find(
+          (q) => q.itemId === item.id && ['ui', 'visual'].includes(q.type),
+        );
+        if (item.status !== 'passed' || !requirement?.affectedTaskIds?.includes(task.taskId))
+          throw new Error('AC upstream prototype must be confirmed for this task before dispatch');
+      }
+    }
+  }
 }
 
 function validate(operation, snapshot) {
@@ -351,6 +464,49 @@ function validate(operation, snapshot) {
     (entry) => entry.teamId === operation.teamId && entry.taskId === operation.taskId,
   );
   if (operation.kind === 'task') {
+    if (!task && (!Array.isArray(operation.acceptanceItems) || !operation.acceptanceItems.length))
+      throw new Error('AC acceptanceItems must be a non-empty array');
+    if (operation.acceptanceItems !== undefined) {
+      validateContract({ ...task, ...operation });
+      operation.acceptanceItems = operation.acceptanceItems.map((item) => ({
+        ...item,
+        status: 'pending',
+      }));
+    }
+    if (
+      task &&
+      ['version', 'role', 'taskType', 'goal'].some(
+        (field) => operation[field] !== undefined && operation[field] !== task[field],
+      ) &&
+      !operation.acceptanceItems
+    )
+      throw new Error('AC changes require complete acceptanceItems');
+    if (
+      ['running', 'awaiting_review', 'completed'].includes(operation.status) &&
+      !task?.acKey &&
+      !operation.acceptanceItems
+    )
+      throw new Error('AC must be supplied before resuming legacy task');
+    if (['running', 'awaiting_review', 'completed'].includes(operation.status))
+      assertPrototypeDependencies(snapshot, { ...task, ...operation });
+    if (['awaiting_review', 'completed'].includes(operation.status)) {
+      const state = task?.acceptance || acceptanceState(task);
+      if (operation.acceptanceItems || !state.agentReady)
+        throw new Error('AC Agent verification and current result required before review');
+      if (
+        operation.status === 'completed' &&
+        (!state.accepted ||
+          snapshot.runs.some(
+            (r) =>
+              r.teamId === task.teamId &&
+              r.taskId === task.taskId &&
+              (r.status !== 'completed' || !r.acceptance?.accepted),
+          ))
+      )
+        throw new Error(
+          'AC completed requires current Agent Review and human acceptance for every card',
+        );
+    }
     if (!task) required(operation.title, 'title');
     if (operation.status !== undefined && !TASK_STATUSES.has(operation.status))
       throw new Error('Invalid task status');
@@ -373,6 +529,41 @@ function validate(operation, snapshot) {
     if (operation.kind !== 'run' && !run) throw new Error('Register run first');
     if (operation.kind === 'run') {
       if (!run) required(operation.provider, 'provider');
+      if (
+        (!run || (!run.acKey && ['queued', 'running'].includes(operation.status))) &&
+        !operation.acceptanceItems
+      )
+        throw new Error('AC acceptanceItems required for run');
+      if (!task.acKey) throw new Error('AC must be supplied on parent before dispatch');
+      if (!run || ['queued', 'running'].includes(operation.status) || operation.acceptanceItems) {
+        assertPrototypeDependencies(snapshot, task);
+        if (run?.parentReferencesCurrent === false && !operation.acceptanceItems)
+          throw new Error('AC parent reference must be refreshed before resuming run');
+      }
+      if (operation.acceptanceItems !== undefined) {
+        validateContract({ ...run, ...operation });
+        for (const item of operation.acceptanceItems) {
+          if (
+            item.parentItemId !== undefined &&
+            (item.parentVersion !== task.version ||
+              !task.acceptanceItems.some((parent) => parent.id === item.parentItemId))
+          )
+            throw new Error('AC parent reference/version must match current task');
+        }
+        operation.acceptanceItems = operation.acceptanceItems.map((item) => ({
+          ...item,
+          status: 'pending',
+          ...(item.parentItemId ? { parentAcKey: task.acKey } : {}),
+        }));
+      }
+      if (
+        run &&
+        ['version', 'role', 'taskType', 'goal'].some(
+          (field) => operation[field] !== undefined && operation[field] !== run[field],
+        ) &&
+        !operation.acceptanceItems
+      )
+        throw new Error('AC changes require complete acceptanceItems');
       for (const field of ['provider', 'nativeAgentId']) {
         if (run?.[field] && operation[field] !== undefined && run[field] !== operation[field])
           throw new Error(`Run ${field} cannot change`);
@@ -408,15 +599,41 @@ function validate(operation, snapshot) {
     }
     return;
   }
+  const target = operation.runId
+    ? snapshot.runs.find(
+        (run) =>
+          run.teamId === operation.teamId &&
+          run.taskId === operation.taskId &&
+          run.runId === operation.runId,
+      )
+    : task;
+  if (!target) throw new Error('runId must belong to this task');
+  if (operation.kind === 'result') {
+    if (!target.acKey) throw new Error('AC must be supplied before result');
+    required(operation.reference, 'reference');
+    required(operation.version, 'version');
+  }
   if (operation.kind === 'acceptance') {
     required(operation.itemId, 'itemId');
-    if (!task.acceptanceItems.some((item) => item.id === operation.itemId))
-      required(operation.label, 'label');
+    const definition = target.acceptanceItems.find((item) => item.id === operation.itemId);
+    if (!target.acKey || !definition)
+      throw new Error('AC must reference an existing definition; update contract atomically');
+    if (operation.label !== undefined && operation.label !== definition.label)
+      throw new Error('AC label changes require a new contract');
+    if (definition.verifier === 'human')
+      throw new Error('AC human conditions require human review, not Agent acceptance updates');
     if (!['pending', 'unknown', 'passed', 'failed'].includes(operation.status))
       throw new Error('Invalid acceptance status');
     if (['passed', 'failed'].includes(operation.status)) {
       required(operation.evidence, 'evidence');
       required(operation.reportedBy, 'reportedBy');
+      if (
+        !target.resultDigest ||
+        target.resultCurrent === false ||
+        operation.version !== target.version ||
+        operation.digest !== target.resultDigest
+      )
+        throw new Error('AC verification must match current result digest and contract version');
     }
   }
   if (operation.kind === 'review-requirement') {
@@ -424,6 +641,26 @@ function validate(operation, snapshot) {
     required(operation.version, 'version');
     required(operation.reference, 'reference');
     required(operation.type, 'type');
+    if (['ui', 'visual'].includes(operation.type) && operation.affectedTaskIds === undefined)
+      operation.affectedTaskIds = [operation.taskId];
+    if (target.acKey && ['delivery', 'ui', 'visual'].includes(operation.type)) {
+      const condition = target.acceptanceItems.find(
+        (i) =>
+          i.id === operation.itemId &&
+          i.verifier === 'human' &&
+          (operation.type === 'delivery' ? i.kind === 'delivery' : i.kind === 'prototype'),
+      );
+      if (!condition)
+        throw new Error('AC human review requirement must reference the matching itemId');
+      if (
+        operation.type === 'delivery' &&
+        (!target.resultDigest ||
+          target.resultCurrent === false ||
+          operation.reference !== target.resultReference ||
+          operation.version !== target.resultVersion)
+      )
+        throw new Error('AC delivery requirement must reference current result file and version');
+    }
     if (!['spec', 'adr', 'ui', 'visual', 'tickets', 'delivery'].includes(operation.type))
       throw new Error('Invalid review requirement type');
     if (
@@ -446,6 +683,15 @@ function validate(operation, snapshot) {
       throw new Error('authorType must be agent or human');
     if (!['approved', 'rejected', 'comment'].includes(operation.decision))
       throw new Error('Invalid review decision');
+    if (
+      operation.authorType === 'agent' &&
+      operation.scope === 'delivery' &&
+      target.acKey &&
+      (!target.acceptance?.agentReady ||
+        operation.version !== target.resultVersion ||
+        operation.digest !== target.resultDigest)
+    )
+      throw new Error('AC Agent Review requires verified current result version/digest');
     if (operation.authorType === 'human') {
       if (operation.reporterRole !== 'coordinator')
         throw new Error(
@@ -453,7 +699,7 @@ function validate(operation, snapshot) {
         );
       required(operation.quote, 'quote');
       required(operation.requirementId, 'requirementId');
-      const requirement = task.reviewRequirements.find(
+      const requirement = target.reviewRequirements.find(
         (item) => item.id === operation.requirementId,
       );
       if (
@@ -462,6 +708,17 @@ function validate(operation, snapshot) {
         requirement.digest !== operation.digest
       )
         throw new Error('Review must match current requirement version and digest');
+      if (
+        target.acKey &&
+        (requirement.acKey !== target.acKey ||
+          requirement.fileCurrent === false ||
+          (requirement.type === 'delivery' &&
+            (!target.resultDigest ||
+              target.resultCurrent === false ||
+              requirement.resultDigest !== target.resultDigest ||
+              requirement.resultVersion !== target.resultVersion)))
+      )
+        throw new Error('Human review must match current AC and result');
     }
   }
   if (operation.kind === 'artifact') {
@@ -527,7 +784,54 @@ async function withWriterLock(loc, work) {
 
 export async function readTracking(config = {}) {
   const loc = await location(config);
-  return fold(await eventsAt(loc), loc.workspace);
+  return refreshAcceptance(fold(await eventsAt(loc), loc.workspace), loc.workspace);
+}
+
+async function fileMatches(workspace, reference, digest) {
+  if (!reference || !digest) return false;
+  try {
+    return sha256(await readFile(await workspaceFile(workspace, reference))) === digest;
+  } catch {
+    return false;
+  }
+}
+function artifactKey(target) {
+  return sha256(stable((target.artifacts || []).map((a) => [a.id, a.reference, a.digest])));
+}
+async function refreshAcceptance(snapshot, workspace) {
+  for (const target of [...snapshot.tasks, ...snapshot.runs]) {
+    if (target.acKey) {
+      const parent = target.runId
+        ? snapshot.tasks.find((t) => t.teamId === target.teamId && t.taskId === target.taskId)
+        : null;
+      target.parentReferencesCurrent =
+        !target.runId ||
+        (target.acceptanceItems || []).every(
+          (i) =>
+            !i.parentItemId ||
+            (i.parentVersion === parent?.version &&
+              i.parentAcKey === parent?.acKey &&
+              parent?.acceptanceItems.some((p) => p.id === i.parentItemId)),
+        );
+      const artifactsCurrent = (
+        await Promise.all(
+          (target.artifacts || []).map((a) => fileMatches(workspace, a.reference, a.digest)),
+        )
+      ).every(Boolean);
+      target.resultCurrent =
+        artifactsCurrent &&
+        target.resultArtifactKey === artifactKey(target) &&
+        (await fileMatches(workspace, target.resultReference, target.resultDigest));
+      for (const requirement of target.reviewRequirements || [])
+        requirement.fileCurrent = await fileMatches(
+          workspace,
+          requirement.reference,
+          requirement.digest,
+        );
+    }
+    target.acceptance = acceptanceState(target);
+  }
+  return snapshot;
 }
 
 export async function appendOperation(config, input) {
@@ -566,9 +870,23 @@ export async function appendOperation(config, input) {
         throw new Error('eventId already exists with different content');
       return { eventId, duplicate: true, event: duplicate };
     }
-    const snapshot = fold(events, loc.workspace);
+    const snapshot = await refreshAcceptance(fold(events, loc.workspace), loc.workspace);
     validate(operation, snapshot);
-    if (operation.kind === 'review-requirement' || operation.kind === 'artifact') {
+    const target = operation.runId
+      ? snapshot.runs.find((r) => r.teamId === operation.teamId && r.runId === operation.runId)
+      : snapshot.tasks.find((t) => t.teamId === operation.teamId && t.taskId === operation.taskId);
+    if (operation.kind === 'review-requirement')
+      operation.scopeKey = sha256(stable(operation.affectedTaskIds || [operation.taskId]));
+    if (operation.kind === 'review' && operation.authorType === 'human')
+      operation.scopeKey = target?.reviewRequirements.find(
+        (q) => q.id === operation.requirementId,
+      )?.scopeKey;
+    if (['acceptance', 'review', 'review-requirement'].includes(operation.kind) && target?.acKey) {
+      operation.acKey = target.acKey;
+      operation.resultDigest = target.resultDigest || null;
+      operation.resultVersion = target.resultVersion || null;
+    }
+    if (['review-requirement', 'artifact', 'result'].includes(operation.kind)) {
       const actual = await workspaceFile(loc.workspace, operation.reference);
       const info = await stat(actual);
       if (!info.isFile() || info.size > 8 * 1024 * 1024)
@@ -577,6 +895,7 @@ export async function appendOperation(config, input) {
       if (content.length > 8 * 1024 * 1024) throw new Error('Referenced file exceeds 8 MiB');
       operation.reference = path.relative(loc.workspace, actual).split(path.sep).join('/');
       operation.digest = sha256(content);
+      if (operation.kind === 'result') operation.artifactKey = artifactKey(target);
       if (operation.kind === 'review-requirement') {
         const snapshotsDir = path.join(loc.scope, 'snapshots');
         await mkdir(snapshotsDir, { recursive: true });

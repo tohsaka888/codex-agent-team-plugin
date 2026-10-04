@@ -18,6 +18,12 @@ export const lifeLabels = {
 };
 export const time = (value) => (value ? new Date(value).toLocaleString() : '未知');
 export function taskState(task) {
+  if (task.acceptance?.humanStatus === 'rejected') return '待修正 · 人工退回';
+  if (
+    task.businessStatus === 'completed' ||
+    (!task.businessStatus && task.executionStatus === 'completed')
+  )
+    return task.acceptance?.accepted ? '验收完成' : '执行结束 · 验收待完成';
   if (task.cardKind === 'task' && task.businessStatus)
     return taskState({ ...task, cardKind: null, currentRunId: null });
   if (task.executionUnreported) return '业务进行中 · 执行未同步';
@@ -55,11 +61,26 @@ export function taskState(task) {
       : labels[task.executionStatus] || '未知';
 }
 export function taskTone(task) {
-  return task.reviewPhase === 'repair_required' ||
-    column(task) === 'review' ||
-    task.executionStatus === 'blocked'
-    ? 'warning'
-    : task.executionStatus === 'completed'
-      ? 'success'
-      : '';
+  if (
+    task.acceptance?.humanStatus === 'rejected' ||
+    ((task.businessStatus === 'completed' ||
+      (!task.businessStatus && task.executionStatus === 'completed')) &&
+      !task.acceptance?.accepted)
+  )
+    return 'warning';
+  if (task.cardKind === 'task' && task.businessStatus)
+    return taskTone({ ...task, cardKind: null, currentRunId: null });
+  if (task.executionUnreported) return 'info';
+  const status =
+    ['queued', 'running'].includes(task.businessStatus) && task.currentRunId
+      ? task.executionStatus
+      : task.businessStatus || task.executionStatus;
+  if (status === 'failed') return 'danger';
+  if (
+    ['blocked', 'awaiting_review', 'repair_required'].includes(status) ||
+    (!task.businessStatus && task.reviewPhase === 'repair_required') ||
+    column(task) === 'review'
+  )
+    return 'warning';
+  return { completed: 'success', running: 'info', queued: 'neutral' }[status] || '';
 }

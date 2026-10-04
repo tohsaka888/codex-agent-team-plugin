@@ -8,6 +8,7 @@ import { appendOperation, readTracking } from './skills/team-sync/scripts/tracki
 import { taskColumn } from './web/view-model.mjs';
 import { taskState } from './web/task-presentation.mjs';
 import { orgRoleView, orgForest } from './web/org-view.mjs';
+import { fixtureContract } from './test-contract-fixture.mjs';
 
 const time = (n) => `2026-10-03T12:${n}:00.000Z`;
 function fixture() {
@@ -68,7 +69,13 @@ test('unique full native path merges duplicate card and fresh execution without 
     for (const value of values)
       await appendOperation(
         { workspace },
-        { ...value, updatedAt: undefined, kind, timestamp: time('30') },
+        {
+          ...(['task', 'run'].includes(kind) ? fixtureContract() : {}),
+          ...value,
+          updatedAt: undefined,
+          kind,
+          timestamp: time('30'),
+        },
       );
   const before = await readTracking({ workspace });
   const merged = await mergePortable({
@@ -118,7 +125,17 @@ test('observed team root joins Coordinator run; task provenance survives later s
   const workspace = await mkdtemp(join(tmpdir(), 'root-provenance-'));
   t.after(() => rm(workspace, { recursive: true, force: true }));
   const append = (input) =>
-    appendOperation({ workspace }, { producer: 'coordinator', timestamp: time('30'), ...input });
+    appendOperation(
+      { workspace },
+      {
+        ...(['task', 'run'].includes(input.kind) && (input.title || input.provider)
+          ? fixtureContract()
+          : {}),
+        producer: 'coordinator',
+        timestamp: time('30'),
+        ...input,
+      },
+    );
   await append({
     kind: 'team',
     teamId: 'app',

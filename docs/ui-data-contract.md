@@ -110,3 +110,13 @@ Snapshot Task 的 humanReview 为派生展示：unreported / unknown / awaiting_
 2026-10-04 用户明确确认 Kanban 父工单与独立执行卡：每个父工单保留原ID，执行卡以task.id/runId形成展示ID；不新建业务数据。父卡按businessStatus，执行卡按executionStatus，各自分列；重复runId合并，列数分别注明工单与执行。执行详情显示所属工单及当前run。依据 .scratch/org-dag/execution-cards-delivery.md。
 
 2026-10-04 Org Chart DAG 同样使用工单和执行独立节点；归属边为 parent→execution 虚线，业务 dependencies 为 prerequisite→task 实线。原生 Agent 父子模式单独保留，不用身份树替代业务依赖，也不推测未提供的执行顺序。依据 .scratch/org-dag/org-execution-delivery.md。
+
+
+## 强制 AC（2026-10-04 v1）
+
+按用户确认的强制验收合同，每张父工单与独立执行卡在登记/分派时都必须有非空 AC，明确角色、类别、AC 版本和验证方法。编码类 taskType=code 必需 unit_test，UE 必需 human prototype；每卡还需 human delivery。Agent 自主验证当前结果，独立审查与人工结果验收分别记录。完整字段和可执行命令见[同步验收合同](../plugins/agent-team/skills/team-sync/references/acceptance.md)。
+
+result 操作登记实际结果文件/版本/指纹；acceptance、review-requirement、review、artifact 的可选 runId 指定执行卡，不传则指定父工单。同名 AC 不跨卡合并。AC/目标/结果或已关联文件变化使旧证据失效，历史保留。业务 completed 要求每张关联卡当前验收满足；run completed 仍仅表示执行结束。旧数据可读，缺失标“AC 缺失 · 待补齐”，不追认人工通过。UI 显示每卡条件、验证进度、人工结果状态，原生执行结束且未验收进入待评审；完成列表示“验收完成”。
+
+
+2026-10-04 人工核验细化（覆盖旧版每卡人工确认约定）：每卡仍须非空具体 AC 和 Agent 自验证；仅需人工核验的功能添加 human 条件，manualCheck 必填 entry、steps、expected。无需人工核验的卡不添加通用确认项，显示“无需人工核验”。UE 原型确认等适用要求保留；不得删除真实人工核验需求规避验收。详见 [强制验收合同](../plugins/agent-team/skills/team-sync/references/acceptance.md)。

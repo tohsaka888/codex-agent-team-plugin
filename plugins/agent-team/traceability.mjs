@@ -11,7 +11,31 @@ export function acceptanceItems(values) {
       ? value.status
       : 'unknown';
     if (['passed', 'failed'].includes(status) && (!evidence || !reportedBy)) status = 'unknown';
-    items.set(value.id, { id: value.id, label: value.label, status, evidence, reportedBy });
+    items.set(value.id, {
+      id: value.id,
+      label: value.label,
+      status,
+      evidence,
+      reportedBy,
+      method: text(value.method),
+      manualCheck: value.manualCheck
+        ? {
+            entry: text(value.manualCheck.entry),
+            steps: (Array.isArray(value.manualCheck.steps) ? value.manualCheck.steps : [])
+              .map((step) => text(step))
+              .filter(Boolean),
+            expected: text(value.manualCheck.expected),
+          }
+        : null,
+      verifier: ['agent', 'human'].includes(value.verifier) ? value.verifier : null,
+      kind: text(value.kind, 100),
+      version: text(value.version, 100),
+      resultVersion: text(value.resultVersion, 100),
+      resultDigest: text(value.resultDigest, 100),
+      parentItemId: text(value.parentItemId, 100),
+      parentVersion: text(value.parentVersion, 100),
+      observedAt: text(value.updatedAt || value.observedAt, 100),
+    });
   }
   return [...items.values()];
 }
@@ -64,7 +88,7 @@ export function reviewRecords(values) {
 export function checklist(task) {
   if (task?.acceptanceItemsReported || task?.acceptanceItems?.length)
     return acceptanceItems(task.acceptanceItems);
-  return (task?.acceptance || '')
+  return (typeof task?.acceptance === 'string' ? task.acceptance : '')
     .split(/[；;\n]+/)
     .map((s) => s.trim())
     .filter(Boolean)

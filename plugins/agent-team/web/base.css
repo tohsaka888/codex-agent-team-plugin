@@ -244,6 +244,18 @@ main {
   background: light-dark(#fffbeb, #3c301b);
   color: light-dark(#92400e, #efc27a);
 }
+.chip.danger {
+  background: light-dark(#fef2f2, #3b1c1c);
+  color: light-dark(#b91c1c, #fca5a5);
+}
+.chip.info {
+  background: light-dark(#eff6ff, #172d49);
+  color: light-dark(#1d4ed8, #93c5fd);
+}
+.chip.neutral {
+  background: var(--subtle);
+  color: var(--muted);
+}
 #detail {
   width: 360px;
   flex: none;

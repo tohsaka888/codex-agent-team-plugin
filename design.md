@@ -18,6 +18,8 @@ colors:
   warning-surface: "#FFFBEB"
   danger: "#B91C1C"
   danger-surface: "#FEF2F2"
+  info: "#1D4ED8"
+  info-surface: "#EFF6FF"
   focus: "#202020"
 typography:
   headline:
@@ -107,6 +109,10 @@ components:
     backgroundColor: "{colors.danger-surface}"
     textColor: "{colors.danger}"
     rounded: "{rounded.full}"
+  status-info:
+    backgroundColor: "{colors.info-surface}"
+    textColor: "{colors.info}"
+    rounded: "{rounded.full}"
   divider:
     backgroundColor: "{colors.border}"
     height: 1px
@@ -130,7 +136,7 @@ components:
 
 优先使用宿主提供的主题变量。上方 token 是浅色主题的候选回退值，深色主题必须跟随宿主适配，不能固定白色画布。
 主文字、选中导航采用中性色；绿色表示有证据的完成，琥珀色表示待评审或阻塞，红色表示失败。
-状态必须同时显示文字。正文对比至少 4.5:1，必要图形至少 3:1；颜色不能独自表达状态。
+状态必须同时显示文字。失败红色、进行中蓝色、待办灰色，执行完成绿色，待评审与阻塞橙色；工单和执行标签按各自展示状态着色。正文对比至少 4.5:1，必要图形至少 3:1；颜色不能独自表达状态。
 
 ## Typography
 

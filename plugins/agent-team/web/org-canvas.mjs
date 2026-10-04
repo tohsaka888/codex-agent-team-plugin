@@ -154,7 +154,7 @@ export function createOrgCanvas({
     const byId = new Map(graph.nodes.map((n) => [orgId(n), n]));
     let activeCount = 0;
     const markup = graph.edges
-      .map((e, index) => {
+      .map((e) => {
         const a = byId.get(e.from),
           b = byId.get(e.to),
           x = a.x + a.width / 2,
@@ -179,7 +179,8 @@ export function createOrgCanvas({
           ',' +
           yy;
         if (e.kind === 'dependency') {
-          const lane = graph.width - 210 + (index % 20) * 8;
+          // 依赖线共用右侧通道，重叠段合并为同一条视觉主干。
+          const lane = graph.width - 210;
           const fromX = a.x + a.width,
             fromY = a.y + a.height / 2;
           const toX = b.x + b.width,

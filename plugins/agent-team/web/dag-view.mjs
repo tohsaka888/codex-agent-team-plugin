@@ -29,7 +29,7 @@ export function individualAgents(agents, tasks) {
   });
 }
 
-export function layoutDag(tasks, agents = [], measured = new Map()) {
+export function layoutDag(tasks, _agents = [], measured = new Map()) {
   const normalized = tasks.map((task) => ({ ...task, runs: executionRecords(task) }));
   const cards = kanbanCards(normalized);
   const nodes = cards.map((task) => ({
@@ -76,22 +76,7 @@ export function layoutDag(tasks, agents = [], measured = new Map()) {
     ranks.set(node.orgNodeId, ranks.get(parent.orgNodeId) + 1);
     edges.push({ from: parent.orgNodeId, to: node.orgNodeId, kind: 'membership' });
   }
-  // 没有工单关联的真实 Agent 仍可见，不造任务或执行。
-  for (const agent of individualAgents(agents, tasks)) {
-    const id = agentId(agent);
-    if (
-      !agent.allRuns?.length &&
-      !tasks.some(
-        (t) =>
-          t.agentId === id ||
-          t.nativeAgentId === id ||
-          t.runs?.some((r) => (r.agentId || r.nativeAgentId) === id),
-      )
-    ) {
-      nodes.push({ ...agent, width: 320, height: 240 });
-      ranks.set(agent.orgNodeId, 0);
-    }
-  }
+  // DAG 仅投影工单与执行；未关联身份保留在原生父子关系视图。
   const rows = [...new Set(ranks.values())]
     .sort((a, b) => a - b)
     .map((rank) => nodes.filter((n) => ranks.get(n.orgNodeId) === rank));
@@ -165,18 +150,24 @@ export function renderDagCard(node) {
 }
 
 export function renderNativeGraphCard(agent, task, selected) {
-  const displayTask = task
-    ? {
-        ...task,
-        businessStatus: null,
-        executionStatus: agent.executionStatus || 'unknown',
-        executionUnreported: false,
-        reviewPhase: 'unknown',
-        currentRunId: null,
-      }
-    : null;
-  const markup = renderAgentCard(agent, displayTask, selected);
   const runs = agent.allRuns || [];
+  const executionStatus = agent.executionStatus || agent.nativeExecution?.status || 'unknown';
+  const displayTask =
+    task || executionStatus !== 'unknown'
+      ? {
+          ...task,
+          businessStatus: null,
+          executionStatus,
+          executionUnreported: false,
+          reviewPhase: 'unknown',
+          currentRunId: null,
+        }
+      : null;
+  const markup = renderAgentCard(
+    runs.length ? agent : { ...agent, lifecycle: 'unknown' },
+    displayTask,
+    selected,
+  );
   return markup
     .replace(
       '<span class="agent-foot">',

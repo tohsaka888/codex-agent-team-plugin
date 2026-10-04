@@ -52,10 +52,11 @@ node plugins/agent-team/server.mjs --http --portable --workspace D:/Projects/MyA
 ```powershell
 $syncScript = 'D:/Projects/MyApp/.agents/skills/team-sync/scripts/sync.mjs'
 node $syncScript team --workspace D:/Projects/MyApp --team-id my-app --title 'My App' --provider common
-node $syncScript task --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --title '实现首页' --goal '依据已确认UI实现首页'
-node $syncScript run --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --run-id developer-1 --provider common --role Developer --agent-name home_development --profile developer
+$taskAc = '[{"id":"tests","label":"首页行为单元回归通过","method":"运行首页单元测试并记录命令、文件和结果","verifier":"agent","kind":"unit_test"},{"id":"delivery","label":"首页今日入口可进入学习页面","method":"查看页面并回报操作结果","verifier":"human","kind":"delivery","manualCheck":{"entry":"学习App首页","steps":["启动App","点击今日学习入口"],"expected":"进入今日课程列表并显示课程标题，无空白或错误页"}}]'
+node $syncScript task --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --title '实现首页' --goal '依据已确认UI实现首页' --role Developer --task-type code --version ac-v1 --acceptance-items $taskAc
+node $syncScript run --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --run-id developer-1 --provider common --role Developer --agent-name home_development --profile developer --title 首页行为实现 --task-type code --version ac-v1 --acceptance-items $taskAc
 node $syncScript activity --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --run-id developer-1 --summary '正在核对首页实现'
-node $syncScript acceptance --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --item-id layout --label '首页布局符合确认图' --status pending
+node $syncScript acceptance --workspace D:/Projects/MyApp --team-id my-app --task-id 01 --item-id tests --status pending
 node $syncScript read --workspace D:/Projects/MyApp
 ```
 
@@ -139,3 +140,13 @@ Git忽略依赖、构建输出、`.runtime/`、本机MCP/Hook配置、Python缓�
 不再启动探针的独立执行器测试来代替第一阶段交付。根 package 仅管理文档校验工具，不表示应用框架已选定。
 
 项目及 marketplace 名称为 `codex-agent-team-plugin`，插件 ID 为 `agent-team`，源码目录为 `plugins/agent-team`。旧名称安装的插件需按新 ID 重新安装；历史验收记录保留当时名称。
+
+
+## 强制 AC 与人工结果验收
+
+每张父工单和独立执行卡都必须有非空 AC；登记时原子提供角色、工作类别、AC 版本和具体核对方法。编码任务必需实际通过的单元测试，UE 必需用户确认具体版本原型。每卡包含 Agent 自验证项和人工结果验收项。新流程及 result 文件指纹/独立 run 证据命令见[同步验收合同](plugins/agent-team/skills/team-sync/references/acceptance.md)。
+
+Agent 逐项验证并完成独立审查后提交用户，明确确认当前卡片/结果版本才能业务完成；同一次回复可确认列明的多卡，分别回报。原生执行完成与验收完成独立，旧卡缺失显示“AC 缺失 · 待补齐”，不会自动追认。更新 Skills 后已有会话需重新读取；源码通过不代表安装缓存已更新。
+
+
+2026-10-04 人工核验细化（覆盖旧版每卡人工确认约定）：每卡仍须非空具体 AC 和 Agent 自验证；仅需人工核验的功能添加 human 条件，manualCheck 必填 entry、steps、expected。无需人工核验的卡不添加通用确认项，显示“无需人工核验”。UE 原型确认等适用要求保留；不得删除真实人工核验需求规避验收。详见 [强制验收合同](plugins/agent-team/skills/team-sync/references/acceptance.md)。

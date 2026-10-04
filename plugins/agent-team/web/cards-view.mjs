@@ -1,7 +1,13 @@
 import { html } from './html.mjs';
 import { escapeHtml as safe } from './trace-detail.mjs';
 import { roleIcon, roleClass } from './role-visual.mjs';
-import { taskLabel, agentLabel, taskColumn, kanbanCards } from './view-model.mjs';
+import {
+  taskLabel,
+  agentLabel,
+  taskColumn,
+  kanbanCards,
+  acceptanceSummary,
+} from './view-model.mjs';
 import { taskState, taskTone, lifeLabels, labels } from './task-presentation.mjs';
 import { reviewWait } from './human-review-view.mjs';
 export function renderKanbanBoard(tasks, selectedTask) {
@@ -10,7 +16,7 @@ export function renderKanbanBoard(tasks, selectedTask) {
     ['queued', '待开始'],
     ['running', '进行中'],
     ['review', '待评审'],
-    ['completed', '执行完成'],
+    ['completed', '验收完成'],
   ];
   return html`
     <div class="board">
@@ -97,6 +103,7 @@ export function renderTaskCard(task, selectedTask) {
         ${safe(task.activitySummary || task.goal || '当前活动未提供')}
       </span>
       ${renderCardExecutions(task)}
+      <span class="review-wait">${safe(acceptanceSummary(task))}</span>
       ${
         task.dependencyWarning
           ? html`

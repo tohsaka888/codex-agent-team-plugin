@@ -2,6 +2,7 @@ import { realpath, stat, open } from 'node:fs/promises';
 import { resolve, relative, isAbsolute } from 'node:path';
 import { readState } from './readonly-state.mjs';
 import { executionDocument } from './execution-document.mjs';
+import { kanbanCards } from './web/view-model.mjs';
 // 只读取本会话已关联产物；既校验词法路径，也校验符号链接后的真实路径。
 function within(root, path) {
   const rel = relative(root, path);
@@ -16,7 +17,7 @@ export async function readArtifact({ projectId, rootSessionId, taskId, reference
   if (!rootSessionId || !taskId || !reference) throw new Error('缺少已关联的任务产物');
   const state = await readState({ projectId, rootSessionId, ...context });
   const project = state.projects.find((p) => p.id === state.selectedProjectId);
-  const task = state.snapshot.tasks.find((t) => t.id === taskId);
+  const task = kanbanCards(state.snapshot.tasks).find((t) => t.id === taskId);
   if (project?.hostId !== 'local' || !task) throw new Error('任务或本机工作区不可用');
   if (reference.startsWith('execution://'))
     return executionDocument({

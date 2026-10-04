@@ -30,7 +30,7 @@ test('搜索和角色筛选只返回当前快照匹配任务，不修改原始�
 test('明确待修正不显示成功，失败优先保留原始阶段', () => {
   assert.equal(
     taskColumn({ executionStatus: 'completed', reviewPhase: 'repair_required' }),
-    'unknown',
+    'review',
   );
   assert.equal(
     taskColumn({ executionStatus: 'running', reviewPhase: 'repair_required' }),

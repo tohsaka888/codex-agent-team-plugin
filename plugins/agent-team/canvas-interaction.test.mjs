@@ -55,7 +55,7 @@ test('只有同会话真实状态变化产生迁移，直接完成不补造中�
     snapshot: { tasks: [{ id: 'task', executionStatus: status, reviewPhase: 'unknown' }] },
   });
   assert.deepEqual(changedTasks(snap('queued'), snap('completed')), [
-    { id: 'task', from: 'queued', to: 'completed' },
+    { id: 'task', from: 'queued', to: 'review' },
   ]);
   assert.deepEqual(changedTasks(snap('queued'), snap('queued')), []);
   assert.deepEqual(

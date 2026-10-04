@@ -1,5 +1,9 @@
 # 新会话交接
 
+2026-10-04 用户纠正人工核验过于笼统：按[合同 v2](acceptance-contract-v2.md)取消每卡统一人工确认，human 项必须具体入口、步骤与预期结果。全量130/130、lint、格式、构建和独立复查通过。真实卡已更新为AC v2：8卡无需人工核验且验证/审查完成；04及implementation-04两卡保留具体看板功能核验。交付见 [delivery-v2.md](../.scratch/mandatory-ac/delivery-v2.md)，截图见 [manual-check-v2.png](../.scratch/mandatory-ac/manual-check-v2.png)。此条覆盖下述v1通用清单约定；未更新安装缓存。
+
+2026-10-04 强制 AC v1：已确认规格和四工单实现完成；每卡非空 AC，代码必须单元测试、UE 必须具体原型人工确认，Agent 自验证与人工结果验收独立。全量128项与独立复查通过，释放临时文件锁后关键11项仍通过、源码指纹稳定；覆盖来源未定位。真实源码预览四父工单/六执行全部待人工验收。交付对象见 [.scratch/mandatory-ac/delivery-v1.md](../.scratch/mandatory-ac/delivery-v1.md)，验证见 [verification-final.md](../.scratch/mandatory-ac/verification-final.md)。未提交、推送、发布或同步安装缓存；既有进程仍需后续更新重连。
+
 2026-10-04 按用户要求补充 design.md CLI 环境预检：UI 任务核验并按项目固定版本补齐官方 `@google/design.md`，更新入口及 UE 工作流，人工结构核对仅作补充。本机 `0.4.0` 可运行，design:lint 为 0 错误/0 警告；本机插件及 AI 安装源/缓存的 4 份指引均已备份同步，SHA256 与源码一致。远程业务项目 CLI 安装未执行，已有会话需重读指引或在新会话使用。替换 Validation 文案与限制见 交付记录（本机记录：`../.scratch/agent-team-preflight/designmd-delivery.md`）。
 
 2026-10-04 Lyria复核阶段一致性追加修复：同实例续派允许历史+唯一活动run，未补报依赖不再遮蔽已开始复核，多实例状态聚合覆盖运行/失败/修复，人工scope自由范围正确映射。Windows104项、AI34项及真实归档/新MCP核对通过；redesign-07两回合实测已结束，两视图一致，01至06无run标执行未同步，2项V1确认恢复。两端缓存已备份同步，需重连并重开；未替业务补造完成。见 第三轮交付（本机记录：`../.scratch/remote-task-merge/delivery-v3.md`）。
@@ -90,3 +94,7 @@ fidelity-v1 实际为一个业务工单、五条执行；卡片及角色筛选�
 用户明确确认父工单与各项执行各自独立成节点并显示归属。DAG 已与 Kanban 共用投影，执行独立名称/状态和 Parent 图标，虚线归属、实线业务依赖、每层居中；本机和AI相关14项通过并安装。记录及验证限制见 .scratch/org-dag/org-execution-delivery.md。
 
 2026-10-04 用户要求去掉箭头：已移除 Org Chart 两种关系模式的 SVG marker 及缩放处理，连线接到节点边缘；保留实线依赖、虚线归属与飞线。构建成功，真实归档预览 DOM 验证0个箭头标记、5条归属线。已同步本机缓存及AI源码/缓存；截图 .scratch/org-dag/org-no-arrows.png。旧看板重新打开生效。
+
+2026-10-04 空 Coordinator 修复：用户明确同意，任务 DAG 不再混入无工单关联的身份卡；原生视图仍保留身份，缺执行状态显示未知。当前协调执行已关联；本机20项/AI15项相关检查及限定复查通过，两端已同步，宿主页面工具超时未直接验收。见 .scratch/org-dag/empty-coordinator-delivery.md。
+
+2026-10-04 执行名称修复：公开run保存title，名称按title/name/goal/执行编号回退，不复制父工单标题；新分派需独立名称。截图三条执行已按实际分派内容补齐。本机32项/AI21项及独立复查通过，两端已同步。见 .scratch/org-dag/execution-names-delivery.md。

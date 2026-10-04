@@ -63,7 +63,7 @@ test('旧验收文字只显示未知；逐项核对需要署名与依据；所�
     ],
   });
   assert.ok(review.includes('Agent 评审'));
-  assert.ok(review.includes('尚无人工交付验收记录'));
+  assert.ok(review.includes('当前结果尚待人工验收'));
 });
 
 test('会话导航仅接受本机真实 UUID，宿主拒绝或预览模式均反馈失败', async () => {

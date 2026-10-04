@@ -57,3 +57,13 @@ reviewer 对照规格和合同，检查用户调用边界、引用、产物和�
 ## 实施前人工评审与恢复
 
 分派、返工和跨回合恢复遵循 [人工评审流程](human-review.md)，先读取 [项目评审索引](agents/review-index.md)。分派合同附当前产物版本、指纹、确认范围与影响任务；不能从团队授权或 Agent 通过推断人工确认。等待明确确认期间只推进无关已确认工作和探索。已确认范围内小修改记录判断依据后自动执行。
+
+
+## 强制 AC（2026-10-04 v1）
+
+按用户确认的强制验收合同，每张父工单与独立执行卡在登记/分派时都必须有非空 AC，明确角色、类别、AC 版本和验证方法。编码类 taskType=code 必需 unit_test，UE 必需 human prototype；每卡还需 human delivery。Agent 自主验证当前结果，独立审查与人工结果验收分别记录。完整字段和可执行命令见[同步验收合同](../plugins/agent-team/skills/team-sync/references/acceptance.md)。
+
+result 操作登记实际结果文件/版本/指纹；acceptance、review-requirement、review、artifact 的可选 runId 指定执行卡，不传则指定父工单。同名 AC 不跨卡合并。AC/目标/结果或已关联文件变化使旧证据失效，历史保留。业务 completed 要求每张关联卡当前验收满足；run completed 仍仅表示执行结束。旧数据可读，缺失标“AC 缺失 · 待补齐”，不追认人工通过。UI 显示每卡条件、验证进度、人工结果状态，原生执行结束且未验收进入待评审；完成列表示“验收完成”。
+
+
+2026-10-04 人工核验细化（覆盖旧版每卡人工确认约定）：每卡仍须非空具体 AC 和 Agent 自验证；仅需人工核验的功能添加 human 条件，manualCheck 必填 entry、steps、expected。无需人工核验的卡不添加通用确认项，显示“无需人工核验”。UE 原型确认等适用要求保留；不得删除真实人工核验需求规避验收。详见 [强制验收合同](../plugins/agent-team/skills/team-sync/references/acceptance.md)。

@@ -1,7 +1,38 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { layoutDag, individualAgents, renderDagCard } from './web/dag-view.mjs';
+import {
+  layoutDag,
+  individualAgents,
+  renderDagCard,
+  renderNativeGraphCard,
+} from './web/dag-view.mjs';
 import { layoutOrg } from './web/canvas-layout.mjs';
+
+test('任务 DAG 不混入未关联身份，原生视图仍保留协调者与真实父子边', () => {
+  const agents = [
+    { agentId: 'root', role: 'Coordinator', lifecycle: 'idle' },
+    { agentId: 'reviewer', role: 'Reviewer', parentAgentId: 'root' },
+  ];
+  const tasks = [{ id: 't', taskId: '01', runs: [{ runId: 'review', agentId: 'reviewer' }] }];
+  const graph = layoutDag(tasks, agents);
+  assert.equal(graph.nodes.length, 2);
+  assert.ok(graph.nodes.every((n) => n.task));
+  assert.equal(graph.edges.length, 1);
+  assert.equal(layoutDag([], agents).nodes.length, 0);
+  const native = layoutOrg(individualAgents(agents, tasks));
+  assert.equal(native.nodes.length, 2);
+  assert.equal(native.edges.length, 1);
+  const root = native.nodes.find((n) => n.agentId === 'root');
+  const markup = renderNativeGraphCard(root, null);
+  assert.ok(markup.includes('0 条执行记录'));
+  assert.ok(markup.includes('未知'));
+  assert.ok(!markup.includes('空闲'));
+  assert.ok(
+    renderNativeGraphCard({ ...root, nativeExecution: { status: 'running' } }, null).includes(
+      '进行中',
+    ),
+  );
+});
 
 test('原生执行观察保留真实记录，普通未执行工单不伪造 run', () => {
   const graph = layoutDag([

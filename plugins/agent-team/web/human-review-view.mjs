@@ -42,7 +42,9 @@ export function renderHumanReview(
   const review = humanReview(task);
   if (!review.items.length)
     return html`
-      <p class="muted review-unknown">人工评审要求未接入，不能从旧完成状态推断确认。</p>
+      <p class="muted review-unknown">
+        ${task.acceptance?.humanStatus === 'not_required' ? '本卡无需人工核验。' : '人工评审要求未接入，不能从旧完成状态推断确认。'}
+      </p>
     `;
   function row(item) {
     const confirmed = item.status === 'confirmed';

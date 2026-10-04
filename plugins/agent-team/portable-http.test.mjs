@@ -9,10 +9,12 @@ import { once } from 'node:events';
 import { readState } from './readonly-state.mjs';
 import { mergePortable } from './portable-state.mjs';
 import { orgForest } from './web/org-view.mjs';
+import { contractArgs } from './test-contract-fixture.mjs';
 
 const cli = fileURLToPath(new URL('./skills/team-sync/scripts/sync.mjs', import.meta.url));
 const serverPath = fileURLToPath(new URL('./server.mjs', import.meta.url));
 function call(workspace, kind, ...args) {
+  args = contractArgs(kind, args);
   return JSON.parse(
     execFileSync(process.execPath, [cli, kind, '--workspace', workspace, ...args], {
       encoding: 'utf8',
