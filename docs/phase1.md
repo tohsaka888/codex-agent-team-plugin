@@ -8,7 +8,7 @@ UI 仅查看，留到后续阶段；SSH、持久任务数据库、严格审批�
 
 ## 第一步：形成可执行规格
 
-使用 Matt `to-spec` 将已有讨论整理为角色职责、输入输出、Skills 规则、任务协作与验收条件。规格见 [native-agent-team](../.scratch/native-agent-team/spec.md)。
+使用 Matt `to-spec` 将已有讨论整理为角色职责、输入输出、Skills 规则、任务协作与验收条件。规格见 native-agent-team（本机记录：`../.scratch/native-agent-team/spec.md`）。
 用户已确认外部验收边界：隔离小任务 → 原生角色派生 → 按需读取 Skill → 任务产物 → 协调者汇总；并行与审查反馈逐步加入。
 规格已生成；推荐角色、模型配置和切片仍需通过后续任务验证，不把文档写成实现结果。
 

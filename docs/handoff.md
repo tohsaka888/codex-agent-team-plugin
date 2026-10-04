@@ -1,34 +1,34 @@
 # 新会话交接
 
-2026-10-04 按用户要求补充 design.md CLI 环境预检：UI 任务核验并按项目固定版本补齐官方 `@google/design.md`，更新入口及 UE 工作流，人工结构核对仅作补充。本机 `0.4.0` 可运行，design:lint 为 0 错误/0 警告；本机插件及 AI 安装源/缓存的 4 份指引均已备份同步，SHA256 与源码一致。远程业务项目 CLI 安装未执行，已有会话需重读指引或在新会话使用。替换 Validation 文案与限制见 [交付记录](../.scratch/agent-team-preflight/designmd-delivery.md)。
+2026-10-04 按用户要求补充 design.md CLI 环境预检：UI 任务核验并按项目固定版本补齐官方 `@google/design.md`，更新入口及 UE 工作流，人工结构核对仅作补充。本机 `0.4.0` 可运行，design:lint 为 0 错误/0 警告；本机插件及 AI 安装源/缓存的 4 份指引均已备份同步，SHA256 与源码一致。远程业务项目 CLI 安装未执行，已有会话需重读指引或在新会话使用。替换 Validation 文案与限制见 交付记录（本机记录：`../.scratch/agent-team-preflight/designmd-delivery.md`）。
 
-2026-10-04 Lyria复核阶段一致性追加修复：同实例续派允许历史+唯一活动run，未补报依赖不再遮蔽已开始复核，多实例状态聚合覆盖运行/失败/修复，人工scope自由范围正确映射。Windows104项、AI34项及真实归档/新MCP核对通过；redesign-07两回合实测已结束，两视图一致，01至06无run标执行未同步，2项V1确认恢复。两端缓存已备份同步，需重连并重开；未替业务补造完成。见 [第三轮交付](../.scratch/remote-task-merge/delivery-v3.md)。
+2026-10-04 Lyria复核阶段一致性追加修复：同实例续派允许历史+唯一活动run，未补报依赖不再遮蔽已开始复核，多实例状态聚合覆盖运行/失败/修复，人工scope自由范围正确映射。Windows104项、AI34项及真实归档/新MCP核对通过；redesign-07两回合实测已结束，两视图一致，01至06无run标执行未同步，2项V1确认恢复。两端缓存已备份同步，需重连并重开；未替业务补造完成。见 第三轮交付（本机记录：`../.scratch/remote-task-merge/delivery-v3.md`）。
 
-2026-10-04 追加修复详情来源遗漏、Org重复根及复合Coordinator图标：原始目标事件署名/时间/ID投影到详情，Codex `/root` run 通过已观察team根会话关联，复合职责按明确主职责使用图标并保留全文。真实Lyria组织图3节点/1根2子，三个截图工单字段齐全；Windows100项、AI32项、lint/格式/构建和真实MCP打开/刷新通过，两端缓存备份同步。需重连MCP并重开页面，宿主内嵌视觉未完整复验。见 [追加交付](../.scratch/remote-task-merge/delivery-v2.md)。
+2026-10-04 追加修复详情来源遗漏、Org重复根及复合Coordinator图标：原始目标事件署名/时间/ID投影到详情，Codex `/root` run 通过已观察team根会话关联，复合职责按明确主职责使用图标并保留全文。真实Lyria组织图3节点/1根2子，三个截图工单字段齐全；Windows100项、AI32项、lint/格式/构建和真实MCP打开/刷新通过，两端缓存备份同步。需重连MCP并重开页面，宿主内嵌视觉未完整复验。见 追加交付（本机记录：`../.scratch/remote-task-merge/delivery-v2.md`）。
 
-2026-10-04 AI 看板重复卡、状态差异及自动打开报错已修复：同主会话内唯一宿主完整路径补充 run 展示关联，较新原生执行状态进入业务卡而不自动改业务依赖/验收，打开时按已核对主会话恢复桌面与服务器不同的项目 ID。Windows 全量97项及新增4项复测、AI18项及补充4项、lint/格式/构建、真实AI安装MCP两种打开与后续刷新通过；两端源码/缓存已备份同步，需重连MCP并重开页面。旧截图五卡当前未直接复现，宿主视觉待核对。见 [.scratch/remote-task-merge/delivery.md](../.scratch/remote-task-merge/delivery.md)。
+2026-10-04 AI 看板重复卡、状态差异及自动打开报错已修复：同主会话内唯一宿主完整路径补充 run 展示关联，较新原生执行状态进入业务卡而不自动改业务依赖/验收，打开时按已核对主会话恢复桌面与服务器不同的项目 ID。Windows 全量97项及新增4项复测、AI18项及补充4项、lint/格式/构建、真实AI安装MCP两种打开与后续刷新通过；两端源码/缓存已备份同步，需重连MCP并重开页面。旧截图五卡当前未直接复现，宿主视觉待核对。见 .scratch/remote-task-merge/delivery.md（本机记录：`../.scratch/remote-task-merge/delivery.md`）。
 
-2026-10-03 可移植追踪重构v2已按用户明确确认的四工单实施：四Skills+自包含CLI/事件核心、Task多run、无实例计划、业务阶段、checklist/版本指纹、MCP/独立HTTP、六可选Profile及安装器，README已补Codex插件与非Codex使用。真实预定义/动态原生成员已读取并同步，独立Reviewer复查无剩余P1/P2。本机94项/AI21项、lint/格式/构建及真实浏览器四列/窄屏/详情/组织图/HTTP嵌入通过；源及两端已有缓存同步有备份。需重连MCP并新会话核对Skills，其他客户端真实会话及人工交付验收未验证。见 [.scratch/profile-native-refactor/delivery-v2.md](../.scratch/profile-native-refactor/delivery-v2.md)。
+2026-10-03 可移植追踪重构v2已按用户明确确认的四工单实施：四Skills+自包含CLI/事件核心、Task多run、无实例计划、业务阶段、checklist/版本指纹、MCP/独立HTTP、六可选Profile及安装器，README已补Codex插件与非Codex使用。真实预定义/动态原生成员已读取并同步，独立Reviewer复查无剩余P1/P2。本机94项/AI21项、lint/格式/构建及真实浏览器四列/窄屏/详情/组织图/HTTP嵌入通过；源及两端已有缓存同步有备份。需重连MCP并新会话核对Skills，其他客户端真实会话及人工交付验收未验证。见 .scratch/profile-native-refactor/delivery-v2.md（本机记录：`../.scratch/profile-native-refactor/delivery-v2.md`）。
 
-2026-10-03 Kanban纵向布局回归已修复：原HTML重构提前关闭board容器，现使用完整renderKanbanBoard模板并补完整DOM测试。本机6项检查/lint/格式/构建、Chrome四列/640px双列及列内滚动通过，两端资源同步并备份；AI三项模型检查通过，远程DOM缺linkedom未运行成功，宿主完整交互未复验。见 [.scratch/kanban-layout-fix/delivery.md](../.scratch/kanban-layout-fix/delivery.md)，重新打开看板加载。
+2026-10-03 Kanban纵向布局回归已修复：原HTML重构提前关闭board容器，现使用完整renderKanbanBoard模板并补完整DOM测试。本机6项检查/lint/格式/构建、Chrome四列/640px双列及列内滚动通过，两端资源同步并备份；AI三项模型检查通过，远程DOM缺linkedom未运行成功，宿主完整交互未复验。见 .scratch/kanban-layout-fix/delivery.md（本机记录：`../.scratch/kanban-layout-fix/delivery.md`），重新打开看板加载。
 
-2026-10-03 UE 方案 v1 已获用户“方案我认可”确认，团队技能、可选角色、图评审/归档/design.md 输入合同及 UE 看板展示已接入并同步两端。Lyria 当前规格/工单确认存在，但七次派生未提供 agent_type，不能称角色分派完整。14项本机/9项AI相关检查、lint/格式/构建通过；真实生图及确认后开发读取未试运行，技能验证器缺 PyYAML 未通过。见 [.scratch/ue-agent/delivery.md](../.scratch/ue-agent/delivery.md) 和对应工单；不补造 Lyria 历史职责，不擅自给其会话发消息。
+2026-10-03 UE 方案 v1 已获用户“方案我认可”确认，团队技能、可选角色、图评审/归档/design.md 输入合同及 UE 看板展示已接入并同步两端。Lyria 当前规格/工单确认存在，但七次派生未提供 agent_type，不能称角色分派完整。14项本机/9项AI相关检查、lint/格式/构建通过；真实生图及确认后开发读取未试运行，技能验证器缺 PyYAML 未通过。见 .scratch/ue-agent/delivery.md（本机记录：`../.scratch/ue-agent/delivery.md`） 和对应工单；不补造 Lyria 历史职责，不擅自给其会话发消息。
 
-2026-10-03 明确分派目标回报：新增技能 report-goal.mjs 与 task-goal-report 展示元数据，成功分派/目标变更后协调者用真实父子 UUID 回报并查询核对。目标叠加到原生卡片，保持执行状态与业务工单目标独立。本机23项、AI21项相关检查通过，两端插件已同步。历史密文目标无可靠工单关联时保持不可用；已有协调者须重读新版 Skill，MCP须重连并重开看板。真实新分派回报闭环及宿主视觉尚未验收，见 [.scratch/goal-reporting/delivery.md](../.scratch/goal-reporting/delivery.md)。
+2026-10-03 明确分派目标回报：新增技能 report-goal.mjs 与 task-goal-report 展示元数据，成功分派/目标变更后协调者用真实父子 UUID 回报并查询核对。目标叠加到原生卡片，保持执行状态与业务工单目标独立。本机23项、AI21项相关检查通过，两端插件已同步。历史密文目标无可靠工单关联时保持不可用；已有协调者须重读新版 Skill，MCP须重连并重开看板。真实新分派回报闭环及宿主视觉尚未验收，见 .scratch/goal-reporting/delivery.md（本机记录：`../.scratch/goal-reporting/delivery.md`）。
 
-2026-10-03 HTML 源码重构：页面骨架/基础样式分离，卡片、空态、详情和状态文案独立模块，相关页面拼接改成多行模板；Prettier 覆盖 HTML/CSS，ESLint 禁止 HTML 字面量加号拼接。本机67项含DOM结构/转义测试、远程32项相关检查、lint/格式/构建通过，页面及源码已同步本机/AI插件。重新打开页面加载，完整宿主视觉未复验。见 [.scratch/html-refactor/delivery.md](../.scratch/html-refactor/delivery.md)。
+2026-10-03 HTML 源码重构：页面骨架/基础样式分离，卡片、空态、详情和状态文案独立模块，相关页面拼接改成多行模板；Prettier 覆盖 HTML/CSS，ESLint 禁止 HTML 字面量加号拼接。本机67项含DOM结构/转义测试、远程32项相关检查、lint/格式/构建通过，页面及源码已同步本机/AI插件。重新打开页面加载，完整宿主视觉未复验。见 .scratch/html-refactor/delivery.md（本机记录：`../.scratch/html-refactor/delivery.md`）。
 
-2026-10-03 代码规范与旧目录收尾：新增 ESLint/Prettier 配置及根 npm 命令，插件44个 mjs 格式化，两个未用变量/import修正，lint/format:check/65项测试/构建通过。旧 probe 配置停用，目录已可恢复归档至 .scratch/plugin-cleanup，plugins 仅保留 agent-team；旧进程停止/删除组合被策略拒绝，未主动终止旧MCP。见 [.scratch/plugin-cleanup/delivery.md](../.scratch/plugin-cleanup/delivery.md)。
+2026-10-03 代码规范与旧目录收尾：新增 ESLint/Prettier 配置及根 npm 命令，插件44个 mjs 格式化，两个未用变量/import修正，lint/format:check/65项测试/构建通过。旧 probe 配置停用，目录已可恢复归档至 .scratch/plugin-cleanup，plugins 仅保留 agent-team；旧进程停止/删除组合被策略拒绝，未主动终止旧MCP。见 .scratch/plugin-cleanup/delivery.md（本机记录：`../.scratch/plugin-cleanup/delivery.md`）。
 
-2026-10-03 默认 session 空选修正：打开看板缺 rootSessionId 时，优先核对调用环境会话；否则自动选择当前工作区最近活动的进行中主会话，再降级最近会话，启发式显示“自动”。页面接受省略会话的工具输入所对应结果绑定，手动选择及后续轮询保持固定 ID。两端15项检查和真实 AI MCP 自动选中 Develop English learning app 通过；资源已同步，需重连插件及重开看板，视觉待核对。见 [.scratch/session-default-fix/delivery.md](../.scratch/session-default-fix/delivery.md)。
+2026-10-03 默认 session 空选修正：打开看板缺 rootSessionId 时，优先核对调用环境会话；否则自动选择当前工作区最近活动的进行中主会话，再降级最近会话，启发式显示“自动”。页面接受省略会话的工具输入所对应结果绑定，手动选择及后续轮询保持固定 ID。两端15项检查和真实 AI MCP 自动选中 Develop English learning app 通过；资源已同步，需重连插件及重开看板，视觉待核对。见 .scratch/session-default-fix/delivery.md（本机记录：`../.scratch/session-default-fix/delivery.md`）。
 
-2026-10-03 原生动态 Agent 兼容：Kanban 缺职责时显示真实派生名称/宿主昵称，详情显示负责 Agent；新增成功分派目标及本实例公开活动摘要、时间和来源，支持 UUID 分派关联及待开始状态。两端43项检查、最后6项相关复测及真实 AI MCP 的 api_implementation/mobile_analysis 字段核对通过。源码与两端缓存已同步；须重连 MCP 并重新打开看板，宿主视觉待核对。范围与限制见 [.scratch/dynamic-agent-display/delivery.md](../.scratch/dynamic-agent-display/delivery.md)。
+2026-10-03 原生动态 Agent 兼容：Kanban 缺职责时显示真实派生名称/宿主昵称，详情显示负责 Agent；新增成功分派目标及本实例公开活动摘要、时间和来源，支持 UUID 分派关联及待开始状态。两端43项检查、最后6项相关复测及真实 AI MCP 的 api_implementation/mobile_analysis 字段核对通过。源码与两端缓存已同步；须重连 MCP 并重新打开看板，宿主视觉待核对。范围与限制见 .scratch/dynamic-agent-display/delivery.md（本机记录：`../.scratch/dynamic-agent-display/delivery.md`）。
 
-2026-10-03 Workspace 归属误判修复：后端接受原始本机项目 ID，但前端只接受规范 ID，导致首次加载报“Workspace 响应归属不匹配”。已按响应清单的唯一 local 映射兼容别名，保留跨项目/主机/会话隔离及迟到响应保护。本机与 AI 各16项相关检查通过，页面构建与两端插件资源同步完成；重新打开看板即可加载本次页面修复，宿主视觉待核对。见 [.scratch/workspace-scope-fix/delivery.md](../.scratch/workspace-scope-fix/delivery.md)。
+2026-10-03 Workspace 归属误判修复：后端接受原始本机项目 ID，但前端只接受规范 ID，导致首次加载报“Workspace 响应归属不匹配”。已按响应清单的唯一 local 映射兼容别名，保留跨项目/主机/会话隔离及迟到响应保护。本机与 AI 各16项相关检查通过，页面构建与两端插件资源同步完成；重新打开看板即可加载本次页面修复，宿主视觉待核对。见 .scratch/workspace-scope-fix/delivery.md（本机记录：`../.scratch/workspace-scope-fix/delivery.md`）。
 
-2026-10-03 远程组织图未知/看板空修正：增加所选会话范围的原生分派及本实例执行回合投影，忽略 fork 父回合，业务回报优先。缺职责显示实际原生类型/分派名称，原始职责仍保留未知；不按名字猜角色。本机/AI源与缓存已同步，实际 AI MCP 返回 Lyria 7实例/6执行卡片；44项本机、29项远程相关检查通过。已有 MCP 须重连并重新打开页面，宿主新页面视觉仍待验收。具体依据与限制见 [.scratch/remote-kanban-fix/delivery.md](../.scratch/remote-kanban-fix/delivery.md)。
+2026-10-03 远程组织图未知/看板空修正：增加所选会话范围的原生分派及本实例执行回合投影，忽略 fork 父回合，业务回报优先。缺职责显示实际原生类型/分派名称，原始职责仍保留未知；不按名字猜角色。本机/AI源与缓存已同步，实际 AI MCP 返回 Lyria 7实例/6执行卡片；44项本机、29项远程相关检查通过。已有 MCP 须重连并重新打开页面，宿主新页面视觉仍待验收。具体依据与限制见 .scratch/remote-kanban-fix/delivery.md（本机记录：`../.scratch/remote-kanban-fix/delivery.md`）。
 
-2026-10-03 用户反馈 AI 远程 Workspace/session 及空下拉异常已修复并同步本机/AI 插件。增加只读 SQLite/名称索引适配，实际 MCP 读到 Lyria 等29个工作区及真实会话/子 Agent；远程 HTTP 页面组织图已核对。已有 MCP 进程须重连插件，页面须重新打开；未重启 Codex 服务。范围、检查、独立审查和待用户宿主验收见 [.scratch/remote-workspace-fix/delivery.md](../.scratch/remote-workspace-fix/delivery.md)。空项目、其他主机与未回报任务语义保持明确限制。
+2026-10-03 用户反馈 AI 远程 Workspace/session 及空下拉异常已修复并同步本机/AI 插件。增加只读 SQLite/名称索引适配，实际 MCP 读到 Lyria 等29个工作区及真实会话/子 Agent；远程 HTTP 页面组织图已核对。已有 MCP 进程须重连插件，页面须重新打开；未重启 Codex 服务。范围、检查、独立审查和待用户宿主验收见 .scratch/remote-workspace-fix/delivery.md（本机记录：`../.scratch/remote-workspace-fix/delivery.md`）。空项目、其他主机与未回报任务语义保持明确限制。
 
 当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。插件 ID 为 `agent-team`；只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
 ## 当前边界
@@ -38,13 +38,13 @@ Codex 原生承担角色职责分派、子 Agent 派生、协作、Skills 发现
 
 ## 已有交付
 
-彩色图标与界面精修（2026-10-02）：五职责双色 SVG、彩色视图标签、阶段细线、卡片层次和选中描边已实现并更新本机0.5.0缓存。悬停/键盘图标动效遵循减少动效及断线停止；修正了相同快照恢复焦点时重播的问题。相关24项检查、实际浅/深主题及640px页面核对、独立限定审查通过，见 [交付](../.scratch/ui-color/delivery.md)。用户最终视觉验收保持待确认，重新打开看板加载新资源。
+彩色图标与界面精修（2026-10-02）：五职责双色 SVG、彩色视图标签、阶段细线、卡片层次和选中描边已实现并更新本机0.5.0缓存。悬停/键盘图标动效遵循减少动效及断线停止；修正了相同快照恢复焦点时重播的问题。相关24项检查、实际浅/深主题及640px页面核对、独立限定审查通过，见 交付（本机记录：`../.scratch/ui-color/delivery.md`）。用户最终视觉验收保持待确认，重新打开看板加载新资源。
 
-执行追踪与详情修正（0.5.0）：移除顶部减少动效/刷新按钮，保留自动同步和系统减少动效；详情固定标题、正文独立滚动及细圆角滚动条。任务/评审/Org 历史关联已观察原生实例；产物链接读取真实文件预览。新增带依据的逐项验收及 Agent/人工评审记录，旧完成状态不自动勾选。38 项基础检查与独立限定审查通过，实际浏览器证据及接口限制见 [本轮交付](../.scratch/ui-traceability/delivery.md)。原生文件编辑器直达未开放，子会话深链已实际点击但目标聊天页完整视觉尚未核对；用户最终验收不自动确认。旧打开资源须重新打开以加载新版。
+执行追踪与详情修正（0.5.0）：移除顶部减少动效/刷新按钮，保留自动同步和系统减少动效；详情固定标题、正文独立滚动及细圆角滚动条。任务/评审/Org 历史关联已观察原生实例；产物链接读取真实文件预览。新增带依据的逐项验收及 Agent/人工评审记录，旧完成状态不自动勾选。38 项基础检查与独立限定审查通过，实际浏览器证据及接口限制见 本轮交付（本机记录：`../.scratch/ui-traceability/delivery.md`）。原生文件编辑器直达未开放，子会话深链已实际点击但目标聊天页完整视觉尚未核对；用户最终验收不自动确认。旧打开资源须重新打开以加载新版。
 
-验收反馈及 v2 视觉收敛（0.4.2）：对照 docs/ue 两张确认图压缩顶部、统一职责图标、看板整高与独立列滚动、业务详情首屏，保留真实数据；Org 将历史9实例汇总为5职责节点、最近任务优先，全部12任务及真实UUID保留在详情/看板。空白关闭区分画布拖动，飞线为短尾粒子，每条2.4秒3轮。具体检查、限定审查及浏览器/安装范围见 [验收反馈交付](../.scratch/ui-acceptance-fixes/delivery.md)。旧已打开资源需要重新打开以加载新UI，已有任务数据不变。
+验收反馈及 v2 视觉收敛（0.4.2）：对照 docs/ue 两张确认图压缩顶部、统一职责图标、看板整高与独立列滚动、业务详情首屏，保留真实数据；Org 将历史9实例汇总为5职责节点、最近任务优先，全部12任务及真实UUID保留在详情/看板。空白关闭区分画布拖动，飞线为短尾粒子，每条2.4秒3轮。具体检查、限定审查及浏览器/安装范围见 验收反馈交付（本机记录：`../.scratch/ui-acceptance-fixes/delivery.md`）。旧已打开资源需要重新打开以加载新UI，已有任务数据不变。
 
-画布与动效升级：用户确认仅拖动画布、固定节点及三项切片后，真实 Requirements / Architect / Reviewer 与协调者完成调研、设计、实施及审查修正。0.4.0 已安装，实际宿主已显示 9 个真实角色、8 条核对父子边；选中角色恢复 100% 阅读比例，先避让再打开详情。26 项相关检查通过，见 [本轮交付](../.scratch/ui-motion/delivery.md)。这不自动关闭旧阶段二断线恢复、主题覆盖等待验收项。
+画布与动效升级：用户确认仅拖动画布、固定节点及三项切片后，真实 Requirements / Architect / Reviewer 与协调者完成调研、设计、实施及审查修正。0.4.0 已安装，实际宿主已显示 9 个真实角色、8 条核对父子边；选中角色恢复 100% 阅读比例，先避让再打开详情。26 项相关检查通过，见 本轮交付（本机记录：`../.scratch/ui-motion/delivery.md`）。这不自动关闭旧阶段二断线恢复、主题覆盖等待验收项。
 
 项目已安装31个固定版本 Matt Skills，并保留五份可选角色预设和项目 native-agent-team 入口。
 真实需求、架构、开发、审查子 Agent 已参与本机配置交付，已有按需技能、并行、审查修正与复查证据。
@@ -54,7 +54,7 @@ Codex 原生承担角色职责分派、子 Agent 派生、协作、Skills 发现
 ## 接下来
 
 阅读 README.md、docs/architecture.md、docs/phase1.md、docs/native-team.md 与相关工单。
-阶段二五个正式工单已发布。01、03 已完成。用户已授权后续已确认工单通过原生团队实施，按 native-agent-team 分派、收集、实施与审查复查，无需再次询问是否使用团队。2026-10-02 的 Architect、Developer、Reviewer 与协调者已真实进入安装插件 Org Chart，当前 Task、活动、Skills/产物及评审/返工阶段也已实测，见 [真实团队交付证据](../.scratch/readonly-team-ui/evidence/03-team-run.md)。
+阶段二五个正式工单已发布。01、03 已完成。用户已授权后续已确认工单通过原生团队实施，按 native-agent-team 分派、收集、实施与审查复查，无需再次询问是否使用团队。2026-10-02 的 Architect、Developer、Reviewer 与协调者已真实进入安装插件 Org Chart，当前 Task、活动、Skills/产物及评审/返工阶段也已实测，见 真实团队交付证据（本机记录：`../.scratch/readonly-team-ui/evidence/03-team-run.md`）。
 02 已补齐筛选及证据展示，最后键盘/筛选组合验收待完成；04 公共查询竞态和缓存边界检查已通过，实际宿主断线恢复仍待；随后完成 05 最终主题/键盘/整体交付验收。SSH 实时展示留到后续。HTML 资源按打开时读取，不因普通 UI 更新要求重启 App。
 不再重跑独立执行器或可选角色装载 POC，不为插件新增执行/技能装载机制。
 用户已明确授权建立 GitHub 私有仓库 `tohsaka888/codex-agent-team-plugin` 并上传初版，采用 `main` 分支。本轮授权包含首个提交与推送；后续提交/发布仍按当时用户授权，不修改全局登录。

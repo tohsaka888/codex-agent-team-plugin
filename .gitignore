@@ -23,3 +23,6 @@ plugins/agent-team/mcp.json
 # 仅本机旧连接可使用的目录别名，不作为插件源码发布
 # 可重建的项目级团队追踪归档。
 .agent-team/
+
+# 本机临时工作与评审记录，不上传 Git 历史
+.scratch/

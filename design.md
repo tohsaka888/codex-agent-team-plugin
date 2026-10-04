@@ -178,7 +178,7 @@ Agent Team 入口使用组织结构图标；关键状态和图标配文字。协
 
 ## Do's and Don'ts
 
-用户已确认画布与动效方案及三项工单，正式实现见 [规格](.scratch/ui-motion/spec.md)、[动效调研](docs/research/ui-motion-canvas.md) 和 [交付证据](.scratch/ui-motion/delivery.md)。颜色继续继承宿主 token。
+用户已确认画布与动效方案及三项工单，正式实现见 规格（本机记录：`.scratch/ui-motion/spec.md`）、[动效调研](docs/research/ui-motion-canvas.md) 和 交付证据（本机记录：`.scratch/ui-motion/delivery.md`）。颜色继续继承宿主 token。
 正式动效参数：角色避让 240ms、详情展开 180ms、卡片真实转列 380ms，错峰上限 120ms；微反馈与状态强调仅短时出现。采用 transform/opacity，避免循环闪烁。
 彩色图标精修：卡片悬停与键盘聚焦采用内部图形 180ms 状态过渡；页签悬停播放一次 480ms 轻微摆动。相同快照重建不重播关键帧。隐藏、同步失败或系统减少动效时清除装饰图标动画与位移，保留完整静态图形；不改变 Org 节点尺寸。
 Kanban 只在同会话稳定 Task ID 的真实状态变化后迁移，先更新语义，再播放过渡；不补造评审等中间阶段。初载、筛选、切换和相同快照不演出状态流转。

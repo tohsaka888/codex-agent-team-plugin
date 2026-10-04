@@ -49,7 +49,7 @@ reviewer 对照规格和合同，检查用户调用边界、引用、产物和�
 ## 验收与 UI 边界
 
 以真实派生、按需 Skill 使用、任务产物、并行和审查证据验收。可选自定义角色按名自动装载不作为必需条件。
-插件只展示 会话 Kanban、Org Chart、详情、同步状态；不控制原生执行或加载 Skills。本次真实本机团队的生命周期、父子关系、任务与技能回报已进入安装插件；仍仅代表已接入范围，不能由原生列表截图推断完整宿主数据全部可读。实测见 [.scratch 团队交付证据](../.scratch/readonly-team-ui/evidence/03-team-run.md)。
+插件只展示 会话 Kanban、Org Chart、详情、同步状态；不控制原生执行或加载 Skills。本次真实本机团队的生命周期、父子关系、任务与技能回报已进入安装插件；仍仅代表已接入范围，不能由原生列表截图推断完整宿主数据全部可读。实测见 .scratch 团队交付证据（本机记录：`../.scratch/readonly-team-ui/evidence/03-team-run.md`）。
 不重跑独立执行器 POC，不自动提交或推送。
 
 官方依据：[Build skills](https://learn.chatgpt.com/docs/build-skills)、[Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)。

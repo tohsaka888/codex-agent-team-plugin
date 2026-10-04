@@ -1,16 +1,16 @@
 # 只读 UI 展示数据合同
 
-2026-10-03 默认绑定补齐：open 工具缺少 rootSessionId 时自动匹配，get 工具通过 autoSelectSession=true 明确请求此行为。优先已核对调用环境会话（含真实父链追溯），否则当前工作区最近活动的进行中主会话，再降级最近主会话。明确输入优先，首次选择后轮询固定 ID，手动选择不被迟到工具结果覆盖。sessionSelectionSource 说明 explicit/invocation-environment/recent-active/recent-session；启发式页面显示“自动”，不声称可读取桌面当前焦点。没有可读会话时仍保持选择提示。见 [默认匹配交付](../.scratch/session-default-fix/delivery.md)。
+2026-10-03 默认绑定补齐：open 工具缺少 rootSessionId 时自动匹配，get 工具通过 autoSelectSession=true 明确请求此行为。优先已核对调用环境会话（含真实父链追溯），否则当前工作区最近活动的进行中主会话，再降级最近主会话。明确输入优先，首次选择后轮询固定 ID，手动选择不被迟到工具结果覆盖。sessionSelectionSource 说明 explicit/invocation-environment/recent-active/recent-session；启发式页面显示“自动”，不声称可读取桌面当前焦点。没有可读会话时仍保持选择提示。见 默认匹配交付（本机记录：`../.scratch/session-default-fix/delivery.md`）。
 
-2026-10-03 用户明确要求补齐原生动态 Agent 的展示：未回报职责时，Kanban 按真实派生名称/宿主昵称展示和筛选，详情显示“负责 Agent”，原始 role 保持未知。成功原生分派的 message 投影 goal（最多6000字符，goalSource=codex-host/spawn-agent/message）；本实例公开活动文本或结构化工具事件摘要投影 activitySummary/activityAt/activitySource。公开文本最多2000字符；不返回思考、工具参数或输出。此范围内读取明确分派任务属于用户本轮授权，不全量读取其他提示或无关工作区。业务回报仍优先，验收/评审不从目标或执行状态自动推断。具体证据及已知限制见 [.scratch/dynamic-agent-display/delivery.md](../.scratch/dynamic-agent-display/delivery.md)。
+2026-10-03 用户明确要求补齐原生动态 Agent 的展示：未回报职责时，Kanban 按真实派生名称/宿主昵称展示和筛选，详情显示“负责 Agent”，原始 role 保持未知。成功原生分派的 message 投影 goal（最多6000字符，goalSource=codex-host/spawn-agent/message）；本实例公开活动文本或结构化工具事件摘要投影 activitySummary/activityAt/activitySource。公开文本最多2000字符；不返回思考、工具参数或输出。此范围内读取明确分派任务属于用户本轮授权，不全量读取其他提示或无关工作区。业务回报仍优先，验收/评审不从目标或执行状态自动推断。具体证据及已知限制见 .scratch/dynamic-agent-display/delivery.md（本机记录：`../.scratch/dynamic-agent-display/delivery.md`）。
 
-2026-10-03 远程 Kanban 补齐：在所选主会话及真实后代范围内，只读解析宿主记录中的成功 `collaboration.spawn_agent` 返回名称、原生回合启动/完成/中断事件，以及带本实例 thread_id 的回合归属证据。Fork 复制的父回合不能用于子实例状态。明确分派和本实例回合均存在时，展示一张最近的“原生执行回合”卡片；完成只表示本轮执行完成，业务目标、验收和评审仍需明确回报，已有业务回报优先。组织图未指定职责时按原生类型或实际分派名称显示，保持实例独立，不猜职责。只投影名称/类型/时间/状态，不返回提示、消息、工具正文或错误正文；缓存随文件变化失效，越界、缺失和超过64MB的记录降级为未知。见 [修复交付](../.scratch/remote-kanban-fix/delivery.md)。
+2026-10-03 远程 Kanban 补齐：在所选主会话及真实后代范围内，只读解析宿主记录中的成功 `collaboration.spawn_agent` 返回名称、原生回合启动/完成/中断事件，以及带本实例 thread_id 的回合归属证据。Fork 复制的父回合不能用于子实例状态。明确分派和本实例回合均存在时，展示一张最近的“原生执行回合”卡片；完成只表示本轮执行完成，业务目标、验收和评审仍需明确回报，已有业务回报优先。组织图未指定职责时按原生类型或实际分派名称显示，保持实例独立，不猜职责。只投影名称/类型/时间/状态，不返回提示、消息、工具正文或错误正文；缓存随文件变化失效，越界、缺失和超过64MB的记录降级为未知。见 修复交付（本机记录：`../.scratch/remote-kanban-fix/delivery.md`）。
 
-2026-10-03 远程故障修正：插件在其实际执行环境只读宿主 SQLite 项目/线程元数据及会话名称索引，补齐 Workspace、会话标题与真实父子关系。远程 App Server 没有桌面注册表时，从未归档主会话的现存 cwd 发现工作区，来源明确标注；不保证无会话空项目或其他 SSH 主机可读。不读取初始提示，生命周期缺失保持未知，任务语义仍依赖明确回报。具体范围及实测见 [修复记录](../.scratch/remote-workspace-fix/delivery.md)。本文旧版“远程尚未接入”仅适用于当前执行环境以外、没有数据通道的 SSH 项目。
+2026-10-03 远程故障修正：插件在其实际执行环境只读宿主 SQLite 项目/线程元数据及会话名称索引，补齐 Workspace、会话标题与真实父子关系。远程 App Server 没有桌面注册表时，从未归档主会话的现存 cwd 发现工作区，来源明确标注；不保证无会话空项目或其他 SSH 主机可读。不读取初始提示，生命周期缺失保持未知，任务语义仍依赖明确回报。具体范围及实测见 修复记录（本机记录：`../.scratch/remote-workspace-fix/delivery.md`）。本文旧版“远程尚未接入”仅适用于当前执行环境以外、没有数据通道的 SSH 项目。
 
 当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。插件 ID 为 `agent-team`；只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
 日期：2026-10-02。状态：阶段二实施合同，已接入本次真实原生团队的启动/停止 Hook、父子关系与明确任务回报；接入范围为本机本流程。
-规格入口：[阶段二规格](../.scratch/readonly-team-ui/spec.md)。领域术语沿用 [GLOSSARY](../GLOSSARY.md)。
+规格入口：阶段二规格（本机记录：`../.scratch/readonly-team-ui/spec.md`）。领域术语沿用 [GLOSSARY](../GLOSSARY.md)。
 
 ## 数据职责
 

@@ -43,7 +43,7 @@ ty' = clamp(ty, ry - s'×y, ry+rh - s'×(y+h))
 
 ## 本轮产物与限制
 
-已确认规格：[spec](../../.scratch/ui-motion/spec.md)，切片：[确认记录](../../.scratch/ui-motion/tickets-draft.md)，交互候选：[原型](../../.scratch/ui-motion/motion-prototype.html)。原型全部为演示数据，没有事件写入、原生任务操作或远程执行。正式实现、浏览器与安装插件核对见 [交付记录](../../.scratch/ui-motion/delivery.md)。
+已确认规格：spec（本机记录：`../../.scratch/ui-motion/spec.md`），切片：确认记录（本机记录：`../../.scratch/ui-motion/tickets-draft.md`），交互候选：原型（本机记录：`../../.scratch/ui-motion/motion-prototype.html`）。原型全部为演示数据，没有事件写入、原生任务操作或远程执行。正式实现、浏览器与安装插件核对见 交付记录（本机记录：`../../.scratch/ui-motion/delivery.md`）。
 架构 Agent 执行了四组无文件算术检查，确认右侧、已可见、左上越界、超大矩形的包含关系。正式浏览器检查、独立审查和极小容器回退的最终结果另外记录；资料调研不是正式插件验收。
 
 用户已确认：本轮仅拖动画布，节点布局固定；不实现节点位置拖动。资料中的节点拖动范式只作为被排除方案记录。

@@ -9,12 +9,12 @@
 
 ## 交付入口
 
-- [规格](../.scratch/readonly-team-ui/spec.md)：用户故事、实施决策与原生对话到插件的验收。
+- 规格（本机记录：`../.scratch/readonly-team-ui/spec.md`）：用户故事、实施决策与原生对话到插件的验收。
 - [展示数据合同](ui-data-contract.md)：字段来源、状态投影、未知关系和刷新规则。
 - [视觉规范](../design.md)：已确认的宿主风格与只读交互方向。
 - [效果图说明](ue/native-v2-prompt.md)：已确认的 v2 演示图与生成提示。
-- [已确认工单拆分](../.scratch/readonly-team-ui/ticket-plan.md)：五条端到端切片，正式工单位于同目录 issues/。
-- [01 实施证据](../.scratch/readonly-team-ui/evidence/01-implementation.md)：实际修改、8 项测试、审查修正、浏览器结果与内嵌验收缺口。
+- 已确认工单拆分（本机记录：`../.scratch/readonly-team-ui/ticket-plan.md`）：五条端到端切片，正式工单位于同目录 issues/。
+- 01 实施证据（本机记录：`../.scratch/readonly-team-ui/evidence/01-implementation.md`）：实际修改、8 项测试、审查修正、浏览器结果与内嵌验收缺口。
 
 ## 推进顺序
 

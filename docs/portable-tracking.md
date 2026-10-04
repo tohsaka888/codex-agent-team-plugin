@@ -1,6 +1,6 @@
 # 可移植追踪合同
 
-规格与四条工单 v2 已获用户明确确认，版本和指纹见 [.scratch 评审记录](../.scratch/profile-native-refactor/review-v2.md)。当前执行仍使用宿主原生工具；追踪核心不调度模型、不认证用户、不控制批准。
+规格与四条工单 v2 已获用户明确确认，版本和指纹见 .scratch 评审记录（本机记录：`../.scratch/profile-native-refactor/review-v2.md`）。当前执行仍使用宿主原生工具；追踪核心不调度模型、不认证用户、不控制批准。
 
 ## 执行与同步
 
