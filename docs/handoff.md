@@ -98,3 +98,14 @@ fidelity-v1 实际为一个业务工单、五条执行；卡片及角色筛选�
 2026-10-04 空 Coordinator 修复：用户明确同意，任务 DAG 不再混入无工单关联的身份卡；原生视图仍保留身份，缺执行状态显示未知。当前协调执行已关联；本机20项/AI15项相关检查及限定复查通过，两端已同步，宿主页面工具超时未直接验收。见 .scratch/org-dag/empty-coordinator-delivery.md。
 
 2026-10-04 执行名称修复：公开run保存title，名称按title/name/goal/执行编号回退，不复制父工单标题；新分派需独立名称。截图三条执行已按实际分派内容补齐。本机32项/AI21项及独立复查通过，两端已同步。见 .scratch/org-dag/execution-names-delivery.md。
+
+
+## 2026-10-07 UI Check 工作流规则
+
+用户明确要求“增加下对UI的校验，不止要比对designmd和uxmd，还要比对产品实际效果图和UI图，需要做UI Check，你把规则和指引增加进去”。本轮仅更新规则、角色指引与文档，沿用现有 check AC 和同步字段；未改同步脚本、UI 或图像判定逻辑。
+
+完整规则见 [UI Check](../plugins/agent-team/skills/team-review/references/ui-check.md)。Web/App UI 实现、视觉/交互修改和修复必须对比当前产品真实运行截图与确认 UI 图，保存覆盖矩阵、图片对、交互验证、差异及复查证据；缺少必需证据保持未通过。Reviewer/UE 工作流、验收合同、团队入口及项目/可安装角色指引均已接入。安装缓存未同步，已有会话须读取本次源码指引；真实产品 UI Check 需在对应业务任务中执行，本轮文件检查不能代替产品视觉验收。
+
+验证：10 处 UI Check 文档链接目标存在；技能安装器现有测试 1/1 通过；按原文件行尾约定检查差异，无空白错误。未运行实际 Web/App UI Check，未同步安装缓存。
+
+2026-10-07 用户要求同步到插件后，已备份并同步本机 agent-team 0.5.0 安装缓存中的 12 份 Skills/角色/引用文件，SHA256 全部与源码一致。同步清单见 .scratch/ui-check-sync/sync-report.json；未同步远程、未修改 MCP 配置或运行代码。已有会话需重读新版指引，新会话实际装载与产品 UI Check 仍须独立验证。

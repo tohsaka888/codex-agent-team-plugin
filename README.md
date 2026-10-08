@@ -144,6 +144,8 @@ Git忽略依赖、构建输出、`.runtime/`、本机MCP/Hook配置、Python缓�
 
 ## 强制 AC 与人工结果验收
 
+Web/App 界面实现、视觉/交互修改及 UI 修复要求 [UI Check](plugins/agent-team/skills/team-review/references/ui-check.md)：Reviewer 逐对查看用户确认的 UI 图与当前产品实际运行截图，同时核对 design.md、ux.md 和交互。工单与相关执行卡登记具体 AC，保存覆盖矩阵、图片对、差异及修正复查证据；缺少必需证据保持未通过。这是 Agent 工作流规则，不是插件自动图像检测功能。
+
 每张父工单和独立执行卡都必须有非空 AC；登记时原子提供角色、工作类别、AC 版本和具体核对方法。编码任务必需实际通过的单元测试，UE 必需用户确认具体版本原型。每卡包含 Agent 自验证项和人工结果验收项。新流程及 result 文件指纹/独立 run 证据命令见[同步验收合同](plugins/agent-team/skills/team-sync/references/acceptance.md)。
 
 Agent 逐项验证并完成独立审查后提交用户，明确确认当前卡片/结果版本才能业务完成；同一次回复可确认列明的多卡，分别回报。原生执行完成与验收完成独立，旧卡缺失显示“AC 缺失 · 待补齐”，不会自动追认。更新 Skills 后已有会话需重新读取；源码通过不代表安装缓存已更新。

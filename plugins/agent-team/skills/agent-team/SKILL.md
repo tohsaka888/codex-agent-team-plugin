@@ -17,6 +17,8 @@ description: 用户明确启用 Agent Team 时，使用当前宿主原生子 Age
 
 UI 任务将官方 `@google/design.md` CLI 的安装及可运行情况纳入预检，按环境指引补齐项目级固定版本；确认图后对实际 design.md 运行 lint 并保存结果。缺失工具时不以人工核对冒称规范校验通过。
 
+Web/App 界面实现、视觉/交互修改和 UI 修复必须在工单及相关执行卡登记 [UI Check](../team-review/references/ui-check.md) AC；委派提供确认 UI 图、design.md、ux.md、产品运行入口和页面/状态/设备范围。交付安排 Reviewer 对比真实运行截图与确认图并保存差异及复查证据。
+
 ## 原生团队执行
 
 有项目 `native-agent-team` 技能时读取其 SKILL.md，遵循 AGENTS.md、docs/native-team.md 与已确认规格；用户直接提及是本次明确团队授权，不修改其他 Skills 的主动调用边界。

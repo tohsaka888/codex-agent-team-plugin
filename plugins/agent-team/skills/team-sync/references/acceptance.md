@@ -8,6 +8,8 @@ Developer 编码/缺陷修复明确 taskType=code，必须有 unit_test 条件�
 
 Requirements 核对边界、故事、AC 与依赖；Architect 核对方案取舍及适用 ADR；Reviewer 核对当前 AC、真实产物/测试和修正复查；Coordinator 核对汇总及依赖。每角色还需任务具体业务条件；人工只核验无法由 Agent 证据代替的具体功能或设计决策。
 
+Web/App 界面实现、视觉/交互修改或 UI 修复须按 [UI Check](../../team-review/references/ui-check.md) 在工单与相关执行卡登记具体 Agent check AC。method 明确页面/状态/设备范围、实际运行截图与用户确认 UI 图的逐对比对、design.md/ux.md 核对和交互验证；evidence 引用当前报告、图片对、差异及复查结论。缺少基线、真实截图或必需覆盖时保持未通过。此规则由 Agent 执行，现有脚本只检查合同与证据绑定，不自动判断图像一致性。
+
 ## 公开同步示例
 
 通过 --body-file 提交 JSON，或 --acceptance-items 传 JSON 数组；正常回复保持自然语言。task/run 的合同示例（执行另填 runId/provider/title/真实身份）：

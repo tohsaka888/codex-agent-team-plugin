@@ -11,6 +11,8 @@ description: Agent Team 的 App 或网页 UI 设计任务：收集已有图，�
 
 工单通过通用同步关联图、UX说明、具体确认版本和指纹。部分确认只适用于对应页面/状态。开发读取同一确认图、ux.md 和 design.md；审查保存实际实现截图，不覆盖确认基线。UE 的运行状态、Agent Review 和用户视觉确认分别同步。
 
+UI 实现及修正交付必须执行 [UI Check](../team-review/references/ui-check.md)，将用户确认的 UI 图与当前产品真实运行截图逐项比对，并核对 design.md、ux.md 和交互操作。UE 交接明确页面/状态和设备范围，供 Reviewer 建立覆盖矩阵。
+
 
 ## 强制 AC 与人工结果验收
 
