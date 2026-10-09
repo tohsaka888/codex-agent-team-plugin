@@ -6,17 +6,7 @@
 
 原生团队协作 · 按需 Skills · Kanban / Org Chart · 逐项验收 · Codex 插件 / 独立 Web
 
-[产品视频](#产品视频) · [为什么选择](#为什么选择-codex-agent-team) · [团队如何工作](#团队如何工作) · [快速开始](#快速开始) · [接入其他客户端](#接入其他客户端) · [文档](#文档)
-
-## 产品视频
-
-[![Codex Agent Team 宣传视频：原生协作、进度追踪与证据交付](videos/agent-team-promo/renders/preview.gif)](videos/agent-team-promo/renders/agent-team-promo.mp4)
-
-**[观看 / 下载完整视频](videos/agent-team-promo/renders/agent-team-promo.mp4)** · 45 秒 · 1080p · 中文静音动效
-
-从一句需求，到专业角色协作、只读看板追踪和逐项证据交付。上方为 15 秒循环节选，点击查看完整 MP4。画面中的工单、角色活动与状态标注为“演示数据”，用于解释功能。
-
-使用 HyperFrames 制作；[分镜与可编辑源码](videos/agent-team-promo/README.md)保留在仓库中。
+[为什么选择](#为什么选择-codex-agent-team) · [团队如何工作](#团队如何工作) · [快速开始](#快速开始) · [接入其他客户端](#接入其他客户端) · [文档](#文档)
 
 ## 为什么选择 Codex Agent Team
 
