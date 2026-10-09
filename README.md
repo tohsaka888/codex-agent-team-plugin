@@ -1,6 +1,6 @@
 # Codex Agent Team
 
-当前重构采用宿主原生团队 + 四个可移植 Skills（agent-team、team-sync、team-review、team-ue）+ 通用同步脚本。Codex 使用内嵌插件；其他客户端使用同一 Skills 和独立只读 Web。Hooks仅是可选生命周期观察，Agent 最终回复不要求专用 JSON。完整协议与边界见 [可移植追踪](docs/portable-tracking.md)。
+当前重构采用宿主原生团队 + 五个可移植 Skills（setup-agent-team、agent-team、team-sync、team-review、team-ue）+ 通用同步脚本。Codex 使用内嵌插件；其他客户端使用同一 Skills 和独立只读 Web。Hooks仅是可选生命周期观察，Agent 最终回复不要求专用 JSON。完整协议与边界见 [可移植追踪](docs/portable-tracking.md)。
 
 ## Codex 安装插件
 
@@ -24,7 +24,7 @@ codex plugin add agent-team@codex-agent-team-plugin
 codex plugin list --marketplace codex-agent-team-plugin --json
 ```
 
-marketplace 入口为 `.agents/plugins/marketplace.json`，插件入口为 `plugins/agent-team/.codex-plugin/plugin.json`。安装命令已通过本机 CLI 帮助核对；安装后在新会话核对四个 Skills 和只读工具实际可见，再说“使用 Agent Team 完成……”。已有会话不保证自动重读新版指引。
+marketplace 入口为 `.agents/plugins/marketplace.json`，插件入口为 `plugins/agent-team/.codex-plugin/plugin.json`。安装命令已通过本机 CLI 帮助核对；安装后在新会话核对五个 Skills 和只读工具实际可见，再说“使用 Agent Team 完成……”。已有会话不保证自动重读新版指引。
 
 想安装项目级原生角色预设时，明确目标工程并执行下列命令；它保留所有已存在的 Skill/Profile，不修改全局规则：
 
@@ -36,7 +36,7 @@ node plugins/agent-team/install-skills.mjs --workspace D:/Projects/MyApp --codex
 
 ## 非 Codex 使用 Skills 和独立 Web
 
-同样安装上面的 Node 依赖并构建页面，无需安装 Codex 插件。将四个 Skills 安装到目标客户端真实支持的目录；默认使用目标项目 `.agents/skills`，也可明确指定目录：
+同样安装上面的 Node 依赖并构建页面，无需安装 Codex 插件。将五个 Skills 安装到目标客户端真实支持的目录；默认使用目标项目 `.agents/skills`，也可明确指定目录：
 
 ```powershell
 node plugins/agent-team/install-skills.mjs --workspace D:/Projects/MyApp --target D:/Projects/MyApp/.agents/skills
@@ -133,9 +133,9 @@ Git忽略依赖、构建输出、`.runtime/`、本机MCP/Hook配置、Python缓�
 
 使用入口：在原生对话调用 `native-agent-team` Skill，并给出具体目标与验收。Skills 发现和任务执行沿用 Codex；角色 TOML 为可选定制，不要求插件按角色名加载。入口是原生工作流辅助，插件本身只展示，详见团队合同。
 
-跨项目及 SSH 使用 `@Agent Team` 时，插件入口先按[环境检查指引](plugins/agent-team/skills/agent-team/references/preflight.md)核对原生工具、实际工作区、Matt Skills、项目流程上下文和适用运行/验证依赖，再按[Matt 流程指引](plugins/agent-team/skills/agent-team/references/matt-workflow.md)开展正式工作。必需项缺失或未知时先补齐，不退化成普通团队。插件携带的是检查与流程指引，未捆绑31个上游技能；看板故障单列，不阻断已就绪的原生执行。文件同步不代表既有会话已重新读取或新会话已实测。
+首次准备目标工作区时，显式调用 `$setup-agent-team`（例如“使用 setup-agent-team 为当前项目安装团队技能依赖”），由 Agent 明确说明调用并检查、安装缺失项。标准工程 Skills 默认按固定来源安装，其他技能和 UI 工具按需求补齐；已有文件保留。插件携带[安装入口](plugins/agent-team/skills/setup-agent-team/SKILL.md)及来源清单，未捆绑31个上游技能正文。日常 `@Agent Team` 对话按[Matt 流程指引](plugins/agent-team/skills/agent-team/references/matt-workflow.md)推进，不再执行整套环境预检；实际缺失依赖仅影响相应阶段。跨项目/SSH 的安装必须在实际目标主机执行。文件同步不代表既有会话已重新读取或新会话已实测。
 
-首次安装文档工具执行 `npm ci`；设计校验执行 `npm run design:lint`。Agent Team 的 UI 任务预检包含官方 `@google/design.md` CLI 的项目级安装、版本与可运行检查；本仓库固定为 `0.4.0`，其他工作区/SSH 环境须独立核验并按[补齐指引](plugins/agent-team/skills/agent-team/references/preflight.md#补齐-designmd-cli)安装，人工结构核对不能替代 CLI 校验通过。
+首次安装文档工具执行 `npm ci`；设计校验执行 `npm run design:lint`。显式 setup-agent-team 的 UI 安装范围包含官方 `@google/design.md` CLI 的项目级安装、版本与可运行检查；本仓库固定为 `0.4.0`，其他工作区/SSH 环境按[补齐指引](plugins/agent-team/skills/setup-agent-team/references/dependencies.md#补齐-designmd-cli)安装。业务阶段仍运行规范 lint，人工结构核对不能替代 CLI 校验通过。
 只读插件位于 `plugins/agent-team/`：`node build.mjs` 构建页面；`node --test native-state.test.mjs org-view.test.mjs view-model.test.mjs sync-query.test.mjs readonly-mcp.test.mjs workspace-registry.test.mjs canvas-interaction.test.mjs` 检查当前查询/展示与几何边界。实际原生团队能力另有分派、Hook、回报及安装插件证据。`review-gate.test.mjs` 仅属历史规则，不代替正式验收。
 不再启动探针的独立执行器测试来代替第一阶段交付。根 package 仅管理文档校验工具，不表示应用框架已选定。
 

@@ -1,5 +1,9 @@
 # 新会话交接
 
+2026-10-09 用户明确要求需求不清晰时自动调用 grill：Requirements 与 Coordinator、团队入口和 Matt 指引已接入 grilling 自动澄清；仅关键歧义触发，协调者统一提问，清晰/已确认需求跳过。grill-with-docs 上游主动调用标记保留，setup 默认依赖增加 grilling。本机插件同步与验证记录见 `.scratch/auto-grilling/delivery.md`。
+
+2026-10-09 按用户要求增加显式 `setup-agent-team` 安装入口，将完整预检从日常团队流程移出；新对话、恢复及切换工作区不自动执行整套检查。实际缺失依赖仅补受影响项，业务测试、design.md lint 和 UI Check 保留。安装器包含第五个 Skill 并保留已有目录。源码及本机0.5.0插件Skills/安装器已备份同步，逐文件SHA256一致；未同步远程，新会话发现尚待核验。安装器1/1、lint、格式及引用检查通过；skill-creator校验器因缺PyYAML未运行。记录见 `.scratch/setup-agent-team/delivery.md` 与 sync-report.json。
+
 2026-10-04 用户纠正人工核验过于笼统：按[合同 v2](acceptance-contract-v2.md)取消每卡统一人工确认，human 项必须具体入口、步骤与预期结果。全量130/130、lint、格式、构建和独立复查通过。真实卡已更新为AC v2：8卡无需人工核验且验证/审查完成；04及implementation-04两卡保留具体看板功能核验。交付见 [delivery-v2.md](../.scratch/mandatory-ac/delivery-v2.md)，截图见 [manual-check-v2.png](../.scratch/mandatory-ac/manual-check-v2.png)。此条覆盖下述v1通用清单约定；未更新安装缓存。
 
 2026-10-04 强制 AC v1：已确认规格和四工单实现完成；每卡非空 AC，代码必须单元测试、UE 必须具体原型人工确认，Agent 自验证与人工结果验收独立。全量128项与独立复查通过，释放临时文件锁后关键11项仍通过、源码指纹稳定；覆盖来源未定位。真实源码预览四父工单/六执行全部待人工验收。交付对象见 [.scratch/mandatory-ac/delivery-v1.md](../.scratch/mandatory-ac/delivery-v1.md)，验证见 [verification-final.md](../.scratch/mandatory-ac/verification-final.md)。未提交、推送、发布或同步安装缓存；既有进程仍需后续更新重连。

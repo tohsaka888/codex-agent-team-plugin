@@ -19,6 +19,10 @@ MIT 许可原文保存在 `mattpocock-LICENSE`；安装路径、文件校验摘�
 | Productivity（7） | grill-me、grilling、handoff、teach、to-questionnaire、wait-what、writing-for-agents |
 | Misc（4） | git-guardrails-claude-code、migrate-to-shoehorn、scaffold-exercises、setup-pre-commit |
 
+## 安装入口
+
+插件新增 [setup-agent-team](../../plugins/agent-team/skills/setup-agent-team/SKILL.md)，显式调用时按固定来源安装缺失的项目级依赖；不覆盖已有目录，不默认全量安装，不修改全局登录。日常团队对话不再读取完整环境清单，按实际任务读取所需技能。安装与会话发现、实际运行分别记录。
+
 ## 使用约定
 
 按任务选择技能，不同时叠加所有流程。需求规格优先 to-spec / grill-with-docs；任务拆分 to-tickets；行为实现 tdd；难复现缺陷 diagnosing-bugs；领域和模块设计 domain-modeling / codebase-design。

@@ -4,7 +4,7 @@
 
 ## 执行与同步
 
-入口 `agent-team` 管理工程流程；`team-sync` 封装同步脚本；`team-review` 保存审查及复查；`team-ue` 管理 UI 基线。协调者在分派前登记 Task，派生后关联 AgentRun；成员收到实际路径及稳定标识后读取 Skill 并同步。正常最终回复不要求 JSON，内部事件仍是结构化协议。
+`setup-agent-team` 是显式环境安装入口；日常任务不重复预检，仅在实际遇到缺失依赖时补齐受影响项。入口 `agent-team` 管理工程流程；`team-sync` 封装同步脚本；`team-review` 保存审查及复查；`team-ue` 管理 UI 基线。协调者在分派前登记 Task，派生后关联 AgentRun；成员收到实际路径及稳定标识后读取 Skill 并同步。正常最终回复不要求 JSON，内部事件仍是结构化协议。
 
 预定义 Profile 优先选择，宿主工具实际支持的 agent_type 与职责分别核对；动态角色同样参与。安装 Profile 不代表已经派生成功，发现 Skill 不代表实际读取，读取也不等于脚本执行。通用 agentId 仅用于展示关联，不填入 nativeAgentId 冒充原生身份。
 

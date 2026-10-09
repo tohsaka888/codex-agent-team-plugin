@@ -1,0 +1,6 @@
+interface:
+  display_name: "Setup Agent Team"
+  short_description: "显式初始化目标工作区的团队 Skills 与适用工具依赖，保留已有配置"
+  default_prompt: "使用 $setup-agent-team 为当前工作区安装缺失的团队技能依赖。"
+policy:
+  allow_implicit_invocation: false

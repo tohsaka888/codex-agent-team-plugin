@@ -26,7 +26,7 @@ UE 是团队预设职责，由当前宿主原生工具按需派生，不是保�
 
 用户确认 UI 后才生成项目 `design.md`，采用 [Google 格式规范](https://github.com/google-labs-code/design.md/blob/main/docs/spec.md)的 tokens 与说明；实施时读取实际规范和目标项目工具版本。沿用现有规范路径，不创建仅大小写不同的第二个文件。
 
-颜色、字体、间距、形状和组件规则反映已确认图；关键选择无法从图确定时提出具体核对，不自行扩展视觉方向。正式工作前按 [环境预检](../../agent-team/references/preflight.md#补齐-designmd-cli)核验并补齐官方 `@google/design.md` CLI；规范形成后用项目本地 `designmd lint <实际规范路径>` 或已有脚本校验，记录版本、命令、退出码及错误/警告处理依据。工具缺失或 lint 有错误时保持规范校验未通过，不以人工 front matter 核对替代；lint 不替代视觉评审。实质变化保留旧版并重新确认。
+颜色、字体、间距、形状和组件规则反映已确认图；关键选择无法从图确定时提出具体核对，不自行扩展视觉方向。不重复执行安装预检；实际缺少官方 `@google/design.md` CLI 时，通过显式调用 [setup-agent-team](../../setup-agent-team/SKILL.md) 补齐项目级依赖；规范形成后用项目本地 `designmd lint <实际规范路径>` 或已有脚本校验，记录版本、命令、退出码及错误/警告处理依据。工具缺失或 lint 有错误时保持规范校验未通过，不以人工 front matter 核对替代；lint 不替代视觉评审。实质变化保留旧版并重新确认。
 
 ## 开发依赖与审查
 

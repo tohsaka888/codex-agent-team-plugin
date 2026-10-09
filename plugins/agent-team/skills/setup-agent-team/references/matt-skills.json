@@ -1,0 +1,131 @@
+{
+  "repository": "https://github.com/mattpocock/skills",
+  "commit": "d81f3a183412e71a5b1e84ca21bc1a35eea03a60",
+  "license": "MIT",
+  "skills": [
+    {
+      "name": "ask-matt",
+      "sourcePath": "skills/engineering/ask-matt"
+    },
+    {
+      "name": "code-review",
+      "sourcePath": "skills/engineering/code-review"
+    },
+    {
+      "name": "codebase-design",
+      "sourcePath": "skills/engineering/codebase-design"
+    },
+    {
+      "name": "diagnosing-bugs",
+      "sourcePath": "skills/engineering/diagnosing-bugs"
+    },
+    {
+      "name": "domain-modeling",
+      "sourcePath": "skills/engineering/domain-modeling"
+    },
+    {
+      "name": "grill-with-docs",
+      "sourcePath": "skills/engineering/grill-with-docs"
+    },
+    {
+      "name": "implement-spec",
+      "sourcePath": "skills/engineering/implement-spec"
+    },
+    {
+      "name": "implement",
+      "sourcePath": "skills/engineering/implement"
+    },
+    {
+      "name": "improve-codebase-architecture",
+      "sourcePath": "skills/engineering/improve-codebase-architecture"
+    },
+    {
+      "name": "pr",
+      "sourcePath": "skills/engineering/pr"
+    },
+    {
+      "name": "prototype",
+      "sourcePath": "skills/engineering/prototype"
+    },
+    {
+      "name": "research",
+      "sourcePath": "skills/engineering/research"
+    },
+    {
+      "name": "retro",
+      "sourcePath": "skills/engineering/retro"
+    },
+    {
+      "name": "setup-matt-pocock-skills",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills"
+    },
+    {
+      "name": "tdd",
+      "sourcePath": "skills/engineering/tdd"
+    },
+    {
+      "name": "to-spec",
+      "sourcePath": "skills/engineering/to-spec"
+    },
+    {
+      "name": "to-tickets",
+      "sourcePath": "skills/engineering/to-tickets"
+    },
+    {
+      "name": "triage",
+      "sourcePath": "skills/engineering/triage"
+    },
+    {
+      "name": "wayfinder",
+      "sourcePath": "skills/engineering/wayfinder"
+    },
+    {
+      "name": "wizard",
+      "sourcePath": "skills/engineering/wizard"
+    },
+    {
+      "name": "git-guardrails-claude-code",
+      "sourcePath": "skills/misc/git-guardrails-claude-code"
+    },
+    {
+      "name": "migrate-to-shoehorn",
+      "sourcePath": "skills/misc/migrate-to-shoehorn"
+    },
+    {
+      "name": "scaffold-exercises",
+      "sourcePath": "skills/misc/scaffold-exercises"
+    },
+    {
+      "name": "setup-pre-commit",
+      "sourcePath": "skills/misc/setup-pre-commit"
+    },
+    {
+      "name": "grill-me",
+      "sourcePath": "skills/productivity/grill-me"
+    },
+    {
+      "name": "grilling",
+      "sourcePath": "skills/productivity/grilling"
+    },
+    {
+      "name": "handoff",
+      "sourcePath": "skills/productivity/handoff"
+    },
+    {
+      "name": "teach",
+      "sourcePath": "skills/productivity/teach"
+    },
+    {
+      "name": "to-questionnaire",
+      "sourcePath": "skills/productivity/to-questionnaire"
+    },
+    {
+      "name": "wait-what",
+      "sourcePath": "skills/productivity/wait-what"
+    },
+    {
+      "name": "writing-for-agents",
+      "sourcePath": "skills/productivity/writing-for-agents"
+    }
+  ]
+}

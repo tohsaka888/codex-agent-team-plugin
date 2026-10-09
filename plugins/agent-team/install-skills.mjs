@@ -20,7 +20,7 @@ export async function installSkills({ workspace, target, codexProfiles = false }
     await cp(source, destination, { recursive: true, errorOnExist: true, force: false });
     results.push({ path: destination, status: 'installed' });
   }
-  for (const name of ['agent-team', 'team-sync', 'team-review', 'team-ue']) {
+  for (const name of ['agent-team', 'setup-agent-team', 'team-sync', 'team-review', 'team-ue']) {
     await copyMissing(resolve(here, 'skills', name), resolve(skillsDirectory, name));
   }
   if (codexProfiles) {
