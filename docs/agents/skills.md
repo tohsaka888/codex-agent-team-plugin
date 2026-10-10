@@ -25,6 +25,8 @@ MIT 许可原文保存在 `mattpocock-LICENSE`；安装路径、文件校验摘�
 
 ## 使用约定
 
+团队分派、成员回报和交付核对遵循[逐执行技能证据](../../plugins/agent-team/skills/team-sync/references/skill-evidence.md)，将实际读取和应用分别关联到对应 run；父卡汇总不能代替每次执行的记录。
+
 按任务选择技能，不同时叠加所有流程。需求规格优先 to-spec / grill-with-docs；任务拆分 to-tickets；行为实现 tdd；难复现缺陷 diagnosing-bugs；领域和模块设计 domain-modeling / codebase-design。
 用户主动调用技能保留上游 `disable-model-invocation` 标记；不能把安装理解为用户已经调用。Claude 专属、Bash 专属或外部 CLI 依赖的技能仍需按环境判断，不宣称全部流程已验证可在 Windows Codex 中运行。
 

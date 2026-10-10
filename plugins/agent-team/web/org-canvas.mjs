@@ -413,12 +413,12 @@ export function createOrgCanvas({
       container.querySelector('.org-legend').textContent =
         (graphMode === 'dag'
           ? agents.length +
-            ' 个真实 Agent · ' +
+            ' 个执行实例 · ' +
             tasks.reduce((sum, t) => sum + executionRecords(t).length, 0) +
             ' 条执行 · ' +
             tasks.length +
             ' 个工单 · 实线：任务依赖 · 虚线：执行归属'
-          : '所有真实 Agent · 连线依据已报告的原生父子关系') +
+          : '全部已同步实例 · 连线依据已报告的父子关系') +
         (graph.warnings?.length ? ' · ' + graph.warnings.join('；') : '');
       svg.setAttribute('width', graph.width);
       svg.setAttribute('height', graph.height);

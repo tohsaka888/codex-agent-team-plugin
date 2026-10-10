@@ -2,9 +2,9 @@
 
 **让原生 Agent 成为可追踪、可协作、可验收的工程团队。**
 
-从一句需求到角色分工、开发、审查和交付，在原生对话中完成协作，在只读看板中看清进度与证据。
+从一句需求到角色分工、开发、审查和交付，在原生对话中完成协作，在独立网页中查看进度、已回报交互与证据。
 
-原生团队协作 · 按需 Skills · Kanban / Org Chart · 逐项验收 · Codex 插件 / 独立 Web
+宿主原生团队协作 · 按需 Skills · 独立网页 Kanban / Org Chart / 协作时间线 · 逐项验收 · Codex 插件 / 独立 Web
 
 [产品视频](#产品视频) · [为什么选择](#为什么选择-codex-agent-team) · [团队如何工作](#团队如何工作) · [快速开始](#快速开始) · [接入其他客户端](#接入其他客户端) · [文档](#文档)
 
@@ -74,7 +74,7 @@ node build.mjs
 Pop-Location
 ```
 
-将 `plugins/agent-team/.mcp.json.example` 复制为同目录 `.mcp.json`，把 `args` 中的 `server.mjs` 路径改成实际绝对路径；Node 不在宿主 PATH 中时，`command` 也使用绝对路径。已有配置先核对并保留。
+可选旧 Codex 内嵌入口：将 `plugins/agent-team/.mcp.json.example` 复制为同目录 `.mcp.json`，把 `args` 中的 `server.mjs` 路径改成实际绝对路径；Node 不在宿主 PATH 中时，`command` 也使用绝对路径。已有配置先核对并保留。
 
 ```powershell
 codex plugin marketplace add .
@@ -90,14 +90,14 @@ codex plugin list --marketplace codex-agent-team-plugin --json
 
 五个可移植 Skills 与独立 Web 可用于具备原生子 Agent 能力的其他客户端。各客户端的技能目录、技能发现和派生接口需实际核验。
 
-完成上面的依赖安装与页面构建后，在实际目标工程中运行：
+源码构建可在任何目录执行 `node <插件绝对路径>/build.mjs --web-only`，构建阶段需要 esbuild；实际目标工程运行：
 
 ```powershell
 node plugins/agent-team/install-skills.mjs --workspace D:/Projects/MyApp --target D:/Projects/MyApp/.agents/skills
-node plugins/agent-team/server.mjs --http --portable --workspace D:/Projects/MyApp
+node plugins/agent-team/dist/web/open-web.mjs --workspace D:/Projects/MyApp --team-id MyTeam
 ```
 
-浏览器打开 [本机看板](http://127.0.0.1:43782/)。安装目录应以目标客户端真实支持的目录为准；没有原生 Skills 发现机制时，明确要求读取已安装的 `agent-team/SKILL.md`。默认数据目录为目标工程的 `.agent-team`。
+启动器核对 workspace/data-dir 后打开系统浏览器并返回团队 URL。独立分发包 `plugins/agent-team/dist/web` 可整体复制，只需 Node.js 20+，没有 MCP/Codex 运行依赖。`--no-open` 用于只启动和查询地址；端口占用用 `--port` 指定其他端口。安装目录应以目标客户端真实支持的目录为准；没有原生 Skills 发现机制时，明确要求读取已安装的 `agent-team/SKILL.md`。默认数据目录为目标工程的 `.agent-team`。
 
 同步脚本自包含，不依赖插件缓存或 Codex SQLite。Claude Code、Hermes、DSH 等可使用通用接入路径；这些客户端的真实团队会话尚未全部验证。完整命令见 [安装与接入](docs/getting-started.md)，数据合同见 [可移植追踪](docs/portable-tracking.md)。
 
@@ -141,3 +141,5 @@ Pop-Location
 `design:lint` 用于设计规范相关工作；行为修改应按实际风险选择检查。纯页面预览可在插件目录运行 `node server.mjs --http`，未接入活动时显示空态。
 
 第三方工程 Skills 的来源、固定版本与许可见 [Skills 说明](docs/agents/skills.md)。README 的信息组织参考 [AionUi](https://github.com/iofficeai/aionui)，产品能力与验证边界以本仓库文档为准。
+
+协作时间线按任务、发送/接收Agent及类型筛选，支持纯文本正文、回复定位和新交互查看。声明/观测时间与归档时间分别展示；未知关联保持未知，未采集历史不自动补齐。网页只查看，派生和发送仍使用宿主原生工具。

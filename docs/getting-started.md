@@ -63,3 +63,7 @@ node $syncScript read --workspace D:/Projects/MyApp
 上述是使用示例，不是预置演示数据。真实团队还应提交具体逐项证据、运行结束和独立业务阶段更新；review-requirement 计算实际文件指纹并保存快照，人工 review 引用用户原话和具体版本。完整参数用 `node $syncScript --help` 查看。同步脚本自包含，只复制 team-sync 目录也能运行，不依赖插件缓存或 Codex SQLite。
 
 Claude Code、Hermes、DSH 等使用此通用路径，无需逐家 Hook 适配器；各家技能目录、隐式发现及原生派生能力需实际核验。本轮通用 CLI/HTTP/浏览器验证与各客户端真实会话验证分别记录，未运行的客户端不标为已完整实测。
+
+## 独立网页默认入口（2026-10-09）
+
+`node <插件绝对路径>/build.mjs --web-only` 构建 `dist/web`；将整个目录复制到任意机器/目标工程，仅需 Node.js 20+。运行 `node <独立包>/open-web.mjs --workspace <目标工程> --team-id <同步team-id> [--data-dir <同步目录>]`。启动器仅连接127.0.0.1，检查服务健康身份及 workspace/data-dir 后打开系统浏览器，返回可复制 URL；`--no-open` 不打开浏览器，冲突用 `--port`。安装Skills时安装器将独立包复制到 agent-team/web，已有目录保留；旧版本需由用户核对后迁移，不自动覆盖。Codex MCP server.mjs保留兼容，默认流程不调用。宿主执行记录 execution:// 在独立模式明确不可用；工作区内已关联文件仍可预览。

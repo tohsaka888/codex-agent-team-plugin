@@ -1,12 +1,12 @@
 {
   "name": "agent-team",
   "version": "0.5.0",
-  "description": "原生 Codex 会话团队协作与只读看板",
+  "description": "宿主原生多 Agent 协作与独立网页追踪",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Agent Team",
-    "shortDescription": "原生团队协作与会话看板",
-    "longDescription": "提及 Agent Team 启用当前会话团队流程；只读 Kanban 与 Org Chart 展示已接入活动。",
+    "shortDescription": "原生协作 · 独立网页 · 协作时间线",
+    "longDescription": "提及 Agent Team 启用团队流程；由宿主原生执行，独立网页展示只读 Kanban、Org Chart 与已回报协作时间线。旧 MCP 入口保留兼容。",
     "developerName": "Local workspace",
     "category": "Productivity",
     "composerIcon": "./assets/team.svg",
@@ -15,7 +15,7 @@
       "Read"
     ],
     "defaultPrompt": [
-      "启用当前会话的 Agent Team，使用原生团队技能处理后续需求，并打开本会话 Kanban。"
+      "启用当前会话的 Agent Team，使用宿主原生团队能力处理后续需求，并打开独立网页查看当前团队的 Kanban、Org Chart 与协作时间线。"
     ]
   },
   "skills": "./skills/"

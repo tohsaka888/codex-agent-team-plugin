@@ -188,5 +188,5 @@ export function renderNativeGraphCard(agent, task, selected) {
       `,
     )
     .replace('class="agent-card ', 'class="agent-card dag-card ')
-    .replace('1 个执行实例', '1 个真实 Agent · ' + runs.length + ' 条执行记录');
+    .replace('1 个执行实例', '1 个执行实例 · ' + runs.length + ' 条执行记录');
 }

@@ -969,7 +969,13 @@
         </svg>
         Kanban
       </button>
-      <button id="org" role="tab" aria-selected="false" aria-controls="content">
+      <button
+        id="org"
+        aria-label="Agent Org Chart"
+        role="tab"
+        aria-selected="false"
+        aria-controls="content"
+      >
         <svg
           class="view-icon org-icon"
           aria-hidden="true"
@@ -983,7 +989,18 @@
           <rect x="2" y="17" width="6" height="5" rx="1.5" />
           <rect x="16" y="17" width="6" height="5" rx="1.5" />
         </svg>
-        Agent Org Chart
+        <span class="nav-full">Agent Org Chart</span>
+        <span class="nav-short">Org</span>
+      </button>
+      <button
+        id="timeline"
+        aria-label="协作时间线"
+        role="tab"
+        aria-selected="false"
+        aria-controls="timeline-view"
+      >
+        <span class="nav-full">协作时间线</span>
+        <span class="nav-short">时间线</span>
       </button>
     </nav>
     <section id="review-banner" hidden aria-label="当前会话待人工评审"></section>
@@ -1002,6 +1019,7 @@
       <main id="content" role="tabpanel" aria-label="任务看板"></main>
       <aside id="detail" hidden aria-label="任务详情"></aside>
     </div>
+    <section id="timeline-view" role="tabpanel" aria-label="协作时间线" hidden></section>
     <p id="motion-status" role="status" class="sr-only"></p>
     <footer id="sync">尚无成功同步数据</footer>
     <dialog id="artifact-dialog" aria-labelledby="artifact-title">

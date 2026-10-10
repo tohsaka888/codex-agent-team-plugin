@@ -5,8 +5,105 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import { acceptanceState } from './skills/team-sync/scripts/acceptance-contract.mjs';
+
+test('旧人工交付对象不遮挡当前结果，新版仍需自己的确认', () => {
+  const current = {
+    id: 'current',
+    itemId: 'delivery',
+    type: 'delivery',
+    version: 'v2',
+    digest: 'new',
+    acKey: 'ac',
+    scopeKey: 'scope',
+    resultDigest: 'new',
+    resultVersion: 'v2',
+  };
+  const old = {
+    ...current,
+    id: 'old',
+    version: 'v1',
+    digest: 'old',
+    resultDigest: 'old',
+    resultVersion: 'v1',
+  };
+  const entity = {
+    acKey: 'ac',
+    resultDigest: 'new',
+    resultVersion: 'v2',
+    acceptanceItems: [{ id: 'delivery', verifier: 'human', kind: 'delivery' }],
+    reviewRequirements: [old, current],
+    reviewRecords: [
+      {
+        ...current,
+        requirementId: 'current',
+        authorType: 'human',
+        decision: 'approved',
+        quote: '确认当前版本',
+      },
+    ],
+  };
+  assert.equal(acceptanceState(entity).humanStatus, 'accepted');
+  entity.reviewRecords = [
+    { ...old, requirementId: 'old', authorType: 'human', decision: 'approved' },
+  ];
+  assert.equal(acceptanceState(entity).humanStatus, 'pending');
+  entity.reviewRecords = [
+    { ...current, requirementId: 'current', authorType: 'human', decision: 'rejected' },
+  ];
+  assert.equal(acceptanceState(entity).humanStatus, 'rejected');
+});
 
 const cli = fileURLToPath(new URL('./skills/team-sync/scripts/sync.mjs', import.meta.url));
+test('已验收的失败历史执行可收尾，未验收或仍运行的执行仍阻止父卡完成', async (t) => {
+  const f = await fixture(t),
+    common = { teamId: 'ac', taskId: '01' };
+  f.call('team', '--team-id', 'ac');
+  await f.task({ acceptanceItems: ac().filter((i) => i.verifier === 'agent') });
+  await f.write('run', {
+    ...common,
+    runId: 'history',
+    provider: 'common',
+    role: 'Reviewer',
+    taskType: 'analysis',
+    version: 'v1',
+    acceptanceItems: ac().filter((i) => i.verifier === 'agent'),
+    status: 'failed',
+  });
+  await writeFile(path.join(f.workspace, 'settled.md'), '父卡交付与历史失败报告均已核对');
+  for (const runId of [null, 'history']) {
+    const scope = { ...common, ...(runId ? { runId } : {}) };
+    const digest = (await f.write('result', { ...scope, reference: 'settled.md', version: 'r1' }))
+      .event.operation.digest;
+    if (runId)
+      await assert.rejects(f.write('task', { ...common, status: 'completed' }), /human acceptance/);
+    await f.write('acceptance', {
+      ...scope,
+      itemId: 'test',
+      status: 'passed',
+      version: 'v1',
+      digest,
+      reportedBy: 'reviewer',
+      evidence: '实际核对本卡结果；历史失败报告无未解决条件',
+    });
+    await f.write('review', {
+      ...scope,
+      reviewId: 'review',
+      author: 'reviewer',
+      authorType: 'agent',
+      scope: 'delivery',
+      decision: 'approved',
+      version: 'r1',
+      digest,
+      evidence: '核对当前结果，历史失败保留',
+    });
+  }
+  await f.write('run', { ...common, runId: 'history', status: 'running' });
+  await assert.rejects(f.write('task', { ...common, status: 'completed' }), /human acceptance/);
+  await f.write('run', { ...common, runId: 'history', status: 'failed' });
+  await f.write('task', { ...common, status: 'completed' });
+  assert.equal(f.call('read').runs[0].status, 'failed');
+});
 const ac = () => [
   {
     id: 'test',

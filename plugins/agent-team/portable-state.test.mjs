@@ -5,6 +5,117 @@ import { orgRoleView } from './web/org-view.mjs';
 import { orgForest } from './web/org-view.mjs';
 import { sessionUrl } from './web/navigation.mjs';
 import { taskColumn } from './web/view-model.mjs';
+import { humanReview } from './human-review.mjs';
+
+test('run prototype confirmation uses the same review scope as parent without inventing approval', () => {
+  const digest = 'a'.repeat(64);
+  const raw = {
+    teams: [{ teamId: 'app' }],
+    tasks: [{ teamId: 'app', taskId: '03', status: 'completed' }],
+    runs: [
+      {
+        teamId: 'app',
+        taskId: '03',
+        runId: 'ue',
+        status: 'completed',
+        reviewRequirements: [
+          {
+            id: 'prototype',
+            type: 'ui',
+            version: 'v1',
+            digest,
+            reference: 'review.md',
+            producer: 'coordinator',
+          },
+        ],
+        reviewRecords: [
+          {
+            id: 'confirmed',
+            requirementId: 'prototype',
+            authorType: 'human',
+            author: 'user',
+            decision: 'approved',
+            scope: 'ui',
+            quote: '确认',
+            evidence: '已保存用户原话与具体版本',
+            version: 'v1',
+            digest,
+          },
+        ],
+      },
+    ],
+  };
+  const run = projectTracking(raw, 'team:app').tasks[0].runs[0];
+  assert.equal(humanReview(run).items[0].status, 'confirmed');
+  assert.equal(run.reviewRecords[0].scope, 'design');
+  assert.match(run.reviewRecords[0].summary, /范围：ui/);
+  raw.runs[0].reviewRecords[0].digest = 'b'.repeat(64);
+  assert.equal(
+    humanReview(projectTracking(raw, 'team:app').tasks[0].runs[0]).items[0].status,
+    'stale_confirmation',
+  );
+});
+
+test('current task and run delivery pending excludes prior results while archive retains them', () => {
+  const old = 'a'.repeat(64),
+    current = 'b'.repeat(64);
+  const contract = {
+    acKey: 'current-ac',
+    resultDigest: current,
+    acceptanceItems: [{ id: 'delivery', label: '当前交付', verifier: 'human', kind: 'delivery' }],
+    reviewRequirements: [
+      {
+        id: 'old',
+        itemId: 'delivery',
+        type: 'delivery',
+        acKey: 'current-ac',
+        resultDigest: old,
+        version: 'v1',
+        digest: old,
+        reference: 'old.md',
+        producer: 'coordinator',
+      },
+      {
+        id: 'current',
+        itemId: 'delivery',
+        type: 'delivery',
+        acKey: 'current-ac',
+        resultDigest: current,
+        version: 'v2',
+        digest: current,
+        reference: 'current.md',
+        producer: 'coordinator',
+      },
+      {
+        id: 'old-contract',
+        itemId: 'delivery',
+        type: 'delivery',
+        acKey: 'old-ac',
+        resultDigest: current,
+        version: 'v2',
+        digest: current,
+        reference: 'other.md',
+        producer: 'coordinator',
+      },
+    ],
+  };
+  const raw = {
+    teams: [{ teamId: 'app' }],
+    tasks: [{ teamId: 'app', taskId: '01', status: 'awaiting_review', ...contract }],
+    runs: [{ teamId: 'app', taskId: '01', runId: 'dev', status: 'completed', ...contract }],
+  };
+  const task = projectTracking(raw, 'team:app').tasks[0];
+  assert.deepEqual(
+    task.humanReview.items.map((i) => [i.id, i.status]),
+    [['current', 'awaiting_confirmation']],
+  );
+  assert.deepEqual(
+    humanReview(task.runs[0]).items.map((i) => [i.id, i.status]),
+    [['current', 'awaiting_confirmation']],
+  );
+  assert.equal(raw.tasks[0].reviewRequirements.length, 3);
+  assert.equal(raw.runs[0].reviewRequirements.length, 3);
+});
 
 test('planned task is visible without a fabricated agent; all runs remain linked', () => {
   const raw = {

@@ -7,9 +7,13 @@ description: Agent Team 的 App 或网页 UI 设计任务：收集已有图，�
 
 适用于已启用团队的 UI 新设计或实质视觉修改。读取 [设计工作流](references/workflow.md) 和团队提供的 team-sync 指引；沿用当前宿主原生 Agent 派生与可用生图工具。
 
+按[逐执行技能证据](../team-sync/references/skill-evidence.md)回报本次设计执行的实际读取及应用；图生成、设计规范校验和确认依据各保留真实证据，结束前查询本 run.skills。
+
 已有匹配范围的已确认图可以复用。没有图时核验实际 imagegen 能力，生成可查看候选让用户评审；能力缺失时如实说明，不以文字描述冒充 UI 图。用户明确确认具体图后才归档和生成 design.md。
 
 工单通过通用同步关联图、UX说明、具体确认版本和指纹。部分确认只适用于对应页面/状态。开发读取同一确认图、ux.md 和 design.md；审查保存实际实现截图，不覆盖确认基线。UE 的运行状态、Agent Review 和用户视觉确认分别同步。
+
+在实施前与协调者建立页面/状态/平台及AC覆盖表，切片完成时补对应证据，按[有界团队执行](../agent-team/references/efficient-workflow.md)准备精简交接。匹配范围的已确认基线复用，新状态或实质交互方向按适用要求补图确认；综合审查核对当前矩阵缺口。
 
 UI 实现及修正交付必须执行 [UI Check](../team-review/references/ui-check.md)，将用户确认的 UI 图与当前产品真实运行截图逐项比对，并核对 design.md、ux.md 和交互操作。UE 交接明确页面/状态和设备范围，供 Reviewer 建立覆盖矩阵。
 

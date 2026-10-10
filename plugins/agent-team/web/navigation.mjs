@@ -1,12 +1,4 @@
-export function sessionUrl(nativeAgentId, hostId = 'local', provider = 'codex') {
-  if (
-    provider !== 'codex' ||
-    hostId !== 'local' ||
-    !/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(nativeAgentId || '')
-  )
-    return null;
-  return 'codex://threads/' + encodeURIComponent(nativeAgentId);
-}
+export { sessionUrl } from './session-url.mjs';
 export async function openNavigation({ url, app, embedded, onError }) {
   try {
     if (!url || !/^codex:\/\/threads\/[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(url))
@@ -20,13 +12,13 @@ export async function openNavigation({ url, app, embedded, onError }) {
     return false;
   }
 }
-import { z } from 'zod';
 export function canOpenNativeFile(app) {
   return Boolean(app.getHostCapabilities?.()?.experimental?.['openai/files']);
 }
 export async function openNativeFile(app, path) {
   if (!canOpenNativeFile(app)) throw new Error('当前宿主未声明原生文件标签页能力');
   if (typeof path !== 'string' || !path.trim()) throw new Error('文件路径不可用');
+  const { z } = await import('zod');
   const result = await app.request(
     { method: 'openai/files/open', params: { path } },
     z.object({ isError: z.boolean().optional() }).passthrough(),

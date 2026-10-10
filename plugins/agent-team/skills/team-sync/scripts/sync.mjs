@@ -5,7 +5,7 @@ import { appendOperation, readTracking } from './tracking-core.mjs';
 
 const HELP = `Agent Team portable tracking (Node.js 20+, no dependencies)
 Usage: node sync.mjs OPERATION --workspace PATH [options]
-Operations: team task run activity acceptance review-requirement review artifact result skill read
+Operations: team task run activity acceptance review-requirement review artifact result skill interaction read
 Common: --workspace PATH --data-dir PATH --team-id ID --task-id ID --run-id ID
         --event-id ID (reuse for retries) --revision INTEGER --producer NAME --timestamp ISO
         --body-file PATH (JSON object supplies command fields; CLI overrides it)
@@ -22,6 +22,11 @@ run:  --title TEXT --provider NAME --native-agent-id ID --native-role TYPE --par
       --version AC_VERSION --task-type TYPE --acceptance-items JSON_ARRAY (independent run AC)
       --agent-name NAME --profile NAME --goal TEXT --activity-summary TEXT --status STATUS
       STATUS: queued running completed failed interrupted
+interaction: --message-id STABLE_ID --type dispatch|message|reply|status --source NAME
+             --content TEXT --from-run-id ID --to-run-id ID --reply-to MESSAGE_ID
+             [--task-id ID --run-id ID --status STATUS]
+             source and timestamp describe actual observation; missing identities remain unknown.
+             Long content uses body-file; reply requires reply-to, status does not update business state.
 activity: --summary TEXT --evidence TEXT
 acceptance: --item-id ID --label TEXT --status pending|unknown|passed|failed
             --evidence TEXT --reported-by NAME --version AC_VERSION --digest RESULT_SHA256
@@ -96,6 +101,12 @@ const names = [
   'name',
   'task-type',
   'acceptance-items',
+  'message-id',
+  'from-run-id',
+  'to-run-id',
+  'content',
+  'reply-to',
+  'source',
 ];
 function camel(name) {
   return name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());

@@ -114,7 +114,17 @@ export function acceptanceState(entity) {
   const items = definitions.map((i) => {
     if (i.verifier === 'human') {
       const types = i.kind === 'prototype' ? ['ui', 'visual'] : ['delivery'];
-      const q = requirements.find((q) => q.itemId === i.id && types.includes(q.type));
+      const q = requirements
+        .filter(
+          (q) =>
+            q.itemId === i.id &&
+            types.includes(q.type) &&
+            q.acKey === entity.acKey &&
+            q.fileCurrent !== false &&
+            (q.type !== 'delivery' ||
+              (q.resultDigest === entity.resultDigest && q.resultVersion === entity.resultVersion)),
+        )
+        .at(-1);
       const decisions = q
         ? records.filter(
             (r) =>

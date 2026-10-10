@@ -4,7 +4,7 @@ import { roleIcon } from './role-visual.mjs';
 import { taskLabel } from './view-model.mjs';
 import { labels, lifeLabels, time, taskState, taskTone } from './task-presentation.mjs';
 import { renderHumanReview } from './human-review-view.mjs';
-import { sessionUrl } from './navigation.mjs';
+import { sessionUrl } from './session-url.mjs';
 
 // 仅生成详情标记；事件绑定、焦点和滚动恢复由页面控制器负责。
 export function renderDetailContent({

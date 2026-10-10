@@ -23,6 +23,16 @@ export async function installSkills({ workspace, target, codexProfiles = false }
   for (const name of ['agent-team', 'setup-agent-team', 'team-sync', 'team-review', 'team-ue']) {
     await copyMissing(resolve(here, 'skills', name), resolve(skillsDirectory, name));
   }
+  try {
+    await access(resolve(here, 'dist/web/board.html'));
+    await copyMissing(resolve(here, 'dist/web'), resolve(skillsDirectory, 'agent-team/web'));
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    results.push({
+      path: resolve(skillsDirectory, 'agent-team/web'),
+      status: 'web-build-required',
+    });
+  }
   if (codexProfiles) {
     for (const name of [
       'coordinator',

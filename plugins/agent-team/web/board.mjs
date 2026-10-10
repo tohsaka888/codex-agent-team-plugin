@@ -1,3 +1,5 @@
+import { createTimeline } from './timeline.mjs';
+import { initialBrowserSession } from './browser-scope.mjs';
 import { renderTaskCard, renderKanbanBoard } from './cards-view.mjs';
 import { renderEmpty } from './empty-view.mjs';
 import { renderDetailContent } from './detail-view.mjs';
@@ -5,16 +7,46 @@ import { time } from './task-presentation.mjs';
 import { html } from './html.mjs';
 import { recentFirst, sessionOptions, createSelectorActivityReader } from './selector-order.mjs';
 import { renderReviewBanner } from './human-review-view.mjs';
-import { App, applyHostStyleVariables, applyHostFonts } from '@modelcontextprotocol/ext-apps';
+import {
+  app,
+  browserOnly,
+  applyHostStyleVariables,
+  applyHostFonts,
+  canOpenNativeFile,
+  openNativeFile,
+} from './host-bridge.mjs';
 import { createOrgCanvas } from './org-canvas.mjs';
 import { individualAgents, renderNativeGraphCard } from './dag-view.mjs';
 import { createMotion, changedTasks, captureCards, animateCards } from './motion.mjs';
 import { visibleTasks, taskColumn, taskLabel, kanbanCards } from './view-model.mjs';
 import { createSnapshotReader } from './sync-query.mjs';
 import { escapeHtml as safe } from './trace-detail.mjs';
-import { canOpenNativeFile, openNativeFile } from './navigation.mjs';
 const $ = (id) => document.getElementById(id);
-const app = new App({ name: 'agent-team-readonly', version: '0.5.0' }, {});
+const timelineView = createTimeline({
+  container: $('timeline-view'),
+  query: async (teamId, after) => {
+    const url = new URL('/api/interactions', location.href);
+    url.searchParams.set('teamId', teamId);
+    url.searchParams.set('after', String(after));
+    url.searchParams.set('limit', '200');
+    const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    return response.json();
+  },
+  onOpenTask: (taskId, runId) => {
+    const task = kanbanCards(data?.snapshot?.tasks || []).find((item) =>
+      runId ? item.runId === runId : item.taskId === taskId && !item.runId,
+    );
+    if (!task) return false;
+    $('kanban').click();
+    selectedTask = task.id;
+    selectedAgent = undefined;
+    detail();
+    $('close')?.focus({ preventScroll: true });
+    return true;
+  },
+});
+
 let data,
   connected = false,
   mode = 'kanban',
@@ -28,7 +60,8 @@ let data,
 let timer,
   stopped = false,
   failureCount = 0;
-const explicitHttp = new URLSearchParams(location.search).get('transport') === 'http';
+const urlParams = new URLSearchParams(location.search);
+const explicitHttp = browserOnly || urlParams.get('transport') === 'http';
 let search = '',
   roleFilter = '',
   ready = explicitHttp || window.parent === window;
@@ -98,6 +131,7 @@ async function showArtifact(taskId, reference) {
       result = response.structuredContent;
     } else {
       const url = new URL('/api/artifact', location.href);
+      if (urlParams.get('teamId')) url.searchParams.set('teamId', urlParams.get('teamId'));
       for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
       const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
       const value = await response.json();
@@ -444,7 +478,7 @@ function render({ changes = [] } = {}) {
   updatePicker();
   const banner = renderReviewBanner(snapshot.tasks);
   $('review-banner').innerHTML = banner;
-  $('review-banner').hidden = !banner;
+  $('review-banner').hidden = mode === 'timeline' || !banner;
   bindReviewTasks($('review-banner'));
   orgNodes = individualAgents(snapshot.agents, snapshot.tasks);
   if (selectedOrg) {
@@ -505,6 +539,18 @@ function render({ changes = [] } = {}) {
   }[automaticSessionSource || data.sessionSelectionSource];
   $('session-label').title =
     [selectionReason, data.selectedRootSessionId].filter(Boolean).join(' · ') || '选择一个主会话';
+  $('timeline-view').hidden = mode !== 'timeline';
+  $('layout').hidden = mode === 'timeline';
+  if (mode === 'timeline') {
+    $('filters').hidden = true;
+    $('detail').hidden = true;
+    const teamId =
+      urlParams.get('teamId') ||
+      data.sessions?.find((session) => session.id === data.selectedRootSessionId)?.teamId;
+    timelineView.show(data, teamId, connected);
+    $('sync').textContent = '只读协作时间线 · 仅展示已回报事实';
+    return;
+  }
   $('filters').hidden = snapshot.coverage !== 'partial' || !snapshot.tasks.length;
   const roles = [
     ...new Set(
@@ -696,6 +742,7 @@ const selectorActivity = createSelectorActivityReader(async (project, session) =
     return result.structuredContent;
   }
   const url = new URL('/api/state', location.href);
+  if (urlParams.get('teamId')) url.searchParams.set('teamId', urlParams.get('teamId'));
   url.searchParams.set('projectId', project);
   if (session) url.searchParams.set('rootSessionId', session);
   const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
@@ -725,6 +772,7 @@ const reader = createSnapshotReader({
       next = result.structuredContent;
     } else {
       const url = new URL('/api/state', location.href);
+      if (urlParams.get('teamId')) url.searchParams.set('teamId', urlParams.get('teamId'));
       if (project) url.searchParams.set('projectId', project);
       if (session) url.searchParams.set('rootSessionId', session);
       else url.searchParams.set('autoSelectSession', 'true');
@@ -760,6 +808,7 @@ const reader = createSnapshotReader({
   },
   onError: (error, context) => {
     data = context.snapshot || undefined;
+    if (mode === 'timeline') timelineView.offline(error.message);
     motion.cancel();
     orgCanvas?.setOnline(false);
     failureCount = Math.min(failureCount + 1, 3);
@@ -874,7 +923,7 @@ $('artifact-dialog').addEventListener('close', () => {
     : null;
   (target || $('close') || $(mode))?.focus({ preventScroll: true });
 });
-for (const name of ['kanban', 'org'])
+for (const name of ['kanban', 'org', 'timeline'])
   $(name).onclick = () => {
     if (mode === name) return;
     releaseCanvas();
@@ -884,6 +933,10 @@ for (const name of ['kanban', 'org'])
     $('detail').scrollTop = 0;
     $('kanban').setAttribute('aria-selected', String(mode === 'kanban'));
     $('org').setAttribute('aria-selected', String(mode === 'org'));
+    $('timeline').setAttribute('aria-selected', String(mode === 'timeline'));
+    $('timeline-view').hidden = mode !== 'timeline';
+    $('layout').hidden = mode === 'timeline';
+    $('review-banner').hidden = mode === 'timeline';
     $('content').scrollTop = $('content').scrollLeft = 0;
     if (data) render();
     else {
@@ -941,8 +994,12 @@ app.ontoolresult = (params) => {
   }
 };
 $('content').innerHTML = empty('loading');
-if (explicitHttp || window.parent === window) await refresh();
-else {
+if (explicitHttp || window.parent === window) {
+  const teamId = urlParams.get('teamId');
+  if (urlParams.get('rootSessionId') || teamId)
+    await bindScope(undefined, initialBrowserSession(urlParams));
+  else await refresh();
+} else {
   document.body.classList.add('embedded');
   try {
     await app.connect(undefined, { timeout: 10000 });

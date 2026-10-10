@@ -1,5 +1,7 @@
 # 当前架构：原生团队与只读展示
 
+2026-10-09 已确认展示追踪独立于 Codex，执行继续由当前宿主负责。当前默认入口为独立浏览器网页：通用事件归档 → 独立 HTTP → 浏览器；MCP 与 Codex 观察为可选兼容适配器。独立运行包仅需 Node，不读取 Codex home/SQLite，也不需要 MCP 安装。决定与影响见 [ADR 0001](adr/0001-independent-web.md)。独立入口、通用交互协议及时间线正式UI已实施；用户确认timeline-v1两图/UX，实际UI Check与独立审查通过。145项回归通过，01入口和04产品人工交付仍待具体结果确认；实际证据见 [UI Check](ue/web-decoupling/ui-check/result-v1/ui-check.md)。以下带日期的内嵌入口描述保留为历史和兼容背景。
+
 2026-10-03 已确认重构 v2：宿主原生工具负责执行，setup-agent-team 负责显式依赖安装，其余四个可移植 Skills 经自包含同步脚本进入通用 Task/AgentRun 事件核心；内嵌 MCP 与独立 HTTP 复用同一快照和 UI。Codex 原生观察及 Hooks 仅为可选补充，旧事件继续读取。名称、职责、原生类型、Profile 与真实身份分别记录；无实例工单及多次执行、逐项证据、人工具体版本/指纹确认保留。详细合同见 [可移植追踪](portable-tracking.md)，历史阶段说明保留其当时范围。
 
 当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。插件 ID 为 `agent-team`；只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
@@ -70,3 +72,7 @@ Org Chart 以真实父子标识为依据，按同一父组织分支的明确职�
 - 被取代的架构完整保存于 [历史架构](history/architecture-before-native-team.md)。
 
 官方参考：[Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)、[Build skills](https://learn.chatgpt.com/docs/build-skills)、[Hooks](https://learn.chatgpt.com/docs/hooks)、[插件扩展](https://developers.openai.com/plugins/build/extensions)。
+
+2026-10-09 最终追加：评审投影发现并修正P2，145/145及lint/format/build/designlint通过；HTML视觉冻结指纹未变。最新独立运行入口端口43820。Reviewer账户用量限制导致本次修正独立复查未完成，01新结果和04均未声明验收完成；具体限制见交付文件。
+
+2026-10-09 收尾复查已恢复完成：独立Reviewer实际25/25及HTTP43820复核通过，最后两处评审投影P2消除；完整145项及所有工程检查通过。01当前result-v5、04当前delivery-v2；工程收尾完成，人工入口和时间线交付保留待明确确认。上述用量限制/复查pending是前次历史，已被本条覆盖。结果见 `.scratch/web-decoupling/delivery-final.md` 与 `review-04.md`；安装缓存按已确认04范围不自动同步。

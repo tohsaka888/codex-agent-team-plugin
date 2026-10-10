@@ -15,6 +15,7 @@ const KINDS = new Set([
   'artifact',
   'skill',
   'result',
+  'interaction',
 ]);
 const TASK_STATUSES = new Set([
   'queued',
@@ -55,6 +56,17 @@ const OPERATION_FIELDS = {
     'acceptanceItems',
     'version',
     'taskType',
+  ],
+  interaction: [
+    'messageId',
+    'type',
+    'fromRunId',
+    'toRunId',
+    'runId',
+    'content',
+    'replyTo',
+    'source',
+    'status',
   ],
   activity: ['runId', 'summary', 'evidence'],
   acceptance: ['runId', 'itemId', 'label', 'status', 'evidence', 'reportedBy', 'version', 'digest'],
@@ -157,6 +169,7 @@ function entityKey(operation) {
     ? operation.runId
     : operation.taskId || '';
   const item =
+    operation.messageId ||
     operation.itemId ||
     operation.requirementId ||
     operation.reviewId ||
@@ -176,6 +189,7 @@ function fields(operation, names) {
 }
 
 function fold(events, workspace) {
+  const interactions = [];
   const teams = new Map();
   const tasks = new Map();
   const runs = new Map();
@@ -183,6 +197,17 @@ function fold(events, workspace) {
   const key = (teamId, id) => JSON.stringify([teamId, id]);
   for (const event of events) {
     const op = event.operation;
+    if (op.kind === 'interaction') {
+      interactions.push({
+        ...op,
+        eventId: event.eventId,
+        timestamp: event.timestamp,
+        recordedAt: event.recordedAt,
+        sequence: event.sequence,
+        producer: event.producer,
+      });
+      continue;
+    }
     const revisionKey = entityKey(op);
     const isCurrent = event.revision > (revisions.get(revisionKey) ?? 0);
     if (!isCurrent) continue;
@@ -406,6 +431,7 @@ function fold(events, workspace) {
   return {
     protocolVersion: 1,
     workspace,
+    interactions,
     teams: [...teams.values()],
     tasks: [...tasks.values()],
     runs: [...runs.values()],
@@ -459,6 +485,43 @@ function validate(operation, snapshot) {
   if (operation.kind === 'team') return;
   if (!snapshot.teams.some((team) => team.teamId === operation.teamId))
     throw new Error('Register team first');
+  if (operation.kind === 'interaction') {
+    required(operation.messageId, 'messageId');
+    if (!['dispatch', 'message', 'reply', 'status'].includes(operation.type))
+      throw new Error('interaction type must be dispatch|message|reply|status');
+    required(operation.source, 'source');
+    if (
+      typeof operation.content !== 'string' ||
+      !operation.content.trim() ||
+      Buffer.byteLength(operation.content) > 1024 * 1024
+    )
+      throw new Error('content must be non-empty and at most 1 MiB');
+    for (const field of ['taskId', 'runId', 'fromRunId', 'toRunId', 'replyTo', 'status'])
+      if (operation[field] !== undefined && operation[field] !== null)
+        required(operation[field], field);
+    if (operation.type === 'reply') {
+      required(operation.replyTo, 'replyTo');
+      const sameTeam = snapshot.interactions.filter((item) => item.teamId === operation.teamId);
+      if (
+        !sameTeam.some((item) => item.messageId === operation.replyTo) &&
+        snapshot.interactions.some(
+          (item) => item.teamId !== operation.teamId && item.messageId === operation.replyTo,
+        )
+      )
+        throw new Error('replyTo belongs to another team');
+      const visited = new Set([operation.messageId]);
+      let next = operation.replyTo;
+      while (next) {
+        if (visited.has(next)) throw new Error('replyTo cannot create a self reference or cycle');
+        visited.add(next);
+        next = sameTeam.find((item) => item.messageId === next)?.replyTo;
+      }
+    }
+    if (operation.type !== 'reply' && operation.replyTo != null)
+      throw new Error('replyTo only applies to reply');
+    if (operation.type === 'status') required(operation.status, 'status');
+    return;
+  }
   required(operation.taskId, 'taskId');
   const task = snapshot.tasks.find(
     (entry) => entry.teamId === operation.teamId && entry.taskId === operation.taskId,
@@ -500,7 +563,8 @@ function validate(operation, snapshot) {
             (r) =>
               r.teamId === task.teamId &&
               r.taskId === task.taskId &&
-              (r.status !== 'completed' || !r.acceptance?.accepted),
+              (!['completed', 'failed', 'interrupted'].includes(r.status) ||
+                !r.acceptance?.accepted),
           ))
       )
         throw new Error(
@@ -869,6 +933,23 @@ export async function appendOperation(config, input) {
       if (duplicate.requestDigest !== requestDigest)
         throw new Error('eventId already exists with different content');
       return { eventId, duplicate: true, event: duplicate };
+    }
+    if (operation.kind === 'interaction') {
+      const existing = events.find(
+        (event) =>
+          event.operation.kind === 'interaction' &&
+          event.operation.teamId === operation.teamId &&
+          event.operation.messageId === operation.messageId,
+      );
+      if (existing) {
+        if (
+          stable(existing.operation) !== stable(operation) ||
+          existing.producer !== producer ||
+          (timestamp !== undefined && existing.timestamp !== timestamp)
+        )
+          throw new Error('messageId already exists with different content');
+        return { eventId: existing.eventId, duplicate: true, event: existing };
+      }
     }
     const snapshot = await refreshAcceptance(fold(events, loc.workspace), loc.workspace);
     validate(operation, snapshot);

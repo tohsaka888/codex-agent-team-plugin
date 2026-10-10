@@ -37,3 +37,11 @@ result 操作登记实际结果文件/版本/指纹；acceptance、review-requir
 
 
 2026-10-04 人工核验细化（覆盖旧版每卡人工确认约定）：每卡仍须非空具体 AC 和 Agent 自验证；仅需人工核验的功能添加 human 条件，manualCheck 必填 entry、steps、expected。无需人工核验的卡不添加通用确认项，显示“无需人工核验”。UE 原型确认等适用要求保留；不得删除真实人工核验需求规避验收。详见 [强制验收合同](../plugins/agent-team/skills/team-sync/references/acceptance.md)。
+
+## 独立网页与通用交互事件（2026-10-09）
+
+独立分发目录dist/web只有Node内置运行依赖；browser bridge不包含MCP。启动器核对workspace/data-dir及本机已登记随机实例标识，未知服务拒绝复用。这是防误打开的本机绑定，不是跨用户认证系统；仅监听127.0.0.1。数据目录默认沿用AGENT_TEAM_DATA_DIR或workspace/.agent-team。teamId URL/API精确选单团队，即使多个团队关联同一宿主rootSessionId；旧MCP的session合并语义保留。
+
+新增interaction操作：messageId稳定且不可变，type为dispatch/message/reply/status，content为实际公开正文（上限1 MiB），source必填；fromRunId/toRunId/taskId/runId未知时可缺失，reply必须replyTo。timestamp为实际发生/观测时间，recordedAt为归档时间，sequence为工作区归档顺序。eventId重试与messageId重复不产生新事实，同messageId不同正文拒绝，原消息迟到可恢复回复关联。status观察不推进业务/执行/验收。
+
+独立HTTP只读GET /api/interactions?teamId=ID&after=0&limit=100，可选taskId/runId/type。返回interactions、nextCursor、hasMore；limit 1–500，after非负整数。顺序按sequence，分页及断线恢复从nextCursor继续；各workspace归档隔离，team过滤不会暴露其他团队正文。from/to身份与task/reply可用性明确known/unknown，不按名称猜测。正文/来源来自明确回报，仅声明而非身份认证。timeline-v1两图/UX已获用户确认，正式时间线及实际UI Check已通过，详见 [UI Check](ue/web-decoupling/ui-check/result-v1/ui-check.md)。本协议只展示明确接入的事件，不代表完整宿主历史已采集；01/04人工产品验收独立保留。

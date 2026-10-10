@@ -47,11 +47,20 @@ export function projectTracking(raw, selectedSessionId) {
   const runMap = new Map(teamRuns.map((r) => [key(r.teamId, r.runId), r]));
   const runs = teamRuns.map((run) => ({
     ...run,
+    skills: (run.skills || []).map((skill) => ({
+      ...skill,
+      usage:
+        skill.status === 'unavailable'
+          ? 'unavailable'
+          : skill.status === 'read'
+            ? 'observed-read'
+            : 'reported-use',
+    })),
     acceptanceItems: acceptanceItems(run.acceptance?.items || run.acceptanceItems),
     acceptanceItemsReported: true,
-    reviewRecords: projectReviews(run.reviewRecords, teamRuns),
+    reviewRecords: projectReviews(run.reviewRecords, teamRuns, run.reviewRequirements),
     reviewRequirements: reviewRequirements(
-      (run.reviewRequirements || [])
+      currentRequirements(run)
         .filter(
           (r) =>
             !r.itemId ||
@@ -213,7 +222,7 @@ export function projectTracking(raw, selectedSessionId) {
           })),
         ),
         reviewRequirements: reviewRequirements(
-          (task.reviewRequirements || [])
+          currentRequirements(task)
             .filter(
               (r) =>
                 !r.itemId ||
@@ -237,17 +246,7 @@ export function projectTracking(raw, selectedSessionId) {
           title: a.label || a.reference,
           availability: 'available',
         })),
-        skills: linked.flatMap((r) =>
-          (r.skills || []).map((s) => ({
-            ...s,
-            usage:
-              s.status === 'unavailable'
-                ? 'unavailable'
-                : s.status === 'read'
-                  ? 'observed-read'
-                  : 'reported-use',
-          })),
-        ),
+        skills: linked.flatMap((r) => r.skills),
         blockedBy: missing,
         dependencyWarning:
           missing.length && !blocked ? '依赖完成状态未同步：' + missing.join('、') : null,
@@ -286,14 +285,33 @@ export function projectTracking(raw, selectedSessionId) {
   };
 }
 
-function projectReviews(records = [], runs = []) {
+// 旧版交付保留在原始归档；当前人工待办只针对当前结果与合同。
+function currentRequirements(target) {
+  return (target.reviewRequirements || []).filter(
+    (r) =>
+      (!r.acKey || !target.acKey || r.acKey === target.acKey) &&
+      (r.type !== 'delivery' ||
+        !r.resultDigest ||
+        !target.resultDigest ||
+        r.resultDigest === target.resultDigest),
+  );
+}
+
+function projectReviews(records = [], runs = [], requirements = []) {
   return reviewRecords(
     records.map((r) => ({
       ...r,
       actorType: r.authorType,
       nativeAgentId:
         r.authorType === 'agent' ? runs.find((run) => run.runId === r.runId)?.nativeAgentId : null,
-      summary: r.quote || r.evidence || '',
+      summary:
+        (r.quote || r.evidence || '') +
+        (r.scope && !['design', 'delivery'].includes(r.scope) ? ' · 范围：' + r.scope : ''),
+      scope: ['design', 'delivery'].includes(r.scope)
+        ? r.scope
+        : requirements.find((q) => q.id === r.requirementId)?.type === 'delivery'
+          ? 'delivery'
+          : 'design',
       decision:
         r.decision === 'approved'
           ? r.authorType === 'human'
@@ -316,9 +334,19 @@ function projectReviews(records = [], runs = []) {
   );
 }
 
-export async function readPortableState({ root, dataDir, projectId, rootSessionId } = {}) {
+export async function readPortableState({ root, dataDir, projectId, rootSessionId, teamId } = {}) {
   const { readTracking } = await import('./skills/team-sync/scripts/tracking-core.mjs');
-  const raw = await readTracking({ workspace: root, dataDir });
+  let raw = await readTracking({ workspace: root, dataDir });
+  if (teamId) {
+    if (!raw.teams.some((team) => team.teamId === teamId)) throw new Error('团队不可用');
+    raw = {
+      ...raw,
+      teams: raw.teams.filter((team) => team.teamId === teamId),
+      tasks: raw.tasks.filter((task) => task.teamId === teamId),
+      runs: raw.runs.filter((run) => run.teamId === teamId),
+    };
+    rootSessionId = sessionId(raw.teams[0]);
+  }
   const project = {
     id: key('local', resolve(root)),
     projectId: null,

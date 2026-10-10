@@ -7,6 +7,10 @@ description: 对已启用 Agent Team 的具体工单进行独立审查、退回�
 
 先读取委派提供的规格、工单、基线和 team-sync/SKILL.md。核对具体 task-id、run-id、版本、允许读取范围；没有版本或原始证据时说明限制。
 
+按[有界团队执行](../agent-team/references/efficient-workflow.md)审查稳定快照，一轮汇总可确认的完整发现；修正后核对原问题与变更影响范围。使用 code-review 时保留其明确的审查轴与分派要求。复查沿用未受影响且可核对的证据，变化后的结果仍遵守版本/指纹合同。
+
+按[逐执行技能证据](../team-sync/references/skill-evidence.md)核对委派要求与每个 run.skills 的实际依据，报告漏报和读取/应用混淆；自己的审查执行也回报技能证据。无法证明的方法保持未核对，不从整体验证通过推断 Matt 流程完整执行。
+
 审查运行另建 run-id 并关联同一 task-id，记录自己的真实身份、职责和活动。返回自然语言发现，不替实现者编造通过证据。通过同步脚本 review 操作保存有署名的结论、范围、依据和关联运行；通过用 `--decision approved`，需返工用 `--decision rejected`（看板投影为 changes_requested），再由协调者更新业务阶段为 repair_required。
 
 逐项验收仅核对实际测试、产物或截图，不因整体验证通过自动勾选全部条件。返工使用新 run，复查使用新 review 标识，历史退回不覆盖删除。Agent Review 与用户设计确认、最终交付验收分别记录。

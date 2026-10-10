@@ -1,5 +1,11 @@
 # 本机原生团队使用约定
 
+执行效率：规划、分派、恢复与交付使用[有界团队执行](../plugins/agent-team/skills/agent-team/references/efficient-workflow.md)，按实际交付和依赖选择粒度与角色，前置验收覆盖、精简交接、服务复用和批量同步。该规则保留已确认范围、每卡AC及所选技能明确要求；不以减少卡片改写历史。
+
+技能证据核对：分派、成员读取/应用、审查和交付执行[逐执行技能证据](../plugins/agent-team/skills/team-sync/references/skill-evidence.md)。协调者逐 run 查询实际回报，明确漏报及方法应用限制；沿用现有协议与验收合同。
+
+2026-10-09 默认展示入口已改为独立网页。启用及汇总运行 agent-team Skill 携带的 `web/open-web.mjs`，传真实 workspace/data-dir/team-id；源码开发使用 `plugins/agent-team/dist/web/open-web.mjs`。启动器核对本机服务实例及目录并打开系统浏览器；日常不调用 `open_agent_team_probe`，该入口仅作显式旧内嵌请求的兼容。执行依然使用当前宿主原生能力，跨客户端复用通用追踪协议。分派/消息/回复/状态通过 team-sync 的 interaction 操作明确回报，未采集历史不补造；时间线v1两图与UX已获用户确认，正式UI、145项回归及独立UI Check已通过；01入口和04产品人工交付验收仍待具体结果确认。此条覆盖下述历史内嵌入口约定，详见 [ADR](adr/0001-independent-web.md)。
+
 当前入口（2026-10-02）：用户提及 `@Agent Team` 在当前主会话启用原生团队技能；后续需求沿用，直到退出。只读 Kanban / Org Chart 按真实主会话及其全部已观察子 Agent 展示，Workspace 作为项目筛选上下文。插件 ID 为 `agent-team`；只读工具名保留兼容。入口已打包，宿主新会话的自动匹配仍须区分于代码检查通过。
 本页统一团队分派与结果字段；范围和验收以已确认规格及工单为准。团队运行属于 Codex 原生工作流，插件仅展示真实任务与执行信息。
 
@@ -71,3 +77,5 @@ result 操作登记实际结果文件/版本/指纹；acceptance、review-requir
 
 
 2026-10-04 人工核验细化（覆盖旧版每卡人工确认约定）：每卡仍须非空具体 AC 和 Agent 自验证；仅需人工核验的功能添加 human 条件，manualCheck 必填 entry、steps、expected。无需人工核验的卡不添加通用确认项，显示“无需人工核验”。UE 原型确认等适用要求保留；不得删除真实人工核验需求规避验收。详见 [强制验收合同](../plugins/agent-team/skills/team-sync/references/acceptance.md)。
+
+2026-10-09 收尾复查已恢复完成：独立Reviewer实际25/25及HTTP43820复核通过，最后两处评审投影P2消除；完整145项及所有工程检查通过。01当前result-v5、04当前delivery-v2；工程收尾完成，人工入口和时间线交付保留待明确确认。上述用量限制/复查pending是前次历史，已被本条覆盖。结果见 `.scratch/web-decoupling/delivery-final.md` 与 `review-04.md`；安装缓存按已确认04范围不自动同步。

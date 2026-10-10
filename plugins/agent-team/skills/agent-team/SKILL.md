@@ -19,6 +19,8 @@ Web/App 界面实现、视觉/交互修改和 UI 修复必须在工单及相关�
 
 ## 原生团队执行
 
+规划、分派、阶段切换与恢复先按[有界团队执行](references/efficient-workflow.md)确定交付工作包、必要成员、前置验收覆盖和精简交接；角色按独立价值参与，工具与同步按决策批量执行，检查依据实际变化选择。已有确认范围、技能的明确流程及验收合同继续适用。
+
 有项目 `native-agent-team` 技能时读取其 SKILL.md，遵循 AGENTS.md、docs/native-team.md 与已确认规格；用户直接提及是本次明确团队授权，不修改其他 Skills 的主动调用边界。
 
 没有项目技能时，使用本插件携带的上述指引完成 Matt 流程；不要求其他项目复制本仓库的 native-agent-team 或 docs/native-team.md。实际缺失的 Matt 技能通过 setup-agent-team 补齐，指引不等于已安装上游技能。
@@ -27,19 +29,25 @@ Web/App 界面实现、视觉/交互修改和 UI 修复必须在工单及相关�
 
 正式分派前读取相邻的 `team-sync/SKILL.md`，用其自包含脚本登记 team 和尚未派生的 task；优先使用宿主实际可用的 Coordinator、Requirements、Architect、Developer、Reviewer、UE Profile。Profile 不能满足时选实际支持的类型并明确动态职责，不自行设置未获授权的模型或权限。
 
-每次成功派生及目标变更后，关联同一 task 的独立 run，保存实际目标和宿主身份。委派须提供同步 Skill/脚本的实际路径、workspace、data-dir、team-id、task-id、run-id，并要求成员读取及查询核对；正常回复保持自然语言。隐式匹配由宿主决定，不能保证每次自动加载，缺失接入如实补录。旧 report-goal/task-report 入口仅保留历史兼容，新流程不再要求。
+分派、收集结果及交付时执行[逐执行技能证据](../team-sync/references/skill-evidence.md)：委派明确本次必要技能、实际路径和应用范围；成员读取及应用后分别回报；协调者逐 run 查询核对缺口。自己实施同样登记独立 run，父会话读过技能不能代替所有执行的记录。
+
+每次成功派生及目标变更后，关联同一 task 的独立 run，保存实际目标和宿主身份，并通过team-sync interaction记录真实dispatch正文及双方run关联。实际Agent间消息和回复同样回报message/reply，长正文使用body-file；等待/结束后记录实际status观察，业务状态另行同步。未采集历史不补造。委派须提供同步 Skill/脚本的实际路径、workspace、data-dir、team-id、task-id、run-id，并要求成员读取及查询核对；正常回复保持自然语言。隐式匹配由宿主决定，不能保证每次自动加载，缺失接入如实补录。旧 report-goal/task-report 入口仅保留历史兼容，新流程不再要求。
 
 按任务选择必要职责，不要求每次全员派生。task_name、职责、原生类型与 Profile 分别同步，不从名字猜测。独立审查按需读取 `team-review/SKILL.md`；涉及 UI 新设计/实质修改时读取 `team-ue/SKILL.md`，用户确认图并归档基线后再实施对应 UI。非 Codex 使用同一 Skills 和独立 Web，执行始终交给当前客户端原生能力。
 
-## 自动呈现会话 Kanban
+## 默认打开独立网页
 
-首次启用以及团队成果汇总时，调用插件只读 `open_agent_team_probe` 工具，传入真实主会话 `rootSessionId` 和已核对的 `projectId`（如可用）。工具名保留历史兼容，显示名为 Agent Team。该调用会在会话中产生 MCP App 看板；展开、固定或全屏由宿主处理，不宣称可以强制弹出或插入宿主内置摘要。
+首次启用及成果汇总时，在目标工作区运行本 Skill 携带的 `web/open-web.mjs`：
 
-`projectId` 必须来自当前插件 `get_agent_team_probe` 返回的项目清单；桌面端 `list_projects` 的 SSH 项目 ID 与服务器 ID 不通用。未核对时省略 `projectId`，用真实 `rootSessionId` 让插件按该会话工作区绑定；不要用路径、名称或桌面 UUID 猜测服务器项目 ID。
+```text
+node <本技能路径>/web/open-web.mjs --workspace <实际目标工作区> --team-id <已登记团队ID> [--data-dir <同步目录>]
+```
 
-会话标识从原生上下文或可核对的宿主观察取得，不使用 Agent 名称代替 UUID，不挑选“最近”的会话冒充当前会话。缺少当前标识时仍可打开选择提示，并如实说明尚未绑定。后续刷新保留会话范围。
+源码开发时对应资源位于插件的 `dist/web/open-web.mjs`；安装器将完整独立资源复制到 Skill 的 web 目录，不能引用 Codex 插件缓存作为跨客户端依赖。运行时只需要 Node.js 20+，不安装 MCP 或 Codex。启动器核对已有本机服务的工作区与数据目录，返回正确团队 URL 并打开系统浏览器；`--no-open` 仅查询/启动不打开浏览器。端口冲突明确报告，使用 `--port` 选择可用端口；不得复用错误项目的服务。启动器及同步脚本必须绑定同一 workspace/data-dir。
 
-真实任务、Skills 使用与产物通过 team-sync 操作同步；原生生命周期由实际宿主观察补充，不是必需安装条件。不要为演示编造子 Agent、状态、验收或父子关系。没有接入数据时显示未知或空态，不能保证所有宿主历史可读。非 Codex 不调用 Codex 专属工具；使用独立 Web URL，同步脚本与 Web 必须绑定同一目录。
+团队ID是通用追踪标识，不使用原生会话 UUID 冒充。首次无任务也可打开空态，不制造任务或派生。返回可复制 URL；无法打开系统浏览器时说明实际错误并提供已核对地址。日常不调用 `open_agent_team_probe`；该工具仅保留为用户明确请求旧 Codex 内嵌入口时的可选兼容适配器。
+
+真实任务、Skills 使用和产物通过 team-sync 同步。宿主观察是可选补充；没有接入数据时显示未知或空态，不承诺回填未采集历史。网页只查看，不执行宿主操作。
 
 团队授权不扩展到发布、外部消息或修改全局登录。UI 只查看、筛选和刷新，不派生、审批或修改原生任务。
 

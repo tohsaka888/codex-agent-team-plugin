@@ -1,7 +1,5 @@
 import { realpath, stat, open } from 'node:fs/promises';
 import { resolve, relative, isAbsolute } from 'node:path';
-import { readState } from './readonly-state.mjs';
-import { executionDocument } from './execution-document.mjs';
 import { kanbanCards } from './web/view-model.mjs';
 // 只读取本会话已关联产物；既校验词法路径，也校验符号链接后的真实路径。
 function within(root, path) {
@@ -15,11 +13,18 @@ function within(root, path) {
 }
 export async function readArtifact({ projectId, rootSessionId, taskId, reference, ...context }) {
   if (!rootSessionId || !taskId || !reference) throw new Error('缺少已关联的任务产物');
-  const state = await readState({ projectId, rootSessionId, ...context });
+  const reader =
+    context.stateReader ||
+    (context.portable
+      ? (await import('./portable-state.mjs')).readPortableState
+      : (await import('./readonly-state.mjs')).readState);
+  const state = await reader({ projectId, rootSessionId, ...context });
   const project = state.projects.find((p) => p.id === state.selectedProjectId);
   const task = kanbanCards(state.snapshot.tasks).find((t) => t.id === taskId);
   if (project?.hostId !== 'local' || !task) throw new Error('任务或本机工作区不可用');
-  if (reference.startsWith('execution://'))
+  if (reference.startsWith('execution://')) {
+    if (context.portable) throw new Error('独立网页未接入宿主执行记录；execution:// 不可用');
+    const { executionDocument } = await import('./execution-document.mjs');
     return executionDocument({
       state,
       project,
@@ -27,6 +32,7 @@ export async function readArtifact({ projectId, rootSessionId, taskId, reference
       id: reference.slice('execution://'.length),
       codexHome: context.codexHome,
     });
+  }
   const artifact = task.artifacts?.find((a) => a.reference === reference);
   const review = task.reviewRecords?.find((r) => r.reference === reference);
   const requirement = task.reviewRequirements?.find((r) => r.reference === reference);

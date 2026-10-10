@@ -1,5 +1,13 @@
 # 新会话交接
 
+2026-10-10 用户明确要求同步本机、AI、SkillHub，并确认同时提交推送 GitHub。本机0.5.0插件缓存、AI两个已有源码目录及0.5.0缓存均备份同步126个文件，逐文件SHA256一致；原MCP登录/配置及业务归档保留，未中断Lyria团队。AI相关22项通过；本地独立分发HTTP/四类交互/回复关联探针通过，五包32处引用有效。SkillHub `dept-bitech-esw` 五技能以public提交 `0.5.1-skillhub.3`，上传均成功；安装接口明确返回尚未发布，不能称公开可安装。setup包将无扩展名MIT许可证改名为 `mattpocock-LICENSE.md` 并更新引用，以满足平台文件扩展名规则，许可正文保留。源码指引与配套独立网页/时间线一同交付；旧会话仍需重读，已加载MCP模块需重连，页面需重开。备份、哈希、上传回执与探针在 `.scratch/lyria-skill-audit-20261010/release/`，远程备份在 `/home/sup1whu/.codex/agent-team-deploy-20261010-102731/`。
+
+2026-10-10 用户要求整体优化团队流程：新增[有界团队执行](../plugins/agent-team/skills/agent-team/references/efficient-workflow.md)，接入团队入口、Matt、同步、审查、UE、项目入口及可安装 Coordinator。工作包按产物/依赖选择，角色按独立价值加入，前置 AC/页面/状态/平台覆盖，精简交接，复用服务，按影响选择检查，稳定快照集中审查及批量同步。保留现有规格/工单确认、逐卡 AC、版本/指纹和 UI Check；没有更改字段、调度器或已确认 Lyria 工单。完整148项、lint、format:check及构建通过，7处规则链接有效，安装器验证携带新引用文件。未启动子 Agent、修改远程执行或同步安装缓存，现有远程团队尚未保证采用。具体交付见 [.scratch/lyria-skill-audit-20261010/workflow-delivery.md](../.scratch/lyria-skill-audit-20261010/workflow-delivery.md)。
+
+2026-10-10 技能证据漏报优化：根据 AI 服务器 Lyria 最新团队诊断，加强已有分派、成员回报及逐 run 审查/交付核对；新增可移植[指引](../plugins/agent-team/skills/team-sync/references/skill-evidence.md)，四团队 Skills、Matt 指引和项目入口均接入。修正执行卡 read/unavailable 被误标已使用，父卡与执行卡共享状态映射，兄弟执行不继承技能记录。新增回归先失败后通过，相关18项及完整148项、lint、format:check、构建通过。沿用已有同步字段和AC合同，没有新增全局完成门槛。本轮没有启动子 Agent、独立审查或产品截图UI Check；模板回归验证显示文案与范围。未修改 Lyria 归档、未给其会话发消息、未同步本机/AI安装缓存；正在运行的旧会话未保证生效。交付见 [.scratch/lyria-skill-audit-20261010/delivery.md](../.scratch/lyria-skill-audit-20261010/delivery.md)。
+
+2026-10-09 独立网页重构 v1：用户已确认范围、ADR、验证边界、四工单及timeline-v1两图/UX。01独立入口、02通用交互协议、03正式时间线均已实施，145/145全量回归、lint/格式/双build、design lint及独立23项相关复查通过；实际UI Check与冻结文件指纹见 [报告](ue/web-decoupling/ui-check/result-v1/ui-check.md)。04真实宿主分派/消息/回复/状态已归档，独立包在临时新目录仅需Node实测通过，无Codex/MCP运行依赖。01入口和04最终产品人工验收仍pending，不能将图确认或Agent审查替代交付认可。当前入口 http://127.0.0.1:43820/?transport=http&teamId=web-decoupling-20261009 。具体交付见 [delivery-final](../.scratch/web-decoupling/delivery-final.md)。未提交、推送或自动覆盖安装缓存；恢复先核对当前结果版本和SHA256。下述日期记录为历史。
+
 2026-10-09 用户明确要求需求不清晰时自动调用 grill：Requirements 与 Coordinator、团队入口和 Matt 指引已接入 grilling 自动澄清；仅关键歧义触发，协调者统一提问，清晰/已确认需求跳过。grill-with-docs 上游主动调用标记保留，setup 默认依赖增加 grilling。本机插件同步与验证记录见 `.scratch/auto-grilling/delivery.md`。
 
 2026-10-09 按用户要求增加显式 `setup-agent-team` 安装入口，将完整预检从日常团队流程移出；新对话、恢复及切换工作区不自动执行整套检查。实际缺失依赖仅补受影响项，业务测试、design.md lint 和 UI Check 保留。安装器包含第五个 Skill 并保留已有目录。源码及本机0.5.0插件Skills/安装器已备份同步，逐文件SHA256一致；未同步远程，新会话发现尚待核验。安装器1/1、lint、格式及引用检查通过；skill-creator校验器因缺PyYAML未运行。记录见 `.scratch/setup-agent-team/delivery.md` 与 sync-report.json。
@@ -113,3 +121,9 @@ fidelity-v1 实际为一个业务工单、五条执行；卡片及角色筛选�
 验证：10 处 UI Check 文档链接目标存在；技能安装器现有测试 1/1 通过；按原文件行尾约定检查差异，无空白错误。未运行实际 Web/App UI Check，未同步安装缓存。
 
 2026-10-07 用户要求同步到插件后，已备份并同步本机 agent-team 0.5.0 安装缓存中的 12 份 Skills/角色/引用文件，SHA256 全部与源码一致。同步清单见 .scratch/ui-check-sync/sync-report.json；未同步远程、未修改 MCP 配置或运行代码。已有会话需重读新版指引，新会话实际装载与产品 UI Check 仍须独立验证。
+
+2026-10-09 最终追加：评审投影发现并修正P2，145/145及lint/format/build/designlint通过；HTML视觉冻结指纹未变。最新独立运行入口端口43820。Reviewer账户用量限制导致本次修正独立复查未完成，01新结果和04均未声明验收完成；具体限制见交付文件。
+
+2026-10-09 收尾复查已恢复完成：独立Reviewer实际25/25及HTTP43820复核通过，最后两处评审投影P2消除；完整145项及所有工程检查通过。01当前result-v5、04当前delivery-v2；工程收尾完成，人工入口和时间线交付保留待明确确认。上述用量限制/复查pending是前次历史，已被本条覆盖。结果见 `.scratch/web-decoupling/delivery-final.md` 与 `review-04.md`；安装缓存按已确认04范围不自动同步。
+
+2026-10-09 用户报告图标异常、连续点击失效和按压时间跳动，已按既有确认设计修复SVG、稳定事件DOM及按压定位。全量145/145，独立Reviewer相关11/11及真实桌面深浅色、390px列表/抽屉UI Check通过；浏览器20次选择和按压坐标证据归档。当前01 result-v6、03 result-v3、04 delivery-v3，交付与审查见 `.scratch/web-decoupling/click-fix/delivery.md`、`review.md`，旧冻结记录为历史版本。05工程验收完成；01/04人工交付保留待确认，安装缓存未同步。

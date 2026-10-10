@@ -29,3 +29,16 @@
 ## 强制验收合同 v1 已确认（2026-10-04）
 
 用户回复“确认”明确放行该 Spec/验证边界与四条工单；确认前 SHA256 已核对，原文/范围见[决定记录](../../.scratch/mandatory-ac/decision-v1.md)及 review-v1.json。此处更新覆盖上方待确认状态，不改写被评审原文。实施与独立复查已通过；交付 delivery-v1 的四父工单和六执行逐卡自验证已回报，人工结果验收待确认，见[交付对象](../../.scratch/mandatory-ac/delivery-v1.md)和[最终验证](../../.scratch/mandatory-ac/verification-final.md)。既有安装缓存尚未发布更新。
+
+## 独立网页与交互追踪 v1（2026-10-09）
+用户明确回复“确认”，放行范围、架构、验证边界与四条工单批次。评审原文及SHA256见[review-v1](../../.scratch/web-decoupling/review-v1.md)，原话与范围见[decision-v1](../../.scratch/web-decoupling/decision-v1.md)。正式工单见该目录issues；01→02→03→04，03正式UI另需具体时间线原型确认。展示追踪独立，执行仍由宿主负责；不扩大为独立执行器。最终人工交付验收独立。
+
+## 协作时间线 v1 已确认（2026-10-09）
+用户“确认”明确认可主图及补充状态图的布局与交互，指纹核对及范围见[决定记录](../ue/web-decoupling/v1/decision.md)。[主图](../ue/web-decoupling/v1/main.png)、[补充图](../ue/web-decoupling/v1/states.png)、[UX原文](../ue/web-decoupling/v1/ux.md)已归档。允许03正式UI及04验证；图中示例为演示数据。实际UI Check和人工产品验收分别记录。
+
+## 独立网页当前交付（2026-10-09）
+源码与可移植包已实现；完整145项、lint/format/build/designlint通过。当前[交付](../../.scratch/web-decoupling/delivery-final.md)及[审查限制](../../.scratch/web-decoupling/review-04.md)区分既有03视觉通过与最后评审投影修复。Reviewer用量限制，01 result-v5与04 delivery-v1独立复查尚未完成，人工交付仍pending，不复用旧审查。当前独立网页端口43820；未同步安装缓存。
+
+2026-10-09 收尾复查已恢复完成：独立Reviewer实际25/25及HTTP43820复核通过，最后两处评审投影P2消除；完整145项及所有工程检查通过。01当前result-v5、04当前delivery-v2；工程收尾完成，人工入口和时间线交付保留待明确确认。上述用量限制/复查pending是前次历史，已被本条覆盖。结果见 `.scratch/web-decoupling/delivery-final.md` 与 `review-04.md`；安装缓存按已确认04范围不自动同步。
+
+2026-10-09 用户报告图标异常、连续点击失效和按压时间跳动，已按既有确认设计修复SVG、稳定事件DOM及按压定位。全量145/145，独立Reviewer相关11/11及真实桌面深浅色、390px列表/抽屉UI Check通过；浏览器20次选择和按压坐标证据归档。当前01 result-v6、03 result-v3、04 delivery-v3，交付与审查见 `.scratch/web-decoupling/click-fix/delivery.md`、`review.md`，旧冻结记录为历史版本。05工程验收完成；01/04人工交付保留待确认，安装缓存未同步。
