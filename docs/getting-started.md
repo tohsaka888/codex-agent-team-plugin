@@ -67,3 +67,8 @@ Claude Code、Hermes、DSH 等使用此通用路径，无需逐家 Hook 适配�
 ## 独立网页默认入口（2026-10-09）
 
 `node <插件绝对路径>/build.mjs --web-only` 构建 `dist/web`；将整个目录复制到任意机器/目标工程，仅需 Node.js 20+。运行 `node <独立包>/open-web.mjs --workspace <目标工程> --team-id <同步team-id> [--data-dir <同步目录>]`。启动器仅连接127.0.0.1，检查服务健康身份及 workspace/data-dir 后打开系统浏览器，返回可复制 URL；`--no-open` 不打开浏览器，冲突用 `--port`。安装Skills时安装器将独立包复制到 agent-team/web，已有目录保留；旧版本需由用户核对后迁移，不自动覆盖。Codex MCP server.mjs保留兼容，默认流程不调用。宿主执行记录 execution:// 在独立模式明确不可用；工作区内已关联文件仍可预览。
+
+
+## 远程 SSH 看板访问
+
+远程执行启动器时使用 --no-open，服务只监听远程回环地址。通过宿主已有端口转发，或在用户本机执行 ssh -N -o ExitOnForwardFailure=yes -L 127.0.0.1:<本机端口>:127.0.0.1:<远程端口> <已配置SSH别名>，再从本机浏览器打开转发地址并带正确 teamId。转发依赖 SSH 进程存活；已有监听须核对健康接口的 workspace/data-dir 后复用。启动器 service=ready 表示服务可用，browser.status=requested 只表示系统接受请求；skipped/unavailable/failed不表示页面打开。完整步骤与回报要求见 [Agent Team Skill](../plugins/agent-team/skills/agent-team/SKILL.md)。

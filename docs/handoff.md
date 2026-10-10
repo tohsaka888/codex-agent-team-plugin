@@ -127,3 +127,8 @@ fidelity-v1 实际为一个业务工单、五条执行；卡片及角色筛选�
 2026-10-09 收尾复查已恢复完成：独立Reviewer实际25/25及HTTP43820复核通过，最后两处评审投影P2消除；完整145项及所有工程检查通过。01当前result-v5、04当前delivery-v2；工程收尾完成，人工入口和时间线交付保留待明确确认。上述用量限制/复查pending是前次历史，已被本条覆盖。结果见 `.scratch/web-decoupling/delivery-final.md` 与 `review-04.md`；安装缓存按已确认04范围不自动同步。
 
 2026-10-09 用户报告图标异常、连续点击失效和按压时间跳动，已按既有确认设计修复SVG、稳定事件DOM及按压定位。全量145/145，独立Reviewer相关11/11及真实桌面深浅色、390px列表/抽屉UI Check通过；浏览器20次选择和按压坐标证据归档。当前01 result-v6、03 result-v3、04 delivery-v3，交付与审查见 `.scratch/web-decoupling/click-fix/delivery.md`、`review.md`，旧冻结记录为历史版本。05工程验收完成；01/04人工交付保留待确认，安装缓存未同步。
+
+
+2026-10-10 用户要求修复远程AI Lyria看板未打开：启动器区分服务可用与浏览器请求，SSH/无桌面不误调远程浏览器，404/非JSON明确报告端口占用；Skill补充本机回环转发、身份/团队/页面核对及链接回报。相关8项、lint/format/build通过；本机和AI安装缓存三文件已备份同步。Lyria 43783通过本机隐藏SSH转发实际打开Codex浏览器并核对团队，转发PID2252需存活；旧会话需重读Skill。无独立Agent Review、未修改业务或发送消息、未发布/提交推送。具体结果与备份见 .scratch/remote-web-open-20261010/delivery.md。
+
+2026-10-10 用户明确要求更新远程、本地、GitHub及SkillHub：远程网页打开修复已同步本机0.5.0缓存、AI两个既有源码目录及0.5.0缓存；远程各38文件逐项SHA256核对，备份在 /home/sup1whu/.codex/agent-team-web-open-20261010/release-backup-*。本机/AI相关各9项及lint/format/build通过。SkillHub dept-bitech-esw五技能public提交0.5.1-skillhub.4均成功，五包预发布检查无警告、32处包内引用有效；五次安装接口明确返回Version is not published，公开发布仍依赖平台流程，不声明可安装。此条覆盖前次未提交推送和未同步源码的范围，GitHub提交推送按本次授权执行；回执与部署清单保存在 .scratch/remote-web-open-20261010/release/。旧会话仍需重读Skill，未发送业务消息或中断Lyria团队。

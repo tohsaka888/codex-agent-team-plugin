@@ -8,7 +8,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { createServer } from 'node:http';
 import { startWebServer } from './web-server.mjs';
-import { openWeb } from './open-web.mjs';
+import { openWeb, requestBrowserOpen } from './open-web.mjs';
 import { createSnapshotReader } from './web/sync-query.mjs';
 import { initialBrowserSession } from './web/browser-scope.mjs';
 import { appendOperation } from './skills/team-sync/scripts/tracking-core.mjs';
@@ -27,6 +27,61 @@ async function listen(server) {
   return server.address().port;
 }
 const close = (server) => new Promise((done) => server.close(done));
+test('SSH 和无桌面环境不调用远程浏览器', async () => {
+  const run = () => assert.fail('不应调用浏览器');
+  for (const env of [{ SSH_CONNECTION: 'remote', DISPLAY: ':0' }, { SSH_CLIENT: 'remote' }, {}]) {
+    const result = await requestBrowserOpen('http://127.0.0.1:43783/', {
+      platform: 'linux',
+      env,
+      run,
+    });
+    assert.equal(result.status, 'unavailable');
+  }
+});
+test('浏览器退出失败保留错误，成功仅表示已请求', async () => {
+  const url = 'http://127.0.0.1:43783/?teamId=test';
+  const failed = await requestBrowserOpen(url, {
+    platform: 'linux',
+    env: { DISPLAY: ':0' },
+    run: async () => {
+      throw Object.assign(new Error('exit 3'), { stderr: 'no browser' });
+    },
+  });
+  assert.deepEqual(failed, { status: 'failed', reason: 'no browser' });
+  for (const platform of ['win32', 'darwin', 'linux']) {
+    const result = await requestBrowserOpen(url, {
+      platform,
+      env: { WAYLAND_DISPLAY: 'wayland-0' },
+      run: async (command, args, options) => {
+        assert.equal(
+          command,
+          { win32: 'rundll32.exe', darwin: 'open', linux: 'xdg-open' }[platform],
+        );
+        assert.equal(args.at(-1), url);
+        assert.equal(options.timeout, 5000);
+      },
+    });
+    assert.equal(result.status, 'requested');
+  }
+});
+test('空404和非JSON健康响应明确报告端口冲突', async () => {
+  const root = await fixture();
+  for (const status of [404, 200]) {
+    const server = createServer((req, res) => {
+      res.writeHead(status);
+      res.end(status === 404 ? '' : '<html>other service</html>');
+    });
+    const port = await listen(server);
+    try {
+      await assert.rejects(
+        openWeb({ workspace: root, port, noOpen: true }),
+        /占用.*(404|JSON).*--port/,
+      );
+    } finally {
+      await close(server);
+    }
+  }
+});
 test('独立分发包在无 MCP/Codex 安装、不同 cwd 中启动、读取真实事件并复用', async () => {
   const root = await fixture();
   await exec(process.execPath, [resolve(here, 'build.mjs'), '--web-only'], { cwd: tmpdir() });
@@ -56,6 +111,8 @@ test('独立分发包在无 MCP/Codex 安装、不同 cwd 中启动、读取真�
       { cwd: tmpdir(), env: { ...process.env, CODEX_HOME: resolve(root, 'missing-codex') } },
     );
     const value = JSON.parse(result.stdout);
+    assert.equal(value.service, 'ready');
+    assert.equal(value.browser.status, 'skipped');
     assert.equal(new URL(value.url).searchParams.get('teamId'), 'real-team');
     const health = await (await fetch('http://127.0.0.1:' + port + '/api/health')).json();
     pid = health.pid;

@@ -2,12 +2,31 @@ import { knownServiceIdentity } from './service-identity.mjs';
 import { realpath } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { spawn } from 'node:child_process';
+import { spawn, execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { parseArgs } from 'node:util';
 import { setTimeout as delay } from 'node:timers/promises';
 const here = dirname(fileURLToPath(import.meta.url));
 const same = (a, b) =>
   process.platform === 'win32' ? a.toLowerCase() === b.toLowerCase() : a === b;
+export async function requestBrowserOpen(
+  url,
+  { platform = process.platform, env = process.env, run = promisify(execFile) } = {},
+) {
+  if (env.SSH_CONNECTION || env.SSH_CLIENT)
+    return { status: 'unavailable', reason: '远程 SSH 环境：请转发端口后在用户本机打开浏览器' };
+  if (platform === 'linux' && !env.DISPLAY && !env.WAYLAND_DISPLAY)
+    return { status: 'unavailable', reason: '当前 Linux 环境没有桌面显示服务' };
+  const command =
+    platform === 'win32' ? 'rundll32.exe' : platform === 'darwin' ? 'open' : 'xdg-open';
+  const args = platform === 'win32' ? ['url.dll,FileProtocolHandler', url] : [url];
+  try {
+    await run(command, args, { timeout: 5000, windowsHide: true });
+    return { status: 'requested', reason: '系统已接受打开请求；页面是否打开仍需浏览器核验' };
+  } catch (error) {
+    return { status: 'failed', reason: error.stderr?.trim() || error.message };
+  }
+}
 export async function openWeb({
   workspace,
   dataDir,
@@ -26,7 +45,16 @@ export async function openWeb({
   async function probe() {
     try {
       const response = await fetch(base + '/api/health', { signal: AbortSignal.timeout(500) });
-      const identity = await response.json();
+      if (!response.ok)
+        throw new Error(
+          '端口已被其他服务占用：健康接口 HTTP ' + response.status + '；请使用 --port',
+        );
+      let identity;
+      try {
+        identity = await response.json();
+      } catch {
+        throw new Error('端口已被其他服务占用：健康接口不是有效 JSON；请使用 --port');
+      }
       if (
         !response.ok ||
         identity.service !== 'agent-team-web' ||
@@ -76,23 +104,10 @@ export async function openWeb({
   const url = new URL(base + '/');
   url.searchParams.set('transport', 'http');
   if (teamId) url.searchParams.set('teamId', teamId);
-  if (!noOpen) {
-    const command =
-      process.platform === 'win32'
-        ? 'rundll32.exe'
-        : process.platform === 'darwin'
-          ? 'open'
-          : 'xdg-open';
-    const args =
-      process.platform === 'win32' ? ['url.dll,FileProtocolHandler', url.href] : [url.href];
-    const browser = spawn(command, args, { detached: true, stdio: 'ignore', windowsHide: true });
-    await new Promise((done, fail) => {
-      browser.once('spawn', done);
-      browser.once('error', fail);
-    });
-    browser.unref();
-  }
-  return { url: url.href, reused, workspace: root, dataDir: archive };
+  const browser = noOpen
+    ? { status: 'skipped', reason: '--no-open' }
+    : await requestBrowserOpen(url.href);
+  return { url: url.href, reused, workspace: root, dataDir: archive, service: 'ready', browser };
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
