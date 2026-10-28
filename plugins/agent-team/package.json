@@ -10,7 +10,7 @@
     "prototype:review": "node web/human-review.prototype-server.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.31.0",
+    "@modelcontextprotocol/sdk": "1.32.0",
     "@modelcontextprotocol/ext-apps": "2.0.3",
     "zod": "4.6.5"
   },
